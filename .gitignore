@@ -7,3 +7,7 @@
 
 classes
 target
+*.class*
+*.prefs
+*.project
+*/bin/*
