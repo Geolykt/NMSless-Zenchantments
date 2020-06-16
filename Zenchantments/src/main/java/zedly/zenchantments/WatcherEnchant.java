@@ -16,6 +16,7 @@ import java.util.function.Supplier;
 import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -60,6 +61,12 @@ public class WatcherEnchant implements Listener {
     private static final WatcherEnchant INSTANCE = new WatcherEnchant();
     private static final HighFrequencyRunnableCache cache = new HighFrequencyRunnableCache(WatcherEnchant::feedEnchCache, 5);
 
+    private static final boolean APPLY_PATCH_PISTON = true;
+    private static final boolean APPLY_PATCH_EXPLOSION = true;
+    private static final boolean PATCH_CANCEL_FROZENSTEP = true;
+    private static final boolean PATCH_CANCEL_NETHERSTEP = true;
+    private static final boolean PATCH_CANCEL_EXPLOSION = true;
+    
     public static WatcherEnchant instance() {
         return INSTANCE;
     }
@@ -97,23 +104,44 @@ public class WatcherEnchant implements Listener {
      */
     @EventHandler(ignoreCancelled = false)
     public void onBlockExplodeEvent(BlockExplodeEvent evt) {
-    	for (Block block: evt.blockList()) {
-    		isProtectedBlock(block, false);
+    	if (!APPLY_PATCH_EXPLOSION) {
+    		return;
     	}
-		isProtectedBlock(evt.getBlock(), false);
+    	for (Block block: evt.blockList()) {
+    		byte b = protectedBlockQuery(block, !PATCH_CANCEL_EXPLOSION && PATCH_CANCEL_NETHERSTEP, !PATCH_CANCEL_EXPLOSION && PATCH_CANCEL_FROZENSTEP);
+    		if (b == 1 && PATCH_CANCEL_NETHERSTEP && PATCH_CANCEL_EXPLOSION) {
+    			evt.setCancelled(true);
+    		} else if (b == 2 && PATCH_CANCEL_FROZENSTEP && PATCH_CANCEL_EXPLOSION) {
+    			evt.setCancelled(true);
+    		}
+    	}
     }
     
     @EventHandler(ignoreCancelled = false)
     public void onEntityExplodeEvent(EntityExplodeEvent evt) {
+    	if (!APPLY_PATCH_EXPLOSION) {
+    		return;
+    	}
     	for (Block block: evt.blockList()) {
-    		isProtectedBlock(block, true);
+    		byte b = protectedBlockQuery(block, !PATCH_CANCEL_EXPLOSION && PATCH_CANCEL_NETHERSTEP, !PATCH_CANCEL_EXPLOSION && PATCH_CANCEL_FROZENSTEP);
+    		if (b == 1 && PATCH_CANCEL_NETHERSTEP && PATCH_CANCEL_EXPLOSION) {
+    			evt.setCancelled(true);
+    		} else if (b == 2 && PATCH_CANCEL_FROZENSTEP && PATCH_CANCEL_EXPLOSION) {
+    			evt.setCancelled(true);
+    		}
     	}
     }
     
     @EventHandler(ignoreCancelled = false)
     public void onBlockPistonExtendEvent(BlockPistonExtendEvent evt) {
+    	if (!APPLY_PATCH_PISTON) {
+    		return;
+    	}
     	for (Block block: evt.getBlocks()) {
-    		if (isProtectedBlock(block, false)) {
+    		byte b = protectedBlockQuery(block, !PATCH_CANCEL_NETHERSTEP, !PATCH_CANCEL_FROZENSTEP);
+    		if (b == 1 && PATCH_CANCEL_NETHERSTEP) {
+    			evt.setCancelled(true);
+    		} else if (b == 2 && PATCH_CANCEL_FROZENSTEP) {
     			evt.setCancelled(true);
     		}
     	}
@@ -121,8 +149,14 @@ public class WatcherEnchant implements Listener {
     
     @EventHandler(ignoreCancelled = false)
     public void onBlockPistonRetractEvent(BlockPistonRetractEvent evt) {
+    	if (!APPLY_PATCH_PISTON) {
+    		return;
+    	}
     	for (Block block: evt.getBlocks()) {
-    		if (isProtectedBlock(block, false)) {
+    		byte b = protectedBlockQuery(block, !PATCH_CANCEL_NETHERSTEP, !PATCH_CANCEL_FROZENSTEP);
+    		if (b == 1 && PATCH_CANCEL_NETHERSTEP) {
+    			evt.setCancelled(true);
+    		} else if (b == 2 && PATCH_CANCEL_FROZENSTEP) {
     			evt.setCancelled(true);
     		}
     	}
@@ -130,47 +164,49 @@ public class WatcherEnchant implements Listener {
     
     /**
      * This method returns whether a block is protected by the plugin and whether it should be considered <br>
-     * <!-- TODO: This functionality should be implemented through another way -->
-     * Note that this is not cached and repeated queries may affect performance.
      * @param block The block to query
-     * @param remove Whether to remove the entry, if found
-     * @return True if the Block is considered protected and should thus not be removed
+     * @param netherstep Whether to remove the entry, if found and the entry belonged to a netherstep block
+     * @param frozenstep Whether to remove the entry, if found and the entry belonged to a frozenstep block
+     * @return non 0 values if the Block is considered protected. <br> 
+     * <ul>
+     * <li>0 if the block is unprotected</li>
+     * <li>1 if the netherstep protects the block</li>
+     * <li>2 if the frozenstep protects the block</li>
+     * <li>3 if something else protects the block</li>
+     * </ul>
      * @author Geolykt
      */
-    public boolean isProtectedBlock(Block block, boolean remove) {
-    	Location a = block.getLocation();
-		/* Check whether the block was placed by either NetherStep or FrozenStep, other Enchantment might be also added
-		 * 
-		 * FIXME this is not a very clean way to do this. A proposed (better?) way of doing this would be by changing NetherStep and
-		 * FrozenStep in a way that they inherit a method that would check whether a given block was placed by them. This would allow for
-		 * easier upscaling.
-		 */
-    	for (Location b : NetherStep.netherstepLocs.keySet()) {
-        	if (a.getBlockX() == b.getBlockX()) {
-        		if (a.getBlockZ() == b.getBlockZ()) {
-        			if (a.getBlockY() == b.getBlockY()) {
-        	        	if (remove) {
-        	        		NetherStep.netherstepLocs.remove(b);
-        	        	}
-        				return true;
-        			}
-        		}
+    public byte protectedBlockQuery(Block block, boolean netherstep, boolean frozenstep) {
+    	if (Storage.COMPATIBILITY_ADAPTER.Ices().contains(block.getType())) {
+    		Location a = block.getLocation();
+        	for (Location b : FrozenStep.frozenLocs.keySet()) {
+            	if (a.getBlockX() == b.getBlockX()) {
+            		if (a.getBlockZ() == b.getBlockZ()) {
+            			if (a.getBlockY() == b.getBlockY()) {
+            	        	if (frozenstep) {
+            	        		FrozenStep.frozenLocs.remove(b);
+            	        	}
+            				return 2;
+            			}
+            		}
+            	}
+        	}
+    	} else if (block.getType() == Material.SOUL_SAND) {
+        	Location a = block.getLocation();
+        	for (Location b : NetherStep.netherstepLocs.keySet()) {
+            	if (a.getBlockX() == b.getBlockX()) {
+            		if (a.getBlockZ() == b.getBlockZ()) {
+            			if (a.getBlockY() == b.getBlockY()) {
+            	        	if (netherstep) {
+            	        		NetherStep.netherstepLocs.remove(b);
+            	        	}
+            				return 1;
+            			}
+            		}
+            	}
         	}
     	}
-    	for (Location b : FrozenStep.frozenLocs.keySet()) {
-        	if (a.getBlockX() == b.getBlockX()) {
-        		if (a.getBlockZ() == b.getBlockZ()) {
-        			if (a.getBlockY() == b.getBlockY()) {
-        	        	if (remove) {
-        	        		FrozenStep.frozenLocs.remove(b);
-        	        	}
-        				return true;
-        			}
-        		}
-        	}
-    	}
-    	
-    	return false;
+    	return 0;
     }
     
     @EventHandler(ignoreCancelled = false)
