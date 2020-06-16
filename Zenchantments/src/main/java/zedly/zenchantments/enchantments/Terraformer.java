@@ -10,8 +10,6 @@ import zedly.zenchantments.compatibility.EnumStorage;
 import zedly.zenchantments.enums.Hand;
 import zedly.zenchantments.enums.Tool;
 
-import java.util.Set;
-
 import static org.bukkit.Material.*;
 import static org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK;
 import static zedly.zenchantments.enums.Tool.SHOVEL;

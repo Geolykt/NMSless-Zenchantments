@@ -1,6 +1,18 @@
 package zedly.zenchantments;
 
-import java.util.ArrayList;
+import static org.bukkit.Material.AIR;
+import static org.bukkit.entity.EntityType.HORSE;
+import static org.bukkit.entity.EntityType.VILLAGER;
+import static org.bukkit.event.entity.EntityDamageEvent.DamageCause.PROJECTILE;
+import static org.bukkit.inventory.EquipmentSlot.HAND;
+import static org.bukkit.potion.PotionEffectType.FAST_DIGGING;
+import static zedly.zenchantments.enums.Tool.BOW;
+
+import java.util.Collection;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+
 import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -15,34 +27,29 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
-import org.bukkit.event.entity.*;
+import org.bukkit.event.entity.EntityCombustByEntityEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.PotionSplashEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerShearEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
+
 import zedly.zenchantments.annotations.EffectTask;
 import zedly.zenchantments.enchantments.FrozenStep;
-import zedly.zenchantments.enchantments.Haste;
 import zedly.zenchantments.enchantments.NetherStep;
 import zedly.zenchantments.enums.Frequency;
 import zedly.zenchantments.enums.Tool;
-
-import java.util.Collection;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
-import org.apache.commons.lang3.tuple.Triple;
-
-import static org.bukkit.Material.AIR;
-import static org.bukkit.entity.EntityType.HORSE;
-import static org.bukkit.entity.EntityType.VILLAGER;
-import static org.bukkit.event.entity.EntityDamageEvent.DamageCause.PROJECTILE;
-import static org.bukkit.inventory.EquipmentSlot.HAND;
-import org.bukkit.potion.PotionEffectType;
-import static org.bukkit.potion.PotionEffectType.FAST_DIGGING;
-import static zedly.zenchantments.enums.Tool.BOW;
 
 // This is the watcher used by the CustomEnchantment class. Each method checks the enchantments on relevant items,
 //      ensures that the item is not an enchantment book, and calls each enchantment's method if the player can

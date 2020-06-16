@@ -3,12 +3,9 @@ package zedly.zenchantments.arrows.enchanted;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.potion.PotionEffectType;
 import zedly.zenchantments.Storage;
 import zedly.zenchantments.Utilities;
 import zedly.zenchantments.arrows.EnchantedArrow;
-
-import static org.bukkit.potion.PotionEffectType.*;
 
 public class PotionArrow extends EnchantedArrow {
 

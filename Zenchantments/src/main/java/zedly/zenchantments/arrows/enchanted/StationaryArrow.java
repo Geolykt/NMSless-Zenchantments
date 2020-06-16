@@ -5,7 +5,6 @@ import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityCombustByEntityEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import zedly.zenchantments.Storage;
-import zedly.zenchantments.Zenchantments;
 import zedly.zenchantments.arrows.EnchantedArrow;
 
 public class StationaryArrow extends EnchantedArrow {

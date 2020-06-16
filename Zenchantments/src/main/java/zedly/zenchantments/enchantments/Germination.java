@@ -6,7 +6,6 @@ import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 import zedly.zenchantments.CustomEnchantment;
 import zedly.zenchantments.Storage;
 import zedly.zenchantments.Utilities;

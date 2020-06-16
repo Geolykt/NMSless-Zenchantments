@@ -19,7 +19,6 @@ import java.util.Set;
 import static org.bukkit.Material.*;
 import static org.bukkit.entity.EntityType.EXPERIENCE_ORB;
 import org.bukkit.entity.Item;
-import org.bukkit.event.entity.ItemSpawnEvent;
 import static zedly.zenchantments.enums.Tool.*;
 
 public class Fire extends CustomEnchantment {

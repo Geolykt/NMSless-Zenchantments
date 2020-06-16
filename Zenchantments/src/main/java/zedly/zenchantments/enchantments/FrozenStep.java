@@ -1,10 +1,7 @@
 package zedly.zenchantments.enchantments;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.Levelled;
-import org.bukkit.block.data.Waterlogged;
 import org.bukkit.entity.Player;
 import zedly.zenchantments.CustomEnchantment;
 import zedly.zenchantments.enums.Hand;

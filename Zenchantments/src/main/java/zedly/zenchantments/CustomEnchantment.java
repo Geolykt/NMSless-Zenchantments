@@ -26,7 +26,6 @@ import java.util.function.Supplier;
 
 import static org.bukkit.Material.BOOK;
 import static org.bukkit.Material.ENCHANTED_BOOK;
-import org.bukkit.inventory.PlayerInventory;
 
 // CustomEnchantment is the defualt structure for any enchantment. Each enchantment below it will extend this class
 //      and will override any methods as neccecary in its behavior

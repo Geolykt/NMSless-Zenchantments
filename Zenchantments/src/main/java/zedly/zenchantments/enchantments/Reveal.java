@@ -1,7 +1,6 @@
 package zedly.zenchantments.enchantments;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -10,7 +9,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import zedly.zenchantments.CustomEnchantment;
 import zedly.zenchantments.Storage;
 import zedly.zenchantments.Utilities;
-import zedly.zenchantments.compatibility.NMS_1_14_R1;
 import zedly.zenchantments.enums.Hand;
 import zedly.zenchantments.enums.Tool;
 

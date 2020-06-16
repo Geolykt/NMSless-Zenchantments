@@ -1,7 +1,6 @@
 package zedly.zenchantments.enchantments;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockBreakEvent;
 import zedly.zenchantments.CustomEnchantment;
@@ -10,9 +9,7 @@ import zedly.zenchantments.enums.Hand;
 import zedly.zenchantments.enums.Tool;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import org.bukkit.entity.Player;
 
 import static zedly.zenchantments.enums.Tool.*;
