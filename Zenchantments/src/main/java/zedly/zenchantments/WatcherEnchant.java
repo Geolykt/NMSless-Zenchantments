@@ -104,62 +104,62 @@ public class WatcherEnchant implements Listener {
      */
     @EventHandler(ignoreCancelled = false)
     public void onBlockExplodeEvent(BlockExplodeEvent evt) {
-    	if (!apply_patch_explosion) {
-    		return;
-    	}
-    	for (Block block: evt.blockList()) {
-    		byte b = protectedBlockQuery(block, !patch_cancel_explosion && patch_cancel_netherstep, !patch_cancel_explosion && patch_cancel_frozenstep);
-    		if (b == 1 && patch_cancel_netherstep && patch_cancel_explosion) {
-    			evt.setCancelled(true);
-    		} else if (b == 2 && patch_cancel_frozenstep && patch_cancel_explosion) {
-    			evt.setCancelled(true);
-    		}
-    	}
+        if (!apply_patch_explosion) {
+            return;
+        }
+        for (Block block: evt.blockList()) {
+            byte b = protectedBlockQuery(block, !patch_cancel_explosion && patch_cancel_netherstep, !patch_cancel_explosion && patch_cancel_frozenstep);
+            if (b == 1 && patch_cancel_netherstep && patch_cancel_explosion) {
+                evt.setCancelled(true);
+            } else if (b == 2 && patch_cancel_frozenstep && patch_cancel_explosion) {
+                evt.setCancelled(true);
+            }
+        }
     }
     
     @EventHandler(ignoreCancelled = false)
     public void onEntityExplodeEvent(EntityExplodeEvent evt) {
-    	if (!apply_patch_explosion) {
-    		return;
-    	}
-    	for (Block block: evt.blockList()) {
-    		byte b = protectedBlockQuery(block, !patch_cancel_explosion && patch_cancel_netherstep, !patch_cancel_explosion && patch_cancel_frozenstep);
-    		if (b == 1 && patch_cancel_netherstep && patch_cancel_explosion) {
-    			evt.setCancelled(true);
-    		} else if (b == 2 && patch_cancel_frozenstep && patch_cancel_explosion) {
-    			evt.setCancelled(true);
-    		}
-    	}
+        if (!apply_patch_explosion) {
+            return;
+        }
+        for (Block block: evt.blockList()) {
+            byte b = protectedBlockQuery(block, !patch_cancel_explosion && patch_cancel_netherstep, !patch_cancel_explosion && patch_cancel_frozenstep);
+            if (b == 1 && patch_cancel_netherstep && patch_cancel_explosion) {
+                evt.setCancelled(true);
+            } else if (b == 2 && patch_cancel_frozenstep && patch_cancel_explosion) {
+                evt.setCancelled(true);
+            }
+        }
     }
     
     @EventHandler(ignoreCancelled = false)
     public void onBlockPistonExtendEvent(BlockPistonExtendEvent evt) {
-    	if (!apply_patch_piston) {
-    		return;
-    	}
-    	for (Block block: evt.getBlocks()) {
-    		byte b = protectedBlockQuery(block, !patch_cancel_netherstep, !patch_cancel_frozenstep);
-    		if (b == 1 && patch_cancel_netherstep) {
-    			evt.setCancelled(true);
-    		} else if (b == 2 && patch_cancel_frozenstep) {
-    			evt.setCancelled(true);
-    		}
-    	}
+        if (!apply_patch_piston) {
+            return;
+        }
+        for (Block block: evt.getBlocks()) {
+            byte b = protectedBlockQuery(block, !patch_cancel_netherstep, !patch_cancel_frozenstep);
+            if (b == 1 && patch_cancel_netherstep) {
+                evt.setCancelled(true);
+            } else if (b == 2 && patch_cancel_frozenstep) {
+                evt.setCancelled(true);
+            }
+        }
     }
     
     @EventHandler(ignoreCancelled = false)
     public void onBlockPistonRetractEvent(BlockPistonRetractEvent evt) {
-    	if (!apply_patch_piston) {
-    		return;
-    	}
-    	for (Block block: evt.getBlocks()) {
-    		byte b = protectedBlockQuery(block, !patch_cancel_netherstep, !patch_cancel_frozenstep);
-    		if (b == 1 && patch_cancel_netherstep) {
-    			evt.setCancelled(true);
-    		} else if (b == 2 && patch_cancel_frozenstep) {
-    			evt.setCancelled(true);
-    		}
-    	}
+        if (!apply_patch_piston) {
+            return;
+        }
+        for (Block block: evt.getBlocks()) {
+            byte b = protectedBlockQuery(block, !patch_cancel_netherstep, !patch_cancel_frozenstep);
+            if (b == 1 && patch_cancel_netherstep) {
+                evt.setCancelled(true);
+            } else if (b == 2 && patch_cancel_frozenstep) {
+                evt.setCancelled(true);
+            }
+        }
     }
     
     /**
@@ -177,36 +177,36 @@ public class WatcherEnchant implements Listener {
      * @author Geolykt
      */
     public byte protectedBlockQuery(Block block, boolean netherstep, boolean frozenstep) {
-    	if (Storage.COMPATIBILITY_ADAPTER.Ices().contains(block.getType())) {
-    		Location a = block.getLocation();
-        	for (Location b : FrozenStep.frozenLocs.keySet()) {
-            	if (a.getBlockX() == b.getBlockX()) {
-            		if (a.getBlockZ() == b.getBlockZ()) {
-            			if (a.getBlockY() == b.getBlockY()) {
-            	        	if (frozenstep) {
-            	        		FrozenStep.frozenLocs.remove(b);
-            	        	}
-            				return 2;
-            			}
-            		}
-            	}
-        	}
-    	} else if (block.getType() == Material.SOUL_SAND) {
-        	Location a = block.getLocation();
-        	for (Location b : NetherStep.netherstepLocs.keySet()) {
-            	if (a.getBlockX() == b.getBlockX()) {
-            		if (a.getBlockZ() == b.getBlockZ()) {
-            			if (a.getBlockY() == b.getBlockY()) {
-            	        	if (netherstep) {
-            	        		NetherStep.netherstepLocs.remove(b);
-            	        	}
-            				return 1;
-            			}
-            		}
-            	}
-        	}
-    	}
-    	return 0;
+        if (Storage.COMPATIBILITY_ADAPTER.Ices().contains(block.getType())) {
+            Location a = block.getLocation();
+            for (Location b : FrozenStep.frozenLocs.keySet()) {
+                if (a.getBlockX() == b.getBlockX()) {
+                    if (a.getBlockZ() == b.getBlockZ()) {
+                        if (a.getBlockY() == b.getBlockY()) {
+                            if (frozenstep) {
+                                FrozenStep.frozenLocs.remove(b);
+                            }
+                            return 2;
+                        }
+                    }
+                }
+            }
+        } else if (block.getType() == Material.SOUL_SAND) {
+            Location a = block.getLocation();
+            for (Location b : NetherStep.netherstepLocs.keySet()) {
+                if (a.getBlockX() == b.getBlockX()) {
+                    if (a.getBlockZ() == b.getBlockZ()) {
+                        if (a.getBlockY() == b.getBlockY()) {
+                            if (netherstep) {
+                                NetherStep.netherstepLocs.remove(b);
+                            }
+                            return 1;
+                        }
+                    }
+                }
+            }
+        }
+        return 0;
     }
     
     @EventHandler(ignoreCancelled = false)
