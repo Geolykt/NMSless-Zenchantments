@@ -61,11 +61,11 @@ public class WatcherEnchant implements Listener {
     private static final WatcherEnchant INSTANCE = new WatcherEnchant();
     private static final HighFrequencyRunnableCache cache = new HighFrequencyRunnableCache(WatcherEnchant::feedEnchCache, 5);
 
-    private static final boolean APPLY_PATCH_PISTON = true;
-    private static final boolean APPLY_PATCH_EXPLOSION = true;
-    private static final boolean PATCH_CANCEL_FROZENSTEP = true;
-    private static final boolean PATCH_CANCEL_NETHERSTEP = true;
-    private static final boolean PATCH_CANCEL_EXPLOSION = true;
+    protected static boolean apply_patch_piston = true;
+    protected static boolean apply_patch_explosion = true;
+    protected static boolean patch_cancel_frozenstep = true;
+    protected static boolean patch_cancel_netherstep = true;
+    protected static boolean patch_cancel_explosion = true;
     
     public static WatcherEnchant instance() {
         return INSTANCE;
@@ -104,14 +104,14 @@ public class WatcherEnchant implements Listener {
      */
     @EventHandler(ignoreCancelled = false)
     public void onBlockExplodeEvent(BlockExplodeEvent evt) {
-    	if (!APPLY_PATCH_EXPLOSION) {
+    	if (!apply_patch_explosion) {
     		return;
     	}
     	for (Block block: evt.blockList()) {
-    		byte b = protectedBlockQuery(block, !PATCH_CANCEL_EXPLOSION && PATCH_CANCEL_NETHERSTEP, !PATCH_CANCEL_EXPLOSION && PATCH_CANCEL_FROZENSTEP);
-    		if (b == 1 && PATCH_CANCEL_NETHERSTEP && PATCH_CANCEL_EXPLOSION) {
+    		byte b = protectedBlockQuery(block, !patch_cancel_explosion && patch_cancel_netherstep, !patch_cancel_explosion && patch_cancel_frozenstep);
+    		if (b == 1 && patch_cancel_netherstep && patch_cancel_explosion) {
     			evt.setCancelled(true);
-    		} else if (b == 2 && PATCH_CANCEL_FROZENSTEP && PATCH_CANCEL_EXPLOSION) {
+    		} else if (b == 2 && patch_cancel_frozenstep && patch_cancel_explosion) {
     			evt.setCancelled(true);
     		}
     	}
@@ -119,14 +119,14 @@ public class WatcherEnchant implements Listener {
     
     @EventHandler(ignoreCancelled = false)
     public void onEntityExplodeEvent(EntityExplodeEvent evt) {
-    	if (!APPLY_PATCH_EXPLOSION) {
+    	if (!apply_patch_explosion) {
     		return;
     	}
     	for (Block block: evt.blockList()) {
-    		byte b = protectedBlockQuery(block, !PATCH_CANCEL_EXPLOSION && PATCH_CANCEL_NETHERSTEP, !PATCH_CANCEL_EXPLOSION && PATCH_CANCEL_FROZENSTEP);
-    		if (b == 1 && PATCH_CANCEL_NETHERSTEP && PATCH_CANCEL_EXPLOSION) {
+    		byte b = protectedBlockQuery(block, !patch_cancel_explosion && patch_cancel_netherstep, !patch_cancel_explosion && patch_cancel_frozenstep);
+    		if (b == 1 && patch_cancel_netherstep && patch_cancel_explosion) {
     			evt.setCancelled(true);
-    		} else if (b == 2 && PATCH_CANCEL_FROZENSTEP && PATCH_CANCEL_EXPLOSION) {
+    		} else if (b == 2 && patch_cancel_frozenstep && patch_cancel_explosion) {
     			evt.setCancelled(true);
     		}
     	}
@@ -134,14 +134,14 @@ public class WatcherEnchant implements Listener {
     
     @EventHandler(ignoreCancelled = false)
     public void onBlockPistonExtendEvent(BlockPistonExtendEvent evt) {
-    	if (!APPLY_PATCH_PISTON) {
+    	if (!apply_patch_piston) {
     		return;
     	}
     	for (Block block: evt.getBlocks()) {
-    		byte b = protectedBlockQuery(block, !PATCH_CANCEL_NETHERSTEP, !PATCH_CANCEL_FROZENSTEP);
-    		if (b == 1 && PATCH_CANCEL_NETHERSTEP) {
+    		byte b = protectedBlockQuery(block, !patch_cancel_netherstep, !patch_cancel_frozenstep);
+    		if (b == 1 && patch_cancel_netherstep) {
     			evt.setCancelled(true);
-    		} else if (b == 2 && PATCH_CANCEL_FROZENSTEP) {
+    		} else if (b == 2 && patch_cancel_frozenstep) {
     			evt.setCancelled(true);
     		}
     	}
@@ -149,14 +149,14 @@ public class WatcherEnchant implements Listener {
     
     @EventHandler(ignoreCancelled = false)
     public void onBlockPistonRetractEvent(BlockPistonRetractEvent evt) {
-    	if (!APPLY_PATCH_PISTON) {
+    	if (!apply_patch_piston) {
     		return;
     	}
     	for (Block block: evt.getBlocks()) {
-    		byte b = protectedBlockQuery(block, !PATCH_CANCEL_NETHERSTEP, !PATCH_CANCEL_FROZENSTEP);
-    		if (b == 1 && PATCH_CANCEL_NETHERSTEP) {
+    		byte b = protectedBlockQuery(block, !patch_cancel_netherstep, !patch_cancel_frozenstep);
+    		if (b == 1 && patch_cancel_netherstep) {
     			evt.setCancelled(true);
-    		} else if (b == 2 && PATCH_CANCEL_FROZENSTEP) {
+    		} else if (b == 2 && patch_cancel_frozenstep) {
     			evt.setCancelled(true);
     		}
     	}
