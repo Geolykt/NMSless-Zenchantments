@@ -1,0 +1,8 @@
+piston:
+  enable: true
+explosion:
+  enable: true
+  removeBlocksInsteadOfCancel: false
+patch_ench_protect:
+  netherstep_removeBlocksInsteadOfCancel: false
+  frozenstep_removeBlocksInsteadOfCancel: false

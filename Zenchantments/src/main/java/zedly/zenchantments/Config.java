@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import zedly.zenchantments.enums.Tool;
 
@@ -138,6 +139,16 @@ public class Config {
         for (World world : Bukkit.getWorlds()) {
             Config.CONFIGS.put(world, getWorldConfig(world));
         }
+        File patchFile = new File(Storage.zenchantments.getDataFolder(), "patches.yml");
+        if (!patchFile.exists()) {
+            Storage.zenchantments.saveResource("patches.yml", false);
+        }
+        FileConfiguration patchCFG = YamlConfiguration.loadConfiguration(patchFile);
+        WatcherEnchant.apply_patch_explosion = patchCFG.getBoolean("explosion.enable", true);
+        WatcherEnchant.apply_patch_piston = patchCFG.getBoolean("piston.enable", true);
+        WatcherEnchant.patch_cancel_explosion = !patchCFG.getBoolean("explosion.removeBlocksInsteadOfCancel", false);
+        WatcherEnchant.patch_cancel_netherstep = !patchCFG.getBoolean("patch_ench_protect.netherstep_removeBlocksInsteadOfCancel", false);
+        WatcherEnchant.patch_cancel_frozenstep = !patchCFG.getBoolean("patch_ench_protect.frozenstep_removeBlocksInsteadOfCancel", false);
     }
 
     public static Config getWorldConfig (World world) {
