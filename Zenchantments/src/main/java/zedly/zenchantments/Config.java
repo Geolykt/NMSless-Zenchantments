@@ -24,8 +24,8 @@ public class Config {
     public static final HashSet<CustomEnchantment> allEnchants = new HashSet<>();
 
     private final Set<CustomEnchantment> worldEnchants;     // Set of active Custom Enchantments
-	private final Map<String, CustomEnchantment> nameToEnch;
-	private final Map<Integer, CustomEnchantment> idToEnch;
+    private final Map<String, CustomEnchantment> nameToEnch;
+    private final Map<Integer, CustomEnchantment> idToEnch;
     private final double enchantRarity;                        // Overall rarity of obtaining enchantments
     private final int maxEnchants;                             // Max number of Custom Enchantments on a tool
     private final int shredDrops;                              // The setting (all, block, none) for shred drops
@@ -33,15 +33,15 @@ public class Config {
     private final boolean descriptionLore;                     // Determines if description lore appears on tools
     private final ChatColor descriptionColor;                  // The color of the description lore
     private final World world;                                 // The World associated with the config
-	private final boolean enchantGlow;
-	private final ChatColor enchantmentColor;
-	private final ChatColor curseColor;
+    private final boolean enchantGlow;
+    private final ChatColor enchantmentColor;
+    private final ChatColor curseColor;
 
     // Constructs a new config object
     public Config(Set<CustomEnchantment> worldEnchants, double enchantRarity,
             int maxEnchants, int shredDrops, boolean explosionBlockBreak,
             boolean descriptionLore, ChatColor descriptionColor, ChatColor enchantmentColor,
-	        ChatColor curseColor, boolean enchantGlow, World world) {
+            ChatColor curseColor, boolean enchantGlow, World world) {
         this.worldEnchants = worldEnchants;
         this.enchantRarity = enchantRarity;
         this.maxEnchants = maxEnchants;

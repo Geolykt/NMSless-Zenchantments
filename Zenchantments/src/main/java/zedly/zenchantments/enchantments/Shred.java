@@ -73,6 +73,7 @@ public class Shred extends CustomEnchantment {
                     } else if (Storage.COMPATIBILITY_ADAPTER.Ores().contains(relativeBlock.getType())) {
                         relativeBlock.setType(STONE);
                     }
+                    //TODO Why run this twice?
                     WatcherEnchant.instance().onBlockShred(relativeEvent);
                     if (relativeEvent.isCancelled()) {
                         return;

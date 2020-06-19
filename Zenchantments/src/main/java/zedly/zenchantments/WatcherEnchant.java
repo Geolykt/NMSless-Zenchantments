@@ -78,10 +78,9 @@ public class WatcherEnchant implements Listener {
     public void onBlockBreak(BlockBreakEvent evt) {
         if (!evt.isCancelled() && !(evt instanceof BlockShredEvent) && evt.getBlock().getType() != AIR) {
             Player player = evt.getPlayer();
-            boolean usedHand = Utilities.isMainHand(HAND);
-            ItemStack usedStack = Utilities.usedStack(player, usedHand);
+            ItemStack usedStack = Utilities.usedStack(player, true);
             CustomEnchantment.applyForTool(player, usedStack, (ench, level) -> {
-                return ench.onBlockBreak(evt, level, usedHand);
+                return ench.onBlockBreak(evt, level, true);
             });
         }
     }
@@ -90,10 +89,9 @@ public class WatcherEnchant implements Listener {
     public void onBlockShred(BlockShredEvent evt) {
         if (!evt.isCancelled() && evt.getBlock().getType() != AIR) {
             Player player = evt.getPlayer();
-            boolean usedHand = Utilities.isMainHand(HAND);
-            ItemStack usedStack = Utilities.usedStack(player, usedHand);
+            ItemStack usedStack = Utilities.usedStack(player, true);
             CustomEnchantment.applyForTool(player, usedStack, (ench, level) -> {
-                return ench.onBlockBreak(evt, level, usedHand);
+                return ench.onBlockBreak(evt, level, true);
             });
         }
     }
