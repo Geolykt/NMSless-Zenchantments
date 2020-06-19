@@ -8,6 +8,8 @@ import org.bukkit.World;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+
+import zedly.zenchantments.enchantments.Spectral;
 import zedly.zenchantments.enums.Tool;
 
 import java.io.File;
@@ -53,17 +55,17 @@ public class Config {
 
         this.nameToEnch = new HashMap<>();
         for (CustomEnchantment ench : this.worldEnchants) {
-	        nameToEnch.put(ChatColor.stripColor(ench.getLoreName().toLowerCase().replace(" ", "")), ench);
+            nameToEnch.put(ChatColor.stripColor(ench.getLoreName().toLowerCase().replace(" ", "")), ench);
         }
 
-	    this.idToEnch = new HashMap<>();
-	    for (CustomEnchantment ench : this.worldEnchants) {
-		    idToEnch.put(ench.getId(), ench);
-	    }
+        this.idToEnch = new HashMap<>();
+        for (CustomEnchantment ench : this.worldEnchants) {
+            idToEnch.put(ench.getId(), ench);
+        }
 
-	    this.enchantGlow = enchantGlow;
-	    this.enchantmentColor = enchantmentColor;
-	    this.curseColor = curseColor;
+        this.enchantGlow = enchantGlow;
+        this.enchantmentColor = enchantmentColor;
+        this.curseColor = curseColor;
 
         allEnchants.addAll(worldEnchants);
     }
@@ -118,7 +120,7 @@ public class Config {
     }
 
     public CustomEnchantment enchantFromString(String enchName) {
-    	return nameToEnch.get(ChatColor.stripColor(enchName.toLowerCase()));
+        return nameToEnch.get(ChatColor.stripColor(enchName.toLowerCase()));
     }
 
     public List<String> getEnchantNames() {
@@ -130,7 +132,7 @@ public class Config {
     }
 
     public CustomEnchantment enchantFromID(int id) {
-    	return idToEnch.get(id);
+        return idToEnch.get(id);
     }
 
     // Loads, parses, and auto updates the config file, creating a new config for each map 
@@ -149,6 +151,7 @@ public class Config {
         WatcherEnchant.patch_cancel_explosion = !patchCFG.getBoolean("explosion.removeBlocksInsteadOfCancel", false);
         WatcherEnchant.patch_cancel_netherstep = !patchCFG.getBoolean("patch_ench_protect.netherstep_removeBlocksInsteadOfCancel", false);
         WatcherEnchant.patch_cancel_frozenstep = !patchCFG.getBoolean("patch_ench_protect.frozenstep_removeBlocksInsteadOfCancel", false);
+        Spectral.performWorldProtection = patchCFG.getBoolean("worldProtection.spectral", true);
     }
 
     public static Config getWorldConfig (World world) {

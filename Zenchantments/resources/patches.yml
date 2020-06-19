@@ -6,3 +6,5 @@ explosion:
 patch_ench_protect:
   netherstep_removeBlocksInsteadOfCancel: false
   frozenstep_removeBlocksInsteadOfCancel: false
+worldProtection:
+  spectral: true
