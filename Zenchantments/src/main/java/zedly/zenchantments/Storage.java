@@ -46,11 +46,11 @@ public class Storage {
         System.out.println("Zenchantments: Detected NMS version \"" + nmsVersionString + "\"");
         switch (nmsVersionString) {
             //case "v1_13_R1":
-            //	COMPATIBILITY_ADAPTER = NMS_1_13_R1.getInstance();
-            //	break;
+            //    COMPATIBILITY_ADAPTER = NMS_1_13_R1.getInstance();
+            //    break;
             //case "v1_13_R2":
-            //	COMPATIBILITY_ADAPTER = NMS_1_13_R2.getInstance();
-            //	break;
+            //    COMPATIBILITY_ADAPTER = NMS_1_13_R2.getInstance();
+            //    break;
             case "v1_14_R1":
                 COMPATIBILITY_ADAPTER = NMS_1_14_R1.getInstance();
                 break;

@@ -8,15 +8,15 @@ import java.util.List;
 
 public class QuickArrow extends EnchantedArrow {
 
-	public QuickArrow(Arrow entity) {
-		super(entity);
-	}
+    public QuickArrow(Arrow entity) {
+        super(entity);
+    }
 
-	public void onLaunch(LivingEntity player, List<String> lore) {
-		arrow.setVelocity(arrow.getVelocity().normalize().multiply(3.5f));
-	}
+    public void onLaunch(LivingEntity player, List<String> lore) {
+        arrow.setVelocity(arrow.getVelocity().normalize().multiply(3.5f));
+    }
 
-	public void onImpact() {
-	}
+    public void onImpact() {
+    }
 
 }

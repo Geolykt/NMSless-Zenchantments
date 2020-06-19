@@ -19,8 +19,8 @@ import static zedly.zenchantments.enums.Tool.PICKAXE;
 
 public class Reveal extends CustomEnchantment {
 
-	// Blocks made to glow by the Reveal enchantment
-	public static final Map<Block, Integer> glowingBlocks = new HashMap<>();
+    // Blocks made to glow by the Reveal enchantment
+    public static final Map<Block, Integer> glowingBlocks = new HashMap<>();
     public static final int ID = 68;
 
     @Override

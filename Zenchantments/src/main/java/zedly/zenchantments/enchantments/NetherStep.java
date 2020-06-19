@@ -19,56 +19,56 @@ import static zedly.zenchantments.enums.Tool.BOOTS;
 
 public class NetherStep extends CustomEnchantment {
 
-	// Blocks spawned from the NatherStep enchantment
-	public static final Map<Location, Long> netherstepLocs = new HashMap<>();
-	public static final int                 ID             = 39;
+    // Blocks spawned from the NatherStep enchantment
+    public static final Map<Location, Long> netherstepLocs = new HashMap<>();
+    public static final int                 ID             = 39;
 
-	@Override
-	public Builder<NetherStep> defaults() {
-		return new Builder<>(NetherStep::new, ID)
-			.maxLevel(3)
-			.loreName("Nether Step")
-			.probability(0)
-			.enchantable(new Tool[]{BOOTS})
-			.conflicting(new Class[]{FrozenStep.class})
-			.description("Allows the player to slowly but safely walk on lava")
-			.cooldown(0)
-			.power(1.0)
-			.handUse(Hand.NONE);
-	}
+    @Override
+    public Builder<NetherStep> defaults() {
+        return new Builder<>(NetherStep::new, ID)
+            .maxLevel(3)
+            .loreName("Nether Step")
+            .probability(0)
+            .enchantable(new Tool[]{BOOTS})
+            .conflicting(new Class[]{FrozenStep.class})
+            .description("Allows the player to slowly but safely walk on lava")
+            .cooldown(0)
+            .power(1.0)
+            .handUse(Hand.NONE);
+    }
 
-	@Override
-	public boolean onScan(Player player, int level, boolean usedHand) {
-		if (player.isSneaking() && player.getLocation().getBlock().getType() == LAVA &&
-			!player.isFlying()) {
-			player.setVelocity(player.getVelocity().setY(.4));
-		}
-		Block block = player.getLocation().add(0, 0.2, 0).getBlock();
-		int radius = (int) Math.round(power * level + 2);
+    @Override
+    public boolean onScan(Player player, int level, boolean usedHand) {
+        if (player.isSneaking() && player.getLocation().getBlock().getType() == LAVA &&
+            !player.isFlying()) {
+            player.setVelocity(player.getVelocity().setY(.4));
+        }
+        Block block = player.getLocation().add(0, 0.2, 0).getBlock();
+        int radius = (int) Math.round(power * level + 2);
 
-		selfRemovingArea(SOUL_SAND, LAVA, radius, block, player, netherstepLocs);
+        selfRemovingArea(SOUL_SAND, LAVA, radius, block, player, netherstepLocs);
 
-		return true;
-	}
+        return true;
+    }
 
-	@EffectTask(Frequency.MEDIUM_HIGH)
-	// Removes the blocks from NetherStep and FrozenStep after a peroid of time
-	public static void updateBlocks() {
-		Iterator it = FrozenStep.frozenLocs.keySet().iterator();
-		while (it.hasNext()) {
-			Location location = (Location) it.next();
-			if (Math.abs(System.nanoTime() - FrozenStep.frozenLocs.get(location)) > 9E8) {
-				location.getBlock().setType(WATER);
-				it.remove();
-			}
-		}
-		it = netherstepLocs.keySet().iterator();
-		while (it.hasNext()) {
-			Location location = (Location) it.next();
-			if (Math.abs(System.nanoTime() - netherstepLocs.get(location)) > 9E8) {
-				location.getBlock().setType(LAVA);
-				it.remove();
-			}
-		}
-	}
+    @EffectTask(Frequency.MEDIUM_HIGH)
+    // Removes the blocks from NetherStep and FrozenStep after a peroid of time
+    public static void updateBlocks() {
+        Iterator it = FrozenStep.frozenLocs.keySet().iterator();
+        while (it.hasNext()) {
+            Location location = (Location) it.next();
+            if (Math.abs(System.nanoTime() - FrozenStep.frozenLocs.get(location)) > 9E8) {
+                location.getBlock().setType(WATER);
+                it.remove();
+            }
+        }
+        it = netherstepLocs.keySet().iterator();
+        while (it.hasNext()) {
+            Location location = (Location) it.next();
+            if (Math.abs(System.nanoTime() - netherstepLocs.get(location)) > 9E8) {
+                location.getBlock().setType(LAVA);
+                it.remove();
+            }
+        }
+    }
 }
