@@ -54,16 +54,16 @@ public class Anthropomorphism extends CustomEnchantment {
     @EffectTask(Frequency.MEDIUM_HIGH)
     // Removes Anthropomorphism blocks when they are dead
     public static void removeCheck() {
-        Iterator it = idleBlocks.keySet().iterator();
+        Iterator<FallingBlock> it = idleBlocks.keySet().iterator();
         while (it.hasNext()) {
-            FallingBlock b = (FallingBlock) it.next();
+            FallingBlock b = it.next();
             if (b.isDead()) {
                 it.remove();
             }
         }
         it = attackBlocks.keySet().iterator();
         while (it.hasNext()) {
-            FallingBlock b = (FallingBlock) it.next();
+            FallingBlock b = it.next();
             if (b.isDead()) {
                 it.remove();
             }

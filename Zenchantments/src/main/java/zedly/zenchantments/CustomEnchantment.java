@@ -38,7 +38,7 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
     protected String loreName;      // Name the given enchantment will appear as; with &7 (Gray) color
     protected float probability;    // Relative probability of obtaining the given enchantment
     protected Tool[] enchantable;   // Enums that represent tools that can receive and work with given enchantment
-    protected Class[] conflicting;  // Classes of enchantments that don't work with given enchantment
+    protected Class<CustomEnchantment>[] conflicting;  // Classes of enchantments that don't work with given enchantment
     protected String description;   // Description of what the enchantment does
     protected int cooldown;         // Cooldown for given enchantment given in ticks; Default is 0
     protected double power;         // Power multiplier for the enchantment's effects; Default is 0; -1 means no
@@ -166,11 +166,11 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
         this.enchantable = enchantable;
     }
 
-    Class[] getConflicting() {
+    Class<CustomEnchantment>[] getConflicting() {
         return conflicting;
     }
 
-    void setConflicting(Class[] conflicting) {
+    void setConflicting(Class<CustomEnchantment>[] conflicting) {
         this.conflicting = conflicting;
     }
 
@@ -605,12 +605,12 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
             return customEnchantment.getEnchantable();
         }
 
-        public Builder<T> conflicting(Class[] conflicting) {
+        public Builder<T> conflicting(Class<CustomEnchantment>[] conflicting) {
             customEnchantment.setConflicting(conflicting);
             return this;
         }
 
-        public Class[] conflicting() {
+        public Class<CustomEnchantment>[] conflicting() {
             return customEnchantment.getConflicting();
         }
 

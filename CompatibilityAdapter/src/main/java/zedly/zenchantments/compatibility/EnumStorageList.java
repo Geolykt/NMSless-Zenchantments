@@ -29,11 +29,11 @@ public class EnumStorageList<T> extends EnumStorage<T> {
 		return Collections.disjoint(enumStorage.enums, enums);
 	}
 
-	public List getEnumList() {
+	public List<T> getEnumList() {
 		return Collections.unmodifiableList(enums);
 	}
 
-	public Set getEnumSet() { return new HashSet(enums); }
+	public Set<T> getEnumSet() { return new HashSet<T>(enums); }
 
 	public int indexOf(T t) {
 		for (int i = 0; i < enumArray.length; i++) {

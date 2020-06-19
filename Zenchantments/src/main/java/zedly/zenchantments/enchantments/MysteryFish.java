@@ -44,6 +44,7 @@ public class MysteryFish extends CustomEnchantment {
         if (Storage.rnd.nextInt(10) < level * power) {
             if (evt.getCaught() != null) {
                 Location location = evt.getCaught().getLocation();
+                //TODO is the reference required? Test that!
                 final Entity ent;
                 if (Storage.rnd.nextBoolean()) {
                     ent = evt.getPlayer().getWorld().spawnEntity(location, SQUID);
@@ -60,7 +61,7 @@ public class MysteryFish extends CustomEnchantment {
     // Move Guardians from MysteryFish towards the player
     @EffectTask(Frequency.HIGH)
     public static void guardian() {
-        Iterator it = guardianMove.keySet().iterator();
+        Iterator<Entity> it = guardianMove.keySet().iterator();
         while (it.hasNext()) {
             Guardian g = (Guardian) it.next();
             if (g.getLocation().distance(guardianMove.get(g).getLocation()) > 2 && g.getTicksLived() < 160) {

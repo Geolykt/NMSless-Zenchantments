@@ -39,11 +39,11 @@ public class EnumStorage<T> {
 		return Collections.disjoint(enumStorage.enums, enums);
 	}
 
-	public List getEnumList() {
-		return new ArrayList(enums);
+	public List<T> getEnumList() {
+		return new ArrayList<T>(enums);
 	}
 
-	public Set getEnumSet() {
+	public Set<T> getEnumSet() {
 		return Collections.unmodifiableSet(enums);
 	}
 

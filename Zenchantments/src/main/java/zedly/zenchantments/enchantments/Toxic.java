@@ -73,7 +73,7 @@ public class Toxic extends CustomEnchantment {
     @EffectTask(Frequency.HIGH)
     // Manages time left for players affected by Toxic enchantment
     public static void hunger() {
-        Iterator it = hungerPlayers.keySet().iterator();
+        Iterator<Player> it = hungerPlayers.keySet().iterator();
         while (it.hasNext()) {
             Player player = (Player) it.next();
             if (hungerPlayers.get(player) < 1) {
