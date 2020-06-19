@@ -35,6 +35,7 @@ public class CommandProcessor {
                 case "reload":
                 case "list":
                 case "help":
+                case "version":
                     break;
                 case "give":
                     if (args.length == 2) {
@@ -383,9 +384,16 @@ public class CommandProcessor {
                     + "Disables selected enchantment for the user");
             player.sendMessage(ChatColor.DARK_AQUA + "- " + "ench enable <enchantment/all>: " + ChatColor.AQUA
                     + "Enables selected enchantment for the user");
+            player.sendMessage(ChatColor.DARK_AQUA + "- " + "ench version: " + ChatColor.AQUA
+                    + "Shows the version the plugin runs on.");
             return true;
         }
         return false;
+    }
+
+    private static boolean versionInfo(EnchantPlayer player) {
+        player.sendMessage("Using Zenchantments " + Storage.version + ". This server utilises the dev-geolykt fork of Zenchantments, so issues should be reported to Geolykt (mail@geolykt.de), not to Zedly.");
+        return true;
     }
 
     // Control flow for the command processor
@@ -413,6 +421,8 @@ public class CommandProcessor {
                     return disable(player, config, args);
                 case "enable":
                     return enable(player, config, args);
+                case "version":
+                    return versionInfo(player);
                 case "help":
                 default:
                     return helpEnchantment(sender, label) || enchant(player, config, args, label, stack);
