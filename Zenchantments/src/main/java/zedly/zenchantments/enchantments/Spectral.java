@@ -9,7 +9,6 @@ import org.bukkit.block.data.type.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import zedly.zenchantments.BlockShredEvent;
 import zedly.zenchantments.CustomEnchantment;
 import zedly.zenchantments.Storage;
 import zedly.zenchantments.Utilities;
