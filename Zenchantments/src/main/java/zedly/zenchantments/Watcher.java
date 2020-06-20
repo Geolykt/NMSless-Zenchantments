@@ -300,6 +300,7 @@ public class Watcher implements Listener {
     }
 
     // Prevents arrows with the 'ze.arrow' metadata from being able to be picked up by removing them
+    @SuppressWarnings("deprecation")
     @EventHandler
     public void onArrowPickup(PlayerPickupArrowEvent evt) {
         if (evt.getItem().hasMetadata("ze.arrow")) {

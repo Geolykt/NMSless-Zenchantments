@@ -144,8 +144,7 @@ public class Fire extends CustomEnchantment {
             return true;
         }
         if (mat != AIR) {
-            Item item = evt.getBlock().getWorld().dropItemNaturally(evt.getBlock().getLocation(), new ItemStack((mat), 1));
-            
+            evt.getBlock().getWorld().dropItemNaturally(evt.getBlock().getLocation(), new ItemStack((mat), 1));
 
             Utilities.display(Utilities.getCenter(evt.getBlock()), Particle.FLAME, 10, .1f, .5f, .5f, .5f);
             Block affectedBlock = evt.getBlock();

@@ -55,11 +55,9 @@ public class Glide extends CustomEnchantment {
             b = true;
         }
         if (!b) {
-            double sinPitch = Math.sin(Math.toRadians(player.getLocation().getPitch()));
             double cosPitch = Math.cos(Math.toRadians(player.getLocation().getPitch()));
             double sinYaw = Math.sin(Math.toRadians(player.getLocation().getYaw()));
             double cosYaw = Math.cos(Math.toRadians(player.getLocation().getYaw()));
-            double y = -1 * (sinPitch);
             Vector v = new Vector(-cosPitch * sinYaw, 0, -1 * (-cosPitch * cosYaw));
             v.multiply(level * power / 2);
             v.setY(-1);

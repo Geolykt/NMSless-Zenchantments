@@ -421,13 +421,6 @@ public class WatcherEnchant implements Listener {
         }
     }
 
-    // Sets player fly and walk speed to default after certain enchantments are removed
-    static void speedPlayers(boolean clearAll) {
-        long currentTime = System.currentTimeMillis();
-        for (Player player : Bukkit.getOnlinePlayers()) {
-        }
-    }
-
     @EffectTask(Frequency.HIGH) // Fast Scan of Player's Armor and their hand to register enchantments
     public static void scanPlayers() {
         for (Player player : Bukkit.getOnlinePlayers()) {

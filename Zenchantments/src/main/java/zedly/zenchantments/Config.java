@@ -165,6 +165,7 @@ public class Config {
                     FileOutputStream fos = new FileOutputStream(file);
                     fos.write(b, 0, b.length);
                     fos.flush();
+                    fos.close();
                 } catch (IOException e) {
                     System.err.println("Error loading config");
                 }

@@ -42,16 +42,14 @@ public class MysteryFish extends CustomEnchantment {
     @Override
     public boolean onPlayerFish(final PlayerFishEvent evt, int level, boolean usedHand) {
         if (Storage.rnd.nextInt(10) < level * power) {
+            //TODO also spawn fish
             if (evt.getCaught() != null) {
                 Location location = evt.getCaught().getLocation();
-                //TODO is the reference required? Test that!
-                final Entity ent;
                 if (Storage.rnd.nextBoolean()) {
-                    ent = evt.getPlayer().getWorld().spawnEntity(location, SQUID);
+                    evt.getPlayer().getWorld().spawnEntity(location, SQUID);
                 } else {
-                    Entity g = Storage.COMPATIBILITY_ADAPTER.spawnGuardian(location, Storage.rnd.nextBoolean());
+                    final Entity g = Storage.COMPATIBILITY_ADAPTER.spawnGuardian(location, Storage.rnd.nextBoolean());
                     guardianMove.put(g, evt.getPlayer());
-                    ent = g;
                 }
             }
         }

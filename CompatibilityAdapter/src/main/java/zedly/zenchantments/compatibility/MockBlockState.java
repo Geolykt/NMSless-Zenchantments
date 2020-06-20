@@ -20,6 +20,7 @@ import org.bukkit.plugin.Plugin;
 /**
  * Wrapper class for firing more accurate events
  */
+@SuppressWarnings("deprecation")
 public class MockBlockState implements BlockState {
 
     private final Block block;
@@ -38,6 +39,7 @@ public class MockBlockState implements BlockState {
     }
 
     @Override
+    @Deprecated
     public MaterialData getData() {
         return newType.getNewData(newData);
     }
@@ -88,6 +90,7 @@ public class MockBlockState implements BlockState {
     }
 
     @Override
+    @Deprecated
     public void setData(MaterialData md) {
         block.getState().setData(md);
     }
@@ -126,6 +129,7 @@ public class MockBlockState implements BlockState {
         return block.getState().getRawData();
     }
 
+    @Deprecated
     @Override
     public void setRawData(byte b) {
         block.getState().setRawData(b);

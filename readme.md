@@ -21,4 +21,6 @@ Anyone is free to contribute to this repository, however keep in mind that this 
 	<li>Patched a bug where blue ice blocks and soulsand blocks placed by the frozenstep and netherstep enchantemnts can be moved or removed; can be toggled</li>
 	<li>Patched a bug where the fire enchantment would work even when the player shouldn't be able to destroy a block</li>
 	<li>Patched a bug which would result in the abillity of changing blockstates in protected regions, for example via Towny or World guard; can be toggled</li>
+	<li>Removed unused variables and methods</li>
+	<li>General reduction of warnings <b>*ahem*</b></li>
 </ul>

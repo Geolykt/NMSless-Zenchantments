@@ -1245,7 +1245,7 @@ public class CompatibilityAdapter {
 
                     // TODO: Apply damage to tool
                 } else if (target instanceof MushroomCow) {
-                    MushroomCow cow = (MushroomCow) target;
+                    //MushroomCow cow = (MushroomCow) target;
                     // TODO: DO
                 }
                 return true;
@@ -1417,6 +1417,7 @@ public class CompatibilityAdapter {
         return false;
     }
 
+    @SuppressWarnings("deprecation")
     public boolean pickBerries(Block berryBlock, Player player) {
         BlockData data = berryBlock.getBlockData();
         Ageable a = (Ageable) data;

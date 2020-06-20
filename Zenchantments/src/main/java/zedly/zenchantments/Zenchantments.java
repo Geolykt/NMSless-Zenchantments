@@ -33,7 +33,6 @@ public class Zenchantments extends JavaPlugin {
 
     // Sets blocks to their natural states at shutdown
     public void onDisable() {
-        WatcherEnchant.speedPlayers(true);
         getServer().getScheduler().cancelTasks(this);
         for (Location l : FrozenStep.frozenLocs.keySet()) {
             l.getBlock().setType(WATER);
