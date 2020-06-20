@@ -11,11 +11,11 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
 import zedly.zenchantments.CustomEnchantment;
 import zedly.zenchantments.Storage;
-import zedly.zenchantments.Utilities;
 import zedly.zenchantments.annotations.EffectTask;
 import zedly.zenchantments.enums.Frequency;
 import zedly.zenchantments.enums.Hand;
 import zedly.zenchantments.enums.Tool;
+import zedly.zenchantments.util.Utilities;
 
 import java.util.*;
 

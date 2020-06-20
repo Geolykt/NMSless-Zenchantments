@@ -19,6 +19,7 @@ import zedly.zenchantments.compatibility.CompatibilityAdapter;
 import zedly.zenchantments.enchantments.*;
 import zedly.zenchantments.enums.Hand;
 import zedly.zenchantments.enums.Tool;
+import zedly.zenchantments.util.Utilities;
 
 import java.util.*;
 import java.util.function.BiPredicate;
@@ -134,7 +135,7 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
 
     //endregion
     //region Getters and Setters
-    int getMaxLevel() {
+    public int getMaxLevel() {
         return maxLevel;
     }
 
@@ -150,7 +151,7 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
         this.loreName = loreName;
     }
 
-    float getProbability() {
+    public float getProbability() {
         return probability;
     }
 
@@ -166,7 +167,7 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
         this.enchantable = enchantable;
     }
 
-    Set<Class<? extends CustomEnchantment>> getConflicting() {
+    public Set<Class<? extends CustomEnchantment>> getConflicting() {
         return conflicting;
     }
 
@@ -189,7 +190,7 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
         this.description = description;
     }
 
-    int getCooldown() {
+    public int getCooldown() {
         return cooldown;
     }
 
@@ -197,7 +198,7 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
         this.cooldown = cooldown;
     }
 
-    double getPower() {
+    public double getPower() {
         return power;
     }
 
@@ -213,7 +214,7 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
         this.handUse = handUse;
     }
 
-    int getId() {
+    public int getId() {
         return id;
     }
 

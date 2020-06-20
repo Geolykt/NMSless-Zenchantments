@@ -11,8 +11,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import zedly.zenchantments.Config;
 import zedly.zenchantments.Storage;
-import zedly.zenchantments.Utilities;
 import zedly.zenchantments.arrows.EnchantedArrow;
+import zedly.zenchantments.util.Utilities;
 
 import static org.bukkit.Material.AIR;
 import static org.bukkit.Material.TNT;

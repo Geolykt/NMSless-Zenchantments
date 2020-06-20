@@ -5,11 +5,11 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import zedly.zenchantments.CustomEnchantment;
-import zedly.zenchantments.Utilities;
 import zedly.zenchantments.arrows.EnchantedArrow;
 import zedly.zenchantments.arrows.admin.MissileArrow;
 import zedly.zenchantments.enums.Hand;
 import zedly.zenchantments.enums.Tool;
+import zedly.zenchantments.util.Utilities;
 
 import static zedly.zenchantments.enums.Tool.BOW;
 

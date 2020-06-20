@@ -11,6 +11,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import zedly.zenchantments.enchantments.*;
 import zedly.zenchantments.enums.Frequency;
+import zedly.zenchantments.evt.Watcher;
+import zedly.zenchantments.evt.WatcherArrow;
+import zedly.zenchantments.evt.WatcherEnchant;
 
 import java.io.File;
 import java.util.Map;

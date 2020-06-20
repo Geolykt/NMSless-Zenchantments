@@ -8,9 +8,9 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import zedly.zenchantments.CustomEnchantment;
 import zedly.zenchantments.Storage;
-import zedly.zenchantments.Utilities;
 import zedly.zenchantments.enums.Hand;
 import zedly.zenchantments.enums.Tool;
+import zedly.zenchantments.util.Utilities;
 
 import java.util.HashMap;
 import java.util.Map;

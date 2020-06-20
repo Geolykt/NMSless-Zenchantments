@@ -11,8 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.bukkit.Material.*;
-import static zedly.zenchantments.Utilities.selfRemovingArea;
 import static zedly.zenchantments.enums.Tool.BOOTS;
+import static zedly.zenchantments.util.Utilities.selfRemovingArea;
 
 public class FrozenStep extends CustomEnchantment {
 

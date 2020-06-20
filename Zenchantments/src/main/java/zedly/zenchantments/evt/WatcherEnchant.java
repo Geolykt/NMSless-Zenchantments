@@ -1,4 +1,4 @@
-package zedly.zenchantments;
+package zedly.zenchantments.evt;
 
 import static org.bukkit.Material.AIR;
 import static org.bukkit.entity.EntityType.HORSE;
@@ -46,11 +46,16 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
+import zedly.zenchantments.CustomEnchantment;
+import zedly.zenchantments.EnchantPlayer;
+import zedly.zenchantments.HighFrequencyRunnableCache;
+import zedly.zenchantments.Storage;
 import zedly.zenchantments.annotations.EffectTask;
 import zedly.zenchantments.enchantments.FrozenStep;
 import zedly.zenchantments.enchantments.NetherStep;
 import zedly.zenchantments.enums.Frequency;
 import zedly.zenchantments.enums.Tool;
+import zedly.zenchantments.util.Utilities;
 
 // This is the watcher used by the CustomEnchantment class. Each method checks the enchantments on relevant items,
 //      ensures that the item is not an enchantment book, and calls each enchantment's method if the player can
@@ -61,11 +66,11 @@ public class WatcherEnchant implements Listener {
     private static final WatcherEnchant INSTANCE = new WatcherEnchant();
     private static final HighFrequencyRunnableCache cache = new HighFrequencyRunnableCache(WatcherEnchant::feedEnchCache, 5);
 
-    protected static boolean apply_patch_piston = true;
-    protected static boolean apply_patch_explosion = true;
-    protected static boolean patch_cancel_frozenstep = true;
-    protected static boolean patch_cancel_netherstep = true;
-    protected static boolean patch_cancel_explosion = true;
+    public static boolean apply_patch_piston = true;
+    public static boolean apply_patch_explosion = true;
+    public static boolean patch_cancel_frozenstep = true;
+    public static boolean patch_cancel_netherstep = true;
+    public static boolean patch_cancel_explosion = true;
     
     public static WatcherEnchant instance() {
         return INSTANCE;
@@ -443,7 +448,7 @@ public class WatcherEnchant implements Listener {
                         return false;
                     }
                     if (ench.onFastScan(player, level, true)) {
-                        EnchantPlayer.matchPlayer(player).setCooldown(ench.id, ench.cooldown);
+                        EnchantPlayer.matchPlayer(player).setCooldown(ench.getId(), ench.getCooldown());
                     }
                     return true;
                 });
@@ -456,7 +461,7 @@ public class WatcherEnchant implements Listener {
                     return false;
                 }
                 if (ench.onFastScanHands(player, level, true)) {
-                    EnchantPlayer.matchPlayer(player).setCooldown(ench.id, ench.cooldown);
+                    EnchantPlayer.matchPlayer(player).setCooldown(ench.getId(), ench.getCooldown());
                 }
                 return true;
             });
@@ -468,7 +473,7 @@ public class WatcherEnchant implements Listener {
                     return false;
                 }
                 if (ench.onFastScanHands(player, level, false)) {
-                    EnchantPlayer.matchPlayer(player).setCooldown(ench.id, ench.cooldown);
+                    EnchantPlayer.matchPlayer(player).setCooldown(ench.getId(), ench.getCooldown());
                 }
                 return true;
             });

@@ -6,9 +6,9 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import zedly.zenchantments.Storage;
-import zedly.zenchantments.Utilities;
 import zedly.zenchantments.arrows.EnchantedArrow;
 import zedly.zenchantments.enchantments.Toxic;
+import zedly.zenchantments.util.Utilities;
 
 import static org.bukkit.potion.PotionEffectType.CONFUSION;
 import static org.bukkit.potion.PotionEffectType.HUNGER;

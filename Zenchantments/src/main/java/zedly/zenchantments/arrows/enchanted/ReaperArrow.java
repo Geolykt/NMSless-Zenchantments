@@ -6,8 +6,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.potion.PotionEffectType;
 import zedly.zenchantments.Storage;
-import zedly.zenchantments.Utilities;
 import zedly.zenchantments.arrows.EnchantedArrow;
+import zedly.zenchantments.util.Utilities;
 
 import static org.bukkit.potion.PotionEffectType.BLINDNESS;
 

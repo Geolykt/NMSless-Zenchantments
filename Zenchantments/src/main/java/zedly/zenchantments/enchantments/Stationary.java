@@ -7,10 +7,10 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import zedly.zenchantments.CustomEnchantment;
 import zedly.zenchantments.arrows.EnchantedArrow;
-import zedly.zenchantments.Utilities;
 import zedly.zenchantments.arrows.enchanted.StationaryArrow;
 import zedly.zenchantments.enums.Hand;
 import zedly.zenchantments.enums.Tool;
+import zedly.zenchantments.util.Utilities;
 
 import static zedly.zenchantments.enums.Tool.BOW;
 import static zedly.zenchantments.enums.Tool.SWORD;

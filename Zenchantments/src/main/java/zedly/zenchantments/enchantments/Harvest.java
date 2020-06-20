@@ -9,9 +9,9 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.event.player.PlayerInteractEvent;
 import zedly.zenchantments.CustomEnchantment;
 import zedly.zenchantments.Storage;
-import zedly.zenchantments.Utilities;
 import zedly.zenchantments.enums.Hand;
 import zedly.zenchantments.enums.Tool;
+import zedly.zenchantments.util.Utilities;
 
 import static org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK;
 import static zedly.zenchantments.enums.Tool.HOE;

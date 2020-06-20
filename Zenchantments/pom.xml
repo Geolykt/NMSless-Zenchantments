@@ -19,7 +19,7 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.14.4-R0.1-SNAPSHOT</version>
+            <version>1.15.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <!-- Apache commons is included in CB/Spigot -->
@@ -42,12 +42,6 @@
             <version>1.6.3</version>
             <scope>compile</scope>
             <!--<type>jar</type>-->
-        </dependency>
-        <dependency>
-            <groupId>zedly</groupId>
-            <artifactId>NMS_1_14_R1</artifactId>
-            <version>1.6.3</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>zedly</groupId>

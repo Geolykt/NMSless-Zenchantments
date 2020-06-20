@@ -2,9 +2,9 @@ package zedly.zenchantments.enchantments;
 
 import org.bukkit.entity.Player;
 import zedly.zenchantments.CustomEnchantment;
-import zedly.zenchantments.Utilities;
 import zedly.zenchantments.enums.Hand;
 import zedly.zenchantments.enums.Tool;
+import zedly.zenchantments.util.Utilities;
 
 import static org.bukkit.potion.PotionEffectType.NIGHT_VISION;
 import static zedly.zenchantments.enums.Tool.HELMET;

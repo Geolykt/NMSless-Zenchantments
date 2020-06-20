@@ -4,9 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.block.BlockFace;
 import zedly.zenchantments.compatibility.CompatibilityAdapter;
-//import zedly.zenchantments.compatibility.NMS_1_13_R1;
-//import zedly.zenchantments.compatibility.NMS_1_13_R2;
-import zedly.zenchantments.compatibility.NMS_1_14_R1;
 import zedly.zenchantments.compatibility.NMS_1_15_R1;
 
 import java.util.*;
@@ -45,18 +42,6 @@ public class Storage {
         String nmsVersionString = versionString.substring(versionString.lastIndexOf('.') + 1);
         System.out.println("Zenchantments: Detected NMS version \"" + nmsVersionString + "\"");
         switch (nmsVersionString) {
-            //case "v1_13_R1":
-            //    COMPATIBILITY_ADAPTER = NMS_1_13_R1.getInstance();
-            //    break;
-            //case "v1_13_R2":
-            //    COMPATIBILITY_ADAPTER = NMS_1_13_R2.getInstance();
-            //    break;
-            case "v1_14_R1":
-                COMPATIBILITY_ADAPTER = NMS_1_14_R1.getInstance();
-                break;
-            case "v1_14_4_R1":
-                COMPATIBILITY_ADAPTER = NMS_1_14_R1.getInstance();
-                break;
             case "v1_15_R1":
                 COMPATIBILITY_ADAPTER = NMS_1_15_R1.getInstance();
                 break;
@@ -69,6 +54,7 @@ public class Storage {
             default:
                 System.out.println(
                         "No compatible adapter available, falling back to Bukkit. Not everything will work!");
+                Bukkit.broadcastMessage(ChatColor.RED + "Warning: Zenchantments is loaded in an unsupported environment");
                 COMPATIBILITY_ADAPTER = zedly.zenchantments.compatibility.CompatibilityAdapter.getInstance();
                 break;
         }

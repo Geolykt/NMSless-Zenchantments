@@ -10,6 +10,9 @@ import org.bukkit.inventory.ItemStack;
 import zedly.zenchantments.*;
 import zedly.zenchantments.enums.Hand;
 import zedly.zenchantments.enums.Tool;
+import zedly.zenchantments.evt.BlockShredEvent;
+import zedly.zenchantments.evt.WatcherEnchant;
+import zedly.zenchantments.util.Utilities;
 
 import java.util.HashSet;
 import java.util.Set;

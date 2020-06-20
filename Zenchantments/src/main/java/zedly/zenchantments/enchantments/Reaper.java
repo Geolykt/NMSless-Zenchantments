@@ -8,10 +8,10 @@ import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.potion.PotionEffectType;
 import zedly.zenchantments.CustomEnchantment;
 import zedly.zenchantments.arrows.EnchantedArrow;
-import zedly.zenchantments.Utilities;
 import zedly.zenchantments.arrows.enchanted.ReaperArrow;
 import zedly.zenchantments.enums.Hand;
 import zedly.zenchantments.enums.Tool;
+import zedly.zenchantments.util.Utilities;
 
 import static org.bukkit.potion.PotionEffectType.BLINDNESS;
 import static zedly.zenchantments.enums.Tool.BOW;

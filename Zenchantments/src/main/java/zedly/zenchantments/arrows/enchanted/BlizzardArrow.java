@@ -3,8 +3,8 @@ package zedly.zenchantments.arrows.enchanted;
 import org.bukkit.Particle;
 import org.bukkit.entity.*;
 import zedly.zenchantments.Storage;
-import zedly.zenchantments.Utilities;
 import zedly.zenchantments.arrows.EnchantedArrow;
+import zedly.zenchantments.util.Utilities;
 
 import static org.bukkit.potion.PotionEffectType.SLOW;
 
