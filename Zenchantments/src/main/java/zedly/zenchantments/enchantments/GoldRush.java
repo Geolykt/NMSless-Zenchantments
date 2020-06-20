@@ -22,7 +22,7 @@ public class GoldRush extends CustomEnchantment {
             .loreName("Gold Rush")
             .probability(0)
             .enchantable(new Tool[]{SHOVEL})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Randomly drops gold nuggets when mining sand")
             .cooldown(0)
             .power(1.0)

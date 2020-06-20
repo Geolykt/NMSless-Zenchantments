@@ -23,7 +23,7 @@ public class PotionResistance extends CustomEnchantment {
             .loreName("Potion Resistance")
             .probability(0)
             .enchantable(new Tool[]{HELMET, CHESTPLATE, LEGGINGS, BOOTS})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Lessens the effects of all potions on players")
             .cooldown(0)
             .power(1.0)

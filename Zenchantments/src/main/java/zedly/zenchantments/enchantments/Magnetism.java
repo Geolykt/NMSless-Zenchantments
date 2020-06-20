@@ -20,7 +20,7 @@ public class Magnetism extends CustomEnchantment {
             .loreName("Magnetism")
             .probability(0)
             .enchantable(new Tool[]{LEGGINGS})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Slowly attracts nearby items to the players inventory")
             .cooldown(0)
             .power(1.0)

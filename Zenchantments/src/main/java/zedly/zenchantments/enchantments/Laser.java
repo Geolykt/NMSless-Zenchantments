@@ -34,7 +34,7 @@ public class Laser extends CustomEnchantment {
                 .loreName("Laser")
                 .probability(0)
                 .enchantable(new Tool[]{PICKAXE, AXE})
-                .conflicting(new Class[]{})
+                .conflicting()
                 .description("Breaks blocks and damages mobs using a powerful beam of light")
                 .cooldown(0)
                 .power(1.0)

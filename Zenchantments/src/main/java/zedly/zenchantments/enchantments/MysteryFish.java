@@ -32,7 +32,7 @@ public class MysteryFish extends CustomEnchantment {
             .loreName("Mystery Fish")
             .probability(0)
             .enchantable(new Tool[]{ROD})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Catches water mobs like Squid and Guardians")
             .cooldown(0)
             .power(1.0)

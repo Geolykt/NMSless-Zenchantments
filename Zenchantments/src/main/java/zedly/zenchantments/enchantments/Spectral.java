@@ -40,7 +40,7 @@ public class Spectral extends CustomEnchantment {
                 .loreName("Spectral")
                 .probability(0)
                 .enchantable(new Tool[]{SHOVEL})
-                .conflicting(new Class[]{})
+                .conflicting()
                 .description("Allows for cycling through a block's types")
                 .cooldown(0)
                 .power(-1.0)

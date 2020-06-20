@@ -30,7 +30,7 @@ public class Glide extends CustomEnchantment {
                 .loreName("Glide")
                 .probability(0)
                 .enchantable(new Tool[]{LEGGINGS})
-                .conflicting(new Class[]{})
+                .conflicting()
                 .description("Gently brings the player back to the ground when sneaking")
                 .cooldown(0)
                 .power(1.0)

@@ -23,7 +23,7 @@ public class Variety extends CustomEnchantment {
             .loreName("Variety")
             .probability(0)
             .enchantable(new Tool[]{AXE})
-            .conflicting(new Class[]{Fire.class})
+            .conflicting(Fire.class)
             .description("Drops random types of wood or leaves")
             .cooldown(0)
             .power(-1.0)

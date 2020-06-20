@@ -34,7 +34,7 @@ public class Singularity extends CustomEnchantment {
             .loreName("Singularity")
             .probability(0)
             .enchantable(new Tool[]{BOW})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Creates a black hole that attracts nearby entities and then discharges them")
             .cooldown(0)
             .power(-1.0)

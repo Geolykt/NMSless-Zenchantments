@@ -18,7 +18,6 @@ import java.util.Set;
 
 import static org.bukkit.Material.*;
 import static org.bukkit.entity.EntityType.EXPERIENCE_ORB;
-import org.bukkit.entity.Item;
 import static zedly.zenchantments.enums.Tool.*;
 
 public class Fire extends CustomEnchantment {
@@ -41,7 +40,7 @@ public class Fire extends CustomEnchantment {
                 .loreName("Fire")
                 .probability(0)
                 .enchantable(new Tool[]{PICKAXE, AXE, SHOVEL})
-                .conflicting(new Class[]{Switch.class, Variety.class})
+                .conflicting(Switch.class, Variety.class)
                 .description("Drops the smelted version of the block broken")
                 .cooldown(0)
                 .power(-1.0)

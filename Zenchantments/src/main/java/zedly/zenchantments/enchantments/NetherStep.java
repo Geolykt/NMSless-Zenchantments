@@ -30,7 +30,7 @@ public class NetherStep extends CustomEnchantment {
             .loreName("Nether Step")
             .probability(0)
             .enchantable(new Tool[]{BOOTS})
-            .conflicting(new Class[]{FrozenStep.class})
+            .conflicting(FrozenStep.class)
             .description("Allows the player to slowly but safely walk on lava")
             .cooldown(0)
             .power(1.0)

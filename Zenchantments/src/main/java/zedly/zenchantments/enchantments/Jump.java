@@ -20,7 +20,7 @@ public class Jump extends CustomEnchantment {
             .loreName("Jump")
             .probability(0)
             .enchantable(new Tool[]{BOOTS})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Gives the player a jump boost")
             .cooldown(0)
             .power(1.0)

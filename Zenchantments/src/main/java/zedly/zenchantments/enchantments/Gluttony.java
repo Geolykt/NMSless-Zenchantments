@@ -22,7 +22,7 @@ public class Gluttony extends CustomEnchantment {
             .loreName("Gluttony")
             .probability(0)
             .enchantable(new Tool[]{HELMET})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Automatically eats for the player")
             .cooldown(0)
             .power(-1.0)

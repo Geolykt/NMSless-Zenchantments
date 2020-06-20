@@ -20,7 +20,7 @@ public class NightVision extends CustomEnchantment {
             .loreName("Night Vision")
             .probability(0)
             .enchantable(new Tool[]{HELMET})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Lets the player see in the darkness")
             .cooldown(0)
             .power(-1.0)

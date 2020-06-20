@@ -28,7 +28,7 @@ public class Reaper extends CustomEnchantment {
             .loreName("Reaper")
             .probability(0)
             .enchantable(new Tool[]{BOW, SWORD})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Gives the target temporary wither effect and blindness")
             .cooldown(0)
             .power(1.0)

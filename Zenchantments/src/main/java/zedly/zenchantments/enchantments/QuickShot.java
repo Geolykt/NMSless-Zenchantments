@@ -22,7 +22,7 @@ public class QuickShot extends CustomEnchantment {
             .loreName("Quick Shot")
             .probability(0)
             .enchantable(new Tool[]{BOW})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Shoots arrows at full speed, instantly")
             .cooldown(0)
             .power(1.0)

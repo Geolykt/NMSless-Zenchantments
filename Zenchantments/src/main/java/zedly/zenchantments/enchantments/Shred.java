@@ -29,7 +29,7 @@ public class Shred extends CustomEnchantment {
                 .loreName("Shred")
                 .probability(0)
                 .enchantable(new Tool[]{SHOVEL, PICKAXE})
-                .conflicting(new Class[]{Pierce.class, Switch.class})
+                .conflicting(Pierce.class, Switch.class)
                 .description("Breaks the blocks within a radius of the original block mined")
                 .cooldown(0)
                 .power(-1.0)

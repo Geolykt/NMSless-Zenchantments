@@ -20,7 +20,7 @@ public class Speed extends CustomEnchantment {
             .loreName("Speed")
             .probability(0)
             .enchantable(new Tool[]{BOOTS})
-            .conflicting(new Class[]{Meador.class, Weight.class})
+            .conflicting(Meador.class, Weight.class)
             .description("Gives the player a speed boost")
             .cooldown(0)
             .power(1.0)

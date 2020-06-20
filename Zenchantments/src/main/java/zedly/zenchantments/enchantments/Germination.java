@@ -26,7 +26,7 @@ public class Germination extends CustomEnchantment {
                 .loreName("Germination")
                 .probability(0)
                 .enchantable(new Tool[]{HOE})
-                .conflicting(new Class[]{})
+                .conflicting()
                 .description("Uses bonemeal from the player's inventory to grow nearby plants")
                 .cooldown(0)
                 .power(1.0)

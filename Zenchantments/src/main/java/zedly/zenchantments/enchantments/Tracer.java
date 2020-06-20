@@ -29,7 +29,7 @@ public class Tracer extends CustomEnchantment {
             .loreName("Tracer")
             .probability(0)
             .enchantable(new Tool[]{BOW})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Guides the arrow to targets and then attacks")
             .cooldown(0)
             .power(1.0)

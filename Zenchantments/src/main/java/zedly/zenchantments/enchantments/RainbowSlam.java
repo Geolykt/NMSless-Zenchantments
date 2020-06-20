@@ -32,7 +32,7 @@ public class RainbowSlam extends CustomEnchantment {
             .loreName("Rainbow Slam")
             .probability(0)
             .enchantable(new Tool[]{SWORD})
-            .conflicting(new Class[]{Force.class, Gust.class})
+            .conflicting(Force.class, Gust.class)
             .description("Attacks enemy mobs with a powerful swirling slam")
             .cooldown(0)
             .power(1.0)

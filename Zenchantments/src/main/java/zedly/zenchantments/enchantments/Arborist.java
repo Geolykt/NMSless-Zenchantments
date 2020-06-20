@@ -23,7 +23,7 @@ public class Arborist extends CustomEnchantment {
             .loreName("Arborist")
             .probability(0)
             .enchantable(new Tool[]{AXE})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Drops more apples, sticks, and saplings when used on leaves")
             .cooldown(0)
             .power(1.0)

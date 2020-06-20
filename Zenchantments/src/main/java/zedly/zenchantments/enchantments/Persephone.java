@@ -25,7 +25,7 @@ public class Persephone extends CustomEnchantment {
                 .loreName("Persephone")
                 .probability(0)
                 .enchantable(new Tool[]{HOE})
-                .conflicting(new Class[]{})
+                .conflicting()
                 .description("Plants seeds from the player's inventory around them")
                 .cooldown(0)
                 .power(1.0)

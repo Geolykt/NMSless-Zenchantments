@@ -33,7 +33,7 @@ public class Force extends CustomEnchantment {
             .loreName("Force")
             .probability(0)
             .enchantable(new Tool[]{SWORD})
-            .conflicting(new Class[]{RainbowSlam.class, Gust.class})
+            .conflicting(RainbowSlam.class, Gust.class)
             .description("Pushes and pulls nearby mobs, configurable through shift clicking")
             .cooldown(0)
             .power(1.0)

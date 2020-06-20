@@ -38,7 +38,7 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
     protected String loreName;      // Name the given enchantment will appear as; with &7 (Gray) color
     protected float probability;    // Relative probability of obtaining the given enchantment
     protected Tool[] enchantable;   // Enums that represent tools that can receive and work with given enchantment
-    protected Class<CustomEnchantment>[] conflicting;  // Classes of enchantments that don't work with given enchantment
+    protected Set<Class<? extends CustomEnchantment>> conflicting; // Classes of enchantments that don't work with given enchantment
     protected String description;   // Description of what the enchantment does
     protected int cooldown;         // Cooldown for given enchantment given in ticks; Default is 0
     protected double power;         // Power multiplier for the enchantment's effects; Default is 0; -1 means no
@@ -166,12 +166,19 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
         this.enchantable = enchantable;
     }
 
-    Class<CustomEnchantment>[] getConflicting() {
+    Set<Class<? extends CustomEnchantment>> getConflicting() {
         return conflicting;
     }
 
-    void setConflicting(Class<CustomEnchantment>[] conflicting) {
-        this.conflicting = conflicting;
+    void setConflicting(Set<Class<? extends CustomEnchantment>> conflicts) {
+        this.conflicting = conflicts;
+    }
+    
+    void addConflicting(Class<? extends CustomEnchantment> conflict) {
+        if (conflicting == null) {
+            conflicting = new HashSet<Class<? extends CustomEnchantment>>();
+        }
+        conflicting.add(conflict);
     }
 
     String getDescription() {
@@ -605,15 +612,29 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
             return customEnchantment.getEnchantable();
         }
 
-        public Builder<T> conflicting(Class<CustomEnchantment>[] conflicting) {
-            customEnchantment.setConflicting(conflicting);
+        public Builder<T> conflicting(Set<Class<? extends CustomEnchantment>> conflicts) {
+            customEnchantment.setConflicting(conflicts);
             return this;
         }
 
-        public Class<CustomEnchantment>[] conflicting() {
+        //I hope that the final modifier doesn't end up making any issues.
+        @SafeVarargs //The vararg in this method can be generally be considered safe
+        public final Builder<T> conflicting(Class<? extends CustomEnchantment>... conflicts) {
+            for (Class<? extends CustomEnchantment> ce : conflicts) {
+                customEnchantment.addConflicting(ce);
+            }
+            return this;
+        }
+        
+        public Set<Class<? extends CustomEnchantment>> getConflicting() {
             return customEnchantment.getConflicting();
         }
-
+        
+        public Builder<T> conflicting() {
+            
+            return this;
+        }
+        
         public Builder<T> description(String description) {
             customEnchantment.setDescription(description);
             return this;

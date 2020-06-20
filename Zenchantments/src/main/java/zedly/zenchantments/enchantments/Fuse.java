@@ -22,7 +22,7 @@ public class Fuse extends CustomEnchantment {
             .loreName("Fuse")
             .probability(0)
             .enchantable(new Tool[]{BOW})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Instantly ignites anything explosive")
             .cooldown(0)
             .power(-1.0)

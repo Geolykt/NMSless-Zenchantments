@@ -33,7 +33,7 @@ public class Burst extends CustomEnchantment {
                 .loreName("Burst")
                 .probability(0)
                 .enchantable(new Tool[]{BOW})
-                .conflicting(new Class[]{Spread.class})
+                .conflicting(Spread.class)
                 .description("Rapidly fires arrows in series")
                 .cooldown(0)
                 .power(1.0)

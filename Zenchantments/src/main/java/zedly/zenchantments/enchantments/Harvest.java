@@ -27,7 +27,7 @@ public class Harvest extends CustomEnchantment {
                 .loreName("Harvest")
                 .probability(0)
                 .enchantable(new Tool[]{HOE})
-                .conflicting(new Class[]{})
+                .conflicting()
                 .description("Harvests fully grown crops within a radius when clicked")
                 .cooldown(0)
                 .power(1.0)

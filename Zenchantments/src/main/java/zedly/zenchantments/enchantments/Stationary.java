@@ -26,7 +26,7 @@ public class Stationary extends CustomEnchantment {
                 .loreName("Stationary")
                 .probability(0)
                 .enchantable(new Tool[]{BOW, SWORD})
-                .conflicting(new Class[]{})
+                .conflicting()
                 .description("Negates any knockback when attacking mobs, leaving them clueless as to who is attacking")
                 .cooldown(0)
                 .power(-1.0)

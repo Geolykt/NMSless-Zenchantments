@@ -26,7 +26,7 @@ public class Bind extends CustomEnchantment {
             .loreName("Bind")
             .probability(0)
             .enchantable(new Tool[]{ALL})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Keeps items with this enchantment in your inventory after death")
             .cooldown(0)
             .power(-1.0)

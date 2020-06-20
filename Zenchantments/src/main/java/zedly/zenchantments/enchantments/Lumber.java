@@ -27,7 +27,7 @@ public class Lumber extends CustomEnchantment {
             .loreName("Lumber")
             .probability(0)
             .enchantable(new Tool[]{AXE})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Breaks the entire tree at once")
             .cooldown(0)
             .power(-1.0)

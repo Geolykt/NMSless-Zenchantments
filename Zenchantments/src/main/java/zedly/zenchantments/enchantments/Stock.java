@@ -23,7 +23,7 @@ public class Stock extends CustomEnchantment {
             .loreName("Stock")
             .probability(0)
             .enchantable(new Tool[]{CHESTPLATE})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Refills the player's item in hand when they run out")
             .cooldown(-1)
             .power(-1.0)

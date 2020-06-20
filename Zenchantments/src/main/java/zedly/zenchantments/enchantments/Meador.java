@@ -22,7 +22,7 @@ public class Meador extends CustomEnchantment {
             .loreName("Meador")
             .probability(0)
             .enchantable(new Tool[]{BOOTS})
-            .conflicting(new Class[]{Weight.class, Speed.class, Jump.class})
+            .conflicting(Weight.class, Speed.class, Jump.class)
             .description("Gives the player both a speed and jump boost")
             .cooldown(0)
             .power(1.0)

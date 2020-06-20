@@ -29,7 +29,7 @@ public class Terraformer extends CustomEnchantment {
             .loreName("Terraformer")
             .probability(0)
             .enchantable(new Tool[]{SHOVEL})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Places the leftmost blocks in the players inventory within a 7 block radius")
             .cooldown(0)
             .power(-1.0)

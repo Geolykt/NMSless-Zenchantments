@@ -38,7 +38,7 @@ public class Pierce extends CustomEnchantment {
             .loreName("Pierce")
             .probability(0)
             .enchantable(new Tool[]{PICKAXE})
-            .conflicting(new Class[]{Anthropomorphism.class, Switch.class, Shred.class})
+            .conflicting(Anthropomorphism.class, Switch.class, Shred.class)
             .description("Lets the player mine in several modes which can be changed through shift clicking")
             .cooldown(0)
             .power(-1.0)

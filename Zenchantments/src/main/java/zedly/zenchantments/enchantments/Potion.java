@@ -24,7 +24,7 @@ public class Potion extends CustomEnchantment {
             .loreName("Potion")
             .probability(0)
             .enchantable(new Tool[]{BOW})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Gives the shooter random positive potion effects when attacking")
             .cooldown(0)
             .power(1.0)

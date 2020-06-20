@@ -43,7 +43,7 @@ public class Anthropomorphism extends CustomEnchantment {
                 .loreName("Anthropomorphism")
                 .probability(0)
                 .enchantable(new Tool[]{PICKAXE})
-                .conflicting(new Class[]{Pierce.class, Switch.class})
+                .conflicting(Pierce.class, Switch.class)
                 .description(
                         "Spawns blocks to protect you when right sneak clicking, and attacks entities when left clicking")
                 .cooldown(0)

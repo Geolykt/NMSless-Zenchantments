@@ -28,7 +28,7 @@ public class GreenThumb extends CustomEnchantment {
             .loreName("Green Thumb")
             .probability(0)
             .enchantable(new Tool[]{LEGGINGS})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Grows the foliage around the player")
             .cooldown(0)
             .power(1.0)

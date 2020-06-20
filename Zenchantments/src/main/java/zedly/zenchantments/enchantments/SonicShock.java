@@ -21,7 +21,7 @@ public class SonicShock extends CustomEnchantment {
             .loreName("Sonic Shock")
             .probability(0)
             .enchantable(new Tool[]{WINGS})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Damages mobs when flying past at high speed")
             .cooldown(0)
             .power(1.0)

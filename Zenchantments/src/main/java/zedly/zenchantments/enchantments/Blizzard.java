@@ -22,7 +22,7 @@ public class Blizzard extends CustomEnchantment {
             .loreName("Blizzard")
             .probability(0)
             .enchantable(new Tool[]{BOW})
-            .conflicting(new Class[]{Firestorm.class})
+            .conflicting(Firestorm.class)
             .description("Spawns a blizzard where the arrow strikes freezing nearby entities")
             .cooldown(0)
             .power(1.0)

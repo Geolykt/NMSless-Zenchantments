@@ -1,6 +1,5 @@
 package zedly.zenchantments;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -194,7 +193,7 @@ public class AnvilMerge implements Listener {
                 return;
             }
             for (CustomEnchantment e : enchantPool.keySet()) {
-                if (ArrayUtils.contains(ench.conflicting, e.getClass())) {
+                if (ench.getConflicting().contains(e.getClass())) {
                     return;
                 }
             }

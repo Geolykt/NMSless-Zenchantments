@@ -1,6 +1,5 @@
 package zedly.zenchantments;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Location;
@@ -218,7 +217,7 @@ public class Watcher implements Listener {
             for (CustomEnchantment ench : mainPool) {
                 boolean conflicts = false;
                 for (CustomEnchantment e : addedEnchants.keySet()) {
-                    if (ArrayUtils.contains(ench.conflicting, e.getClass()) || addedEnchants.containsKey(ench)
+                    if (ench.getConflicting().contains(e.getClass()) || addedEnchants.containsKey(ench)
                             || e.probability <= 0) {
                         conflicts = true;
                         break;

@@ -22,7 +22,7 @@ public class Fireworks extends CustomEnchantment {
             .loreName("Fireworks")
             .probability(0)
             .enchantable(new Tool[]{BOW})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Shoots arrows that burst into fireworks upon impact")
             .cooldown(0)
             .power(-1.0)

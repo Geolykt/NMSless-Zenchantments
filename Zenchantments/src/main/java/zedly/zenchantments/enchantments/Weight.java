@@ -25,7 +25,7 @@ public class Weight extends CustomEnchantment {
             .loreName("Weight")
             .probability(0)
             .enchantable(new Tool[]{BOOTS})
-            .conflicting(new Class[]{Meador.class, Speed.class})
+            .conflicting(Meador.class, Speed.class)
             .description("Slows the player down but makes them stronger and more resistant to knockback")
             .cooldown(0)
             .power(1.0)

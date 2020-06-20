@@ -22,7 +22,7 @@ public class Apocalypse extends CustomEnchantment {
             .loreName("Apocalypse")
             .probability(0)
             .enchantable(new Tool[]{BOW})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Unleashes hell")
             .cooldown(0)
             .power(-1.0)

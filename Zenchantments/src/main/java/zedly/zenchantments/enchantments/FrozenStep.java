@@ -27,7 +27,7 @@ public class FrozenStep extends CustomEnchantment {
             .loreName("Frozen Step")
             .probability(0)
             .enchantable(new Tool[]{BOOTS})
-            .conflicting(new Class[]{NetherStep.class})
+            .conflicting(NetherStep.class)
             .description("Allows the player to walk on water and safely emerge from it when sneaking")
             .cooldown(0)
             .power(1.0)

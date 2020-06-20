@@ -22,7 +22,7 @@ public class IceAspect extends CustomEnchantment {
             .loreName("Ice Aspect")
             .probability(0)
             .enchantable(new Tool[]{SWORD})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Temporarily freezes the target")
             .cooldown(0)
             .power(1.0)

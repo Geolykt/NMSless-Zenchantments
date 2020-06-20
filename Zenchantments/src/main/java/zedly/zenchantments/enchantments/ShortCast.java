@@ -19,7 +19,7 @@ public class ShortCast extends CustomEnchantment {
             .loreName("Short Cast")
             .probability(0)
             .enchantable(new Tool[]{ROD})
-            .conflicting(new Class[]{LongCast.class})
+            .conflicting(LongCast.class)
             .description("Launches fishing hooks closer in when casting")
             .cooldown(0)
             .power(1.0)

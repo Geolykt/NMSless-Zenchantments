@@ -26,7 +26,7 @@ public class Rainbow extends CustomEnchantment {
             .loreName("Rainbow")
             .probability(0)
             .enchantable(new Tool[]{SHEAR})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Drops random flowers and wool colors when used")
             .cooldown(0)
             .power(-1.0)

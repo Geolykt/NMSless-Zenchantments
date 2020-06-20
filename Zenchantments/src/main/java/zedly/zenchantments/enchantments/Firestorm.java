@@ -22,7 +22,7 @@ public class Firestorm extends CustomEnchantment {
             .loreName("Firestorm")
             .probability(0)
             .enchantable(new Tool[]{BOW})
-            .conflicting(new Class[]{Blizzard.class})
+            .conflicting(Blizzard.class)
             .description("Spawns a firestorm where the arrow strikes burning nearby entities")
             .cooldown(0)
             .power(1.0)

@@ -26,7 +26,7 @@ public class Siphon extends CustomEnchantment {
                 .loreName("Siphon")
                 .probability(0)
                 .enchantable(new Tool[]{BOW, SWORD})
-                .conflicting(new Class[]{})
+                .conflicting()
                 .description("Drains the health of the mob that you attack, giving it to you")
                 .cooldown(0)
                 .power(1.0)

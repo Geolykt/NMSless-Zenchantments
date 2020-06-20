@@ -25,7 +25,7 @@ public class Plough extends CustomEnchantment {
             .loreName("Plough")
             .probability(0)
             .enchantable(new Tool[]{HOE})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Tills all soil within a radius")
             .cooldown(0)
             .power(1.0)

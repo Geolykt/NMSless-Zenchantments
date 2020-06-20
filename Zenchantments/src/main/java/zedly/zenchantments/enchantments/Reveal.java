@@ -30,7 +30,7 @@ public class Reveal extends CustomEnchantment {
             .loreName("Reveal")
             .probability(0)
             .enchantable(new Tool[]{PICKAXE})
-            .conflicting(new Class[]{Switch.class, Pierce.class, Spectral.class})
+            .conflicting(Switch.class, Pierce.class, Spectral.class)
             .description("Makes nearby ores glow white through the stone.")
             .cooldown(100)
             .power(1.0)

@@ -24,7 +24,7 @@ public class Conversion extends CustomEnchantment {
             .loreName("Conversion")
             .probability(0)
             .enchantable(new Tool[]{SWORD})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Converts XP to health when right clicking and sneaking")
             .cooldown(0)
             .power(1.0)

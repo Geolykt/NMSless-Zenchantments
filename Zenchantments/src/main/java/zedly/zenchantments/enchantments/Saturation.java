@@ -20,7 +20,7 @@ public class Saturation extends CustomEnchantment {
             .loreName("Saturation")
             .probability(0)
             .enchantable(new Tool[]{LEGGINGS})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Uses less of the player's hunger")
             .cooldown(0)
             .power(1.0)

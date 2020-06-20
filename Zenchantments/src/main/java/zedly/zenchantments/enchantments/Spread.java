@@ -29,7 +29,7 @@ public class Spread extends CustomEnchantment {
             .loreName("Spread")
             .probability(0)
             .enchantable(new Tool[]{BOW})
-            .conflicting(new Class[]{Burst.class})
+            .conflicting(Burst.class)
             .description("Fires an array of arrows simultaneously")
             .cooldown(0)
             .power(1.0)

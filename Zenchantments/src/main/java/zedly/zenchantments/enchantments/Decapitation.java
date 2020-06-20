@@ -28,7 +28,7 @@ public class Decapitation extends CustomEnchantment {
             .loreName("Decapitation")
             .probability(0)
             .enchantable(new Tool[]{SWORD})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Increases the chance for dropping the enemies head on death")
             .cooldown(0)
             .power(1.0)

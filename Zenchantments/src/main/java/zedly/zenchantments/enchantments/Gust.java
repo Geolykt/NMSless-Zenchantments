@@ -26,7 +26,7 @@ public class Gust extends CustomEnchantment {
             .loreName("Gust")
             .probability(0)
             .enchantable(new Tool[]{SWORD})
-            .conflicting(new Class[]{Force.class, RainbowSlam.class})
+            .conflicting(Force.class, RainbowSlam.class)
             .description("Pushes the user through the air at the cost of their health")
             .cooldown(0)
             .power(1.0)

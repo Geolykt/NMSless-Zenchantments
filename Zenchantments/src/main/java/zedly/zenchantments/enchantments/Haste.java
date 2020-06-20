@@ -22,7 +22,7 @@ public class Haste extends CustomEnchantment {
             .loreName("Haste")
             .probability(0)
             .enchantable(new Tool[]{PICKAXE, AXE, SHOVEL})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Gives the player a mining boost")
             .cooldown(0)
             .power(1.0)

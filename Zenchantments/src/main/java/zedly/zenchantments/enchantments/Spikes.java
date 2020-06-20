@@ -20,7 +20,7 @@ public class Spikes extends CustomEnchantment {
             .loreName("Spikes")
             .probability(0)
             .enchantable(new Tool[]{BOOTS})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Damages entities the player jumps onto")
             .cooldown(0)
             .power(1.0)

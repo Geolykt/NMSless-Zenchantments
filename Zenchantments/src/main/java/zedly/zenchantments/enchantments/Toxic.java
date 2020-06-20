@@ -38,7 +38,7 @@ public class Toxic extends CustomEnchantment {
             .loreName("Toxic")
             .probability(0)
             .enchantable(new Tool[]{BOW, SWORD})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Sickens the target, making them nauseous and unable to eat")
             .cooldown(0)
             .power(1.0)

@@ -19,7 +19,7 @@ public class Bounce extends CustomEnchantment {
             .loreName("Bounce")
             .probability(0)
             .enchantable(new Tool[]{BOOTS})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Preserves momentum when on slime blocks")
             .cooldown(0)
             .power(1.0)

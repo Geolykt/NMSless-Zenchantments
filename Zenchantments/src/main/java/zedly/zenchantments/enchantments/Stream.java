@@ -32,7 +32,7 @@ public class Stream extends CustomEnchantment {
             .loreName("Stream")
             .probability(0)
             .enchantable(new Tool[]{WINGS})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Creates a trail of particles when in flight")
             .cooldown(0)
             .power(1.0)

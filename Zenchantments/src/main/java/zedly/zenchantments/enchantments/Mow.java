@@ -26,7 +26,7 @@ public class Mow extends CustomEnchantment {
             .loreName("Mow")
             .probability(0)
             .enchantable(new Tool[]{SHEAR})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Shears all nearby sheep")
             .cooldown(0)
             .power(1.0)

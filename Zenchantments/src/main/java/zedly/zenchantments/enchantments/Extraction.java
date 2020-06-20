@@ -26,7 +26,7 @@ public class Extraction extends CustomEnchantment {
             .loreName("Extraction")
             .probability(0)
             .enchantable(new Tool[]{PICKAXE})
-            .conflicting(new Class[]{Switch.class})
+            .conflicting(Switch.class)
             .description("Smelts and yields more product from ores")
             .cooldown(0)
             .power(1.0)

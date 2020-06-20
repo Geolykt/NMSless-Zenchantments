@@ -28,7 +28,7 @@ public class Transformation extends CustomEnchantment {
                 .loreName("Transformation")
                 .probability(0)
                 .enchantable(new Tool[]{SWORD})
-                .conflicting(new Class[]{})
+                .conflicting()
                 .description("Occasionally causes the attacked mob to be transformed into its similar cousin")
                 .cooldown(0)
                 .power(1.0)

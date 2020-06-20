@@ -17,7 +17,7 @@ public class Unrepairable extends CustomEnchantment {
             .loreName("Unrepairable")
             .probability(0)
             .enchantable(new Tool[]{ALL})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Prevents an item from being repaired")
             .cooldown(0)
             .power(-1.0)

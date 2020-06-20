@@ -28,7 +28,7 @@ public class BlazesCurse extends CustomEnchantment {
             .loreName("Blaze's Curse")
             .probability(0)
             .enchantable(new Tool[]{CHESTPLATE})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Causes the player to be unharmed in lava and fire, but damages them in water and rain")
             .cooldown(0)
             .power(-1.0)

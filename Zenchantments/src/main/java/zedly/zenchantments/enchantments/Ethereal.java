@@ -22,7 +22,7 @@ public class Ethereal extends CustomEnchantment {
             .loreName("Ethereal")
             .probability(0)
             .enchantable(new Tool[]{ALL})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Prevents tools from breaking")
             .cooldown(0)
             .power(-1.0)

@@ -20,7 +20,7 @@ public class Combustion extends CustomEnchantment {
             .loreName("Combustion")
             .probability(0)
             .enchantable(new Tool[]{CHESTPLATE})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Lights attacking entities on fire when player is attacked")
             .cooldown(0)
             .power(1.0)

@@ -27,7 +27,7 @@ public class Grab extends CustomEnchantment {
             .loreName("Grab")
             .probability(0)
             .enchantable(new Tool[]{PICKAXE, SHOVEL, AXE})
-            .conflicting(new Class[]{})
+            .conflicting()
             .description("Teleports mined items and XP directly to the player")
             .cooldown(0)
             .power(-1.0)

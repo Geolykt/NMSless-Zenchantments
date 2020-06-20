@@ -32,7 +32,7 @@ public class Vortex extends CustomEnchantment {
                 .loreName("Vortex")
                 .probability(0)
                 .enchantable(new Tool[]{BOW, SWORD})
-                .conflicting(new Class[]{})
+                .conflicting()
                 .description("Teleports mob loot and XP directly to the player")
                 .cooldown(0)
                 .power(-1.0)
