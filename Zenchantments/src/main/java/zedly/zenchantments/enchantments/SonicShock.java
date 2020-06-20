@@ -34,7 +34,7 @@ public class SonicShock extends CustomEnchantment {
             for (Entity e : player.getNearbyEntities(2 + 2 * level, 4, 2 + 2 * level)) {
                 double damage = player.getVelocity().length() * 1.5 * level * power;
                 if (e instanceof Monster) {
-                    ADAPTER.attackEntity((LivingEntity) e, player,  damage);
+                    ADAPTER.attackEntity((LivingEntity) e, player,  damage, false);
                 }
             }
         }

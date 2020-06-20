@@ -1110,24 +1110,33 @@ public class CompatibilityAdapter {
     // players hand.
     //      This also takes into account the unbreaking enchantment
     public static void damageTool(Player player, int damage, boolean handUsed) {
-        if (!player.getGameMode().equals(GameMode.CREATIVE)) {
-            ItemStack hand
-                    = handUsed ? player.getInventory().getItemInMainHand() : player.getInventory().getItemInOffHand();
-            for (int i = 0; i < damage; i++) {
-                if (RND.nextInt(100) <= (100 / (hand.getEnchantmentLevel(org.bukkit.enchantments.Enchantment.DURABILITY) + 1))) {
-                    setDamage(hand, getDamage(hand) + 1);
-                }
-            }
-            if (handUsed) {
-                player.getInventory().setItemInMainHand(
-                        getDamage(hand) > hand.getType().getMaxDurability() ? new ItemStack(AIR) : hand);
-            } else {
-                player.getInventory().setItemInOffHand(
-                        getDamage(hand) > hand.getType().getMaxDurability() ? new ItemStack(AIR) : hand);
-            }
+        if (handUsed) {
+            damageToolInSlot(player, damage, player.getInventory().getHeldItemSlot());
+        } else {
+            player.getInventory().setItemInOffHand(damageItem(player.getInventory().getItemInOffHand(), damage));
         }
     }
 
+    public static void damageToolInSlot(Player player, int damage, int slotIndex) {
+        ItemStack stack = damageItem(player.getInventory().getItem(slotIndex), damage);
+        if (getDamage(stack) < 0) {
+            player.getInventory().clear(slotIndex);
+        } else {
+            player.getInventory().setItem(slotIndex, stack);
+        }
+    }
+    
+    public static ItemStack damageItem(ItemStack stack, int damage) {
+        if (!stack.getItemMeta().isUnbreakable()) {
+            for (int i = 0; i < damage; i++) {
+                if (RND.nextInt(100) <= (100 / (stack.getEnchantmentLevel(org.bukkit.enchantments.Enchantment.DURABILITY) + 1))) {
+                    setDamage(stack, getDamage(stack) + 1);
+                }
+            }
+        }
+        return stack;
+    }
+    
     // Displays a particle with the given data
     public static void display(Location loc, Particle particle, int amount, double speed, double xO, double yO,
             double zO) {
@@ -1216,7 +1225,12 @@ public class CompatibilityAdapter {
         return placeBlock(blockPlaced, player, is.getType(), (BlockData) is.getData());
     }
 
+
     public boolean attackEntity(LivingEntity target, Player attacker, double damage) {
+        return attackEntity(target, attacker, damage, true);
+    }
+    
+    public boolean attackEntity(LivingEntity target, Player attacker, double damage, boolean performEquipmentDamage) {
         EntityDamageByEntityEvent damageEvent
                 = new EntityDamageByEntityEvent(attacker, target, DamageCause.ENTITY_ATTACK, damage);
         Bukkit.getPluginManager().callEvent(damageEvent);
@@ -1226,7 +1240,9 @@ public class CompatibilityAdapter {
         if (!damageEvent.isCancelled()) {
             target.damage(damage, attacker);
             target.setLastDamageCause(damageEvent);
-            damageTool(attacker, 1, true);
+            if (performEquipmentDamage) {
+                damageTool(attacker, 1, true);
+            }
             return true;
         }
         return false;
