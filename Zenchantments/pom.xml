@@ -44,12 +44,6 @@
             <!--<type>jar</type>-->
         </dependency>
         <dependency>
-            <groupId>zedly</groupId>
-            <artifactId>NMS_1_15_R1</artifactId>
-            <version>1.6.3</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>io.github.lukehutch</groupId>
             <artifactId>fast-classpath-scanner</artifactId>
             <version>3.1.10</version>

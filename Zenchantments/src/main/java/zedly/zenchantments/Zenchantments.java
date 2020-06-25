@@ -1,5 +1,5 @@
 package zedly.zenchantments;
-//For Bukkit & Spigot 1.13.X
+//For Bukkit & Spigot 1.16.X
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
