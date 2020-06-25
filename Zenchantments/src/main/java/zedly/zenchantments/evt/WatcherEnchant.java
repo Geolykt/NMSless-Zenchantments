@@ -103,6 +103,7 @@ public class WatcherEnchant implements Listener {
 
     /**
      * This event is not thrown within regular spigot, however certain plugins may throw it, which is why this EventHandler exists
+     * 
      * @param evt The event
      */
     @EventHandler(ignoreCancelled = false)
@@ -167,46 +168,37 @@ public class WatcherEnchant implements Listener {
     
     /**
      * This method returns whether a block is protected by the plugin and whether it should be considered <br>
+     * 
      * @param block The block to query
-     * @param netherstep Whether to remove the entry, if found and the entry belonged to a netherstep block
-     * @param frozenstep Whether to remove the entry, if found and the entry belonged to a frozenstep block
+     * @param netherstep_remove Whether to remove the entry, if found and the entry belonged to a netherstep block
+     * @param frozenstep_remove Whether to remove the entry, if found and the entry belonged to a frozenstep block
      * @return non 0 values if the Block is considered protected. <br> 
+     * 
      * <ul>
      * <li>0 if the block is unprotected</li>
      * <li>1 if the netherstep protects the block</li>
      * <li>2 if the frozenstep protects the block</li>
-     * <li>3 if something else protects the block</li>
      * </ul>
-     * @author Geolykt
      */
-    public byte protectedBlockQuery(Block block, boolean netherstep, boolean frozenstep) {
-        if (Storage.COMPATIBILITY_ADAPTER.Ices().contains(block.getType())) {
-            Location a = block.getLocation();
-            for (Location b : FrozenStep.frozenLocs.keySet()) {
-                if (a.getBlockX() == b.getBlockX()) {
-                    if (a.getBlockZ() == b.getBlockZ()) {
-                        if (a.getBlockY() == b.getBlockY()) {
-                            if (frozenstep) {
-                                FrozenStep.frozenLocs.remove(b);
-                            }
-                            return 2;
-                        }
-                    }
-                }
+    public byte protectedBlockQuery(Block block, boolean netherstep_remove, boolean frozenstep_remove) {
+        Location a = block.getLocation();
+        if (netherstep_remove) {
+            if (NetherStep.netherstepLocs.remove(a) != null) {
+                return 1;
             }
-        } else if (block.getType() == Material.SOUL_SAND) {
-            Location a = block.getLocation();
-            for (Location b : NetherStep.netherstepLocs.keySet()) {
-                if (a.getBlockX() == b.getBlockX()) {
-                    if (a.getBlockZ() == b.getBlockZ()) {
-                        if (a.getBlockY() == b.getBlockY()) {
-                            if (netherstep) {
-                                NetherStep.netherstepLocs.remove(b);
-                            }
-                            return 1;
-                        }
-                    }
-                }
+        } else {
+            if (NetherStep.netherstepLocs.containsKey(a)) {
+                return 1;
+            }
+        }
+        if (frozenstep_remove) {
+            if (FrozenStep.frozenLocs.remove(a) != null) {
+                return 2;
+            }
+            
+        } else {
+            if (FrozenStep.frozenLocs.containsKey(a)) {
+                return 2;
             }
         }
         return 0;

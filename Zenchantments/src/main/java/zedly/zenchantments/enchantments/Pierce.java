@@ -107,6 +107,8 @@ public class Pierce extends CustomEnchantment {
                     ints = new int[][]{{0, 0, 1}, {1, 0, 0}, {0, 1, 0}};
                     add = 1;
                     break;
+                default:
+                    break;
             }
             int[] rads = ints[mode - 2];
             if (mode == 3) {
