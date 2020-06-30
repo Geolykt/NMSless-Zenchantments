@@ -1,3 +1,5 @@
+This fork only supports 1.16.1 and newer versions when the time comes
+
 # Zenchantments
 ## Description
 Zenchantments is a custom enchantment plugin that adds 70+ new enchantments to the game, covering a multitude of different uses. These include target-tracing arrows, lumber axes, block-breaking lasers, and much more. These custom enchantments are obtained through the normal enchantment process and act like regular enchantments, capable of being combined and merged. The plugin requires no client-side mods or resource packs. A comprehensive configuration file enables fine-tuning of individual enchantments to tailor them to every server's gameplay. This specific repository tries to create a more stable version of Zenchantments
@@ -6,11 +8,10 @@ Zenchantments is a custom enchantment plugin that adds 70+ new enchantments to t
 See [Releases](https://github.com/Zedly/Zenchantments/releases) for downloads
 
 ## Compile
-To compile the entire project yourself, you need multiple versions of CraftBukkit as Maven repositories. These are created automatically when you use [BuildTools](https://www.spigotmc.org/wiki/buildtools/) to obtain CB and/or Spigot. If you are making a private build and only need support for one server version, you can easily add and remove compatibility adapters by editing the parent POM and a switch in PlayerInteractUtil.
+Compile this project like every other project out there
 
 ## Compatibility
-The current version of this plugin is fully compatible with CraftBukkit and Spigot versions 1.13 - 1.15.2. Keep in mind that currently the Plugin is only tested with 1.15.2, in case you want stabillity in older versions, use the Zedly's Zenchantments. 1.16 is **not** supported as of now, but watch this repo in case you want to get notified when it is!
-
+The current version of this plugin is fully compatible with Spigot version 1.16.1. Any versions under 1.16.1, will **not** work, versions above, may, although with a few issues. Note that 1.16.1 support is still pretty new and does not work fully as of now.
 ## Contribute
 Anyone is free to contribute to this repository, however keep in mind that this (and parent) repository uses 4 space indentation.
 
@@ -23,4 +24,6 @@ Anyone is free to contribute to this repository, however keep in mind that this 
 	<li>Patched a bug which would result in the abillity of changing blockstates in protected regions, for example via Towny or World guard; can be toggled</li>
 	<li>Removed unused variables and methods</li>
 	<li>General reduction of warnings</li>
+	<li>Removed NMS</li>
+	<li>1.16.1 Compatible</li>
 </ul>
