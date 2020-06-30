@@ -7,7 +7,7 @@
 
 classes
 target
-*.class*
+*.class
 *.prefs
 *.project
 */bin/*
