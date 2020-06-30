@@ -927,7 +927,7 @@ public class CompatibilityAdapter {
     private final EnumStorage<EntityType> TRANSFORMATION_ENTITY_TYPES_FROM_E = new EnumStorage<>(new EntityType[]{
             HUSK, WITCH, EntityType.COD, PHANTOM, HORSE, SKELETON, EntityType.CHICKEN, SQUID, OCELOT, POLAR_BEAR, COW, PIG,
             SPIDER, SLIME, GUARDIAN, ENDERMITE, SKELETON_HORSE, EntityType.RABBIT, SHULKER, SNOWMAN, DROWNED, VINDICATOR,
-            EntityType.SALMON, BLAZE, DONKEY, STRAY, PARROT, DOLPHIN, WOLF, SHEEP, MUSHROOM_COW, PIG_ZOMBIE, CAVE_SPIDER,
+            EntityType.SALMON, BLAZE, DONKEY, STRAY, PARROT, DOLPHIN, WOLF, SHEEP, MUSHROOM_COW, ZOMBIFIED_PIGLIN, CAVE_SPIDER,
             MAGMA_CUBE, ELDER_GUARDIAN, SILVERFISH, ZOMBIE_HORSE, EntityType.RABBIT, ENDERMAN, IRON_GOLEM, ZOMBIE, EVOKER,
             PUFFERFISH, VEX, MULE, WITHER_SKELETON, BAT, TURTLE, ZOMBIE_VILLAGER, VILLAGER, EntityType.TROPICAL_FISH, GHAST,
             LLAMA, CREEPER});
@@ -938,7 +938,7 @@ public class CompatibilityAdapter {
 
     private final EnumStorage<EntityType> TRANSFORMATION_ENTITY_TYPES_TO_E = new EnumStorage<>(new EntityType[]{
             DROWNED, VINDICATOR, EntityType.SALMON, BLAZE, DONKEY, STRAY, PARROT, DOLPHIN, WOLF, SHEEP, MUSHROOM_COW,
-            PIG_ZOMBIE, CAVE_SPIDER, MAGMA_CUBE, ELDER_GUARDIAN, SILVERFISH, ZOMBIE_HORSE, EntityType.RABBIT, ENDERMAN,
+            ZOMBIFIED_PIGLIN, CAVE_SPIDER, MAGMA_CUBE, ELDER_GUARDIAN, SILVERFISH, ZOMBIE_HORSE, EntityType.RABBIT, ENDERMAN,
             IRON_GOLEM, ZOMBIE, EVOKER, PUFFERFISH, VEX, MULE, WITHER_SKELETON, BAT, TURTLE, OCELOT, POLAR_BEAR, COW, PIG,
             SPIDER, SLIME, GUARDIAN, ENDERMITE, SKELETON_HORSE, EntityType.RABBIT, SHULKER, SNOWMAN, ZOMBIE_VILLAGER,
             VILLAGER, EntityType.TROPICAL_FISH, GHAST, LLAMA, SKELETON, EntityType.CHICKEN, SQUID, HUSK, WITCH,
@@ -1252,6 +1252,7 @@ public class CompatibilityAdapter {
 
     public boolean shearEntityNMS(Entity target, Player player, boolean mainHand) {
         if ((target instanceof Sheep && !((Sheep) target).isSheared()) || target instanceof MushroomCow) {
+            @SuppressWarnings("deprecation")
             PlayerShearEntityEvent evt = new PlayerShearEntityEvent(player, target);
             Bukkit.getPluginManager().callEvent(evt);
             if (!evt.isCancelled()) {
