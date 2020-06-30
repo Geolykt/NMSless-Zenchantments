@@ -53,7 +53,7 @@ public class MockBlock implements Block {
 
     @Override
     public Block getRelative(BlockFace bf) {
-         return realBlock.getRelative(bf);
+        return realBlock.getRelative(bf);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class MockBlock implements Block {
 
     @Override
     public byte getLightFromBlocks() {
-       return realBlock.getLightFromSky();
+        return realBlock.getLightFromSky();
     }
 
     @Override
@@ -162,7 +162,7 @@ public class MockBlock implements Block {
 
     @Override
     public boolean isBlockIndirectlyPowered() {
-       return realBlock.isBlockIndirectlyPowered();
+        return realBlock.isBlockIndirectlyPowered();
     }
 
     @Override
