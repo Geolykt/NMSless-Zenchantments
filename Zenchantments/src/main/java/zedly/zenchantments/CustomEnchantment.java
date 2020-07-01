@@ -632,7 +632,7 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
         }
         
         public Builder<T> conflicting() {
-            
+            customEnchantment.setConflicting(new HashSet<Class<? extends CustomEnchantment>>());
             return this;
         }
         
