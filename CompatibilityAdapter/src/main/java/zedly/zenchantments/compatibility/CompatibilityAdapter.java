@@ -1228,6 +1228,10 @@ public class CompatibilityAdapter {
     }
 
 
+    /**
+     * 
+     * @return True if damaged, false otherwise
+     */
     public boolean attackEntity(LivingEntity target, Player attacker, double damage) {
         return attackEntity(target, attacker, damage, true);
     }

@@ -34,31 +34,32 @@ public class Weight extends CustomEnchantment {
 
     @Override
     public boolean onBeingHit(EntityDamageByEntityEvent evt, int level, boolean usedHand) {
-        if (!(evt.getEntity() instanceof LivingEntity) ||
-            !ADAPTER.attackEntity((LivingEntity) evt.getEntity(), (Player) evt.getDamager(), 0)) {
+        if (!(evt.getEntity() instanceof Player) || //check if victim is a player
+            !(evt.getDamager() instanceof LivingEntity) || //check if the damager is alive
+            //check if the victim (player) can damage the attacker
+            !ADAPTER.attackEntity((LivingEntity) evt.getDamager(), (Player) evt.getEntity(), 0)) {
             return true;
         }
-
-        if (evt.getEntity() instanceof Player) {
-            Player player = (Player) evt.getEntity();
-            if (evt.getDamage() < player.getHealth()) {
-                evt.setCancelled(true);
-                player.damage(evt.getDamage());
-                player.setVelocity(player.getLocation().subtract(evt.getDamager().getLocation()).toVector()
+        Player player = (Player) evt.getEntity();
+        if (evt.getDamage() < player.getHealth()) {
+            //FIXME this looks like bad practice - plugins may not have a say in this and
+            //this would prevent the MONITOR priority of being used.
+            //This should be changed into something better sometime in the future
+            evt.setCancelled(true);
+            player.damage(evt.getDamage());
+            player.setVelocity(player.getLocation().subtract(evt.getDamager().getLocation()).toVector()
                                          .multiply((float) (1 / (level * power + 1.5))));
-                ItemStack[] s = player.getInventory().getArmorContents();
-                for (int i = 0; i < 4; i++) {
-                    if (s[i] != null) {
-                        Utilities.addUnbreaking(player, s[i], 1);
-                        if (Utilities.getDamage(s[i]) > s[i].getType().getMaxDurability()) {
-                            s[i] = null;
-                        }
+            ItemStack[] s = player.getInventory().getArmorContents();
+            for (int i = 0; i < 4; i++) {
+                if (s[i] != null) {
+                    Utilities.addUnbreaking(player, s[i], 1);
+                    if (Utilities.getDamage(s[i]) > s[i].getType().getMaxDurability()) {
+                        s[i] = null;
                     }
                 }
-                player.getInventory().setArmorContents(s);
             }
+            player.getInventory().setArmorContents(s);
         }
-
         return true;
     }
 
