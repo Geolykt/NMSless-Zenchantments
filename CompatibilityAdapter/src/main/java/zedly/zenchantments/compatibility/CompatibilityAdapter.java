@@ -192,7 +192,8 @@ public class CompatibilityAdapter {
     //endregion
     //region Woods
     //region Signs
-    private final EnumStorage<Material> SIGNS_E = new EnumStorage<>(new Material[]{ACACIA_SIGN});
+    private final EnumStorage<Material> SIGNS_E = new EnumStorage<>(new Material[]{DARK_OAK_SIGN, BIRCH_SIGN, JUNGLE_SIGN,
+            SPRUCE_SIGN, OAK_SIGN, ACACIA_SIGN});
 
     public EnumStorage<Material> Signs() {
         return SIGNS_E;
@@ -350,7 +351,7 @@ public class CompatibilityAdapter {
     //endregion
     //region Plants
     //region Deadly Plants
-    private final EnumStorage<Material> DEADLY_PLANTS_E = new EnumStorage<>(new Material[]{});
+    private final EnumStorage<Material> DEADLY_PLANTS_E = new EnumStorage<>(new Material[]{WITHER_ROSE, CACTUS, SWEET_BERRY_BUSH});
 
     public EnumStorage<Material> DeadlyPlants() {
         return DEADLY_PLANTS_E;
@@ -575,7 +576,7 @@ public class CompatibilityAdapter {
 
     //region Ores
     private final EnumStorage<Material> ORES_E = new EnumStorage<>(new Material[]{COAL_ORE, REDSTONE_ORE, DIAMOND_ORE,
-            GOLD_ORE, IRON_ORE, LAPIS_ORE, GLOWSTONE, NETHER_QUARTZ_ORE, EMERALD_ORE});
+            GOLD_ORE, IRON_ORE, LAPIS_ORE, GLOWSTONE, NETHER_QUARTZ_ORE, EMERALD_ORE, ANCIENT_DEBRIS});
 
     public EnumStorage<Material> Ores() {
         return ORES_E;
@@ -608,7 +609,7 @@ public class CompatibilityAdapter {
     //endregion
 
     //region Stones
-    private final EnumStorage<Material> STONES_E = new EnumStorage<>(new Material[]{STONE, GRANITE, ANDESITE, DIORITE});
+    private final EnumStorage<Material> STONES_E = new EnumStorage<>(new Material[]{STONE, GRANITE, ANDESITE, DIORITE, BASALT, BLACKSTONE});
 
     public EnumStorage<Material> Stones() {
         return STONES_E;
@@ -843,10 +844,16 @@ public class CompatibilityAdapter {
     //endregion
 
     //region Nether Brick Walls
-    private final EnumStorage<Material> NETHER_BRICK_WALLS_E = new EnumStorage<>(new Material[]{});
+    private final EnumStorage<Material> NETHER_BRICK_WALLS_E = new EnumStorage<>(new Material[]{Material.NETHER_BRICK_WALL});
 
     public EnumStorage<Material> NetherBrickWalls() {
         return NETHER_BRICK_WALLS_E;
+    }
+    
+    private final EnumStorage<Material> NETHERRACKS_E = new EnumStorage<>(new Material[]{Material.NETHERRACK, Material.WARPED_NYLIUM, Material.CRIMSON_NYLIUM});
+
+    public EnumStorage<Material> Netherracks() {
+        return NETHERRACKS_E;
     }
     //endregion
 
@@ -863,7 +870,7 @@ public class CompatibilityAdapter {
     //endregion
 
     //region Laser Blacklist Blocks
-    private final EnumStorage<Material> LASER_BLACKLIST_BLOCKS = new EnumStorage<>(new Material[]{OBSIDIAN});
+    private final EnumStorage<Material> LASER_BLACKLIST_BLOCKS = new EnumStorage<>(new Material[]{OBSIDIAN, CRYING_OBSIDIAN});
 
     public EnumStorage<Material> LaserBlackListBlocks() {
         return LASER_BLACKLIST_BLOCKS;
@@ -900,11 +907,11 @@ public class CompatibilityAdapter {
     //endregion
     //region Enchantment Enum Storage
     //region Terraformer Materials
-    private final EnumStorage<Material> TERRAFORMER_MATERIALS_E = new EnumStorage<>(new Material[]{STONE, GRASS_BLOCK,
+    private final EnumStorage<Material> TERRAFORMER_MATERIALS_E = new EnumStorage<>(new Material[]{GRASS_BLOCK,
             DIRT, COBBLESTONE, SAND, RED_SAND, GRAVEL, SANDSTONE, BRICK, TNT, BOOKSHELF, MOSSY_COBBLESTONE, ICE, SNOW_BLOCK, CLAY,
-            NETHERRACK, SOUL_SAND, STONE_BRICKS, MYCELIUM, NETHER_BRICK, END_STONE, EMERALD_ORE, QUARTZ_BLOCK, SLIME_BLOCK,
+            SOUL_SAND, STONE_BRICKS, MYCELIUM, NETHER_BRICK, END_STONE, EMERALD_ORE, QUARTZ_BLOCK, SLIME_BLOCK,
             PRISMARINE, PACKED_ICE, RED_SANDSTONE}, Ores(), Terracottas(), GlazedTerracottas(), Wools(), Woods(), Planks(),
-            StrippedLogs(), Logs(), Concretes(), ConcretePowders(), StainedGlass(), StrippedWoods());
+            StrippedLogs(), Logs(), Concretes(), ConcretePowders(), StainedGlass(), StrippedWoods(), Stones(), Netherracks());
 
     public EnumStorage<Material> TerraformerMaterials() {
         return TERRAFORMER_MATERIALS_E;
@@ -1023,8 +1030,8 @@ public class CompatibilityAdapter {
 
     //region Shred Picks
     private final EnumStorage<Material> SHRED_PICKS_E = new EnumStorage<>(new Material[]{STONE, GRANITE,
-            ANDESITE, DIORITE, NETHERRACK, GLOWSTONE, SANDSTONE, RED_SANDSTONE, ICE, PACKED_ICE, BLUE_ICE}, Ores(),
-            Terracottas());
+            ANDESITE, DIORITE, GLOWSTONE, SANDSTONE, RED_SANDSTONE, ICE, PACKED_ICE, BLUE_ICE, BASALT}, Ores(),
+            Terracottas(), Netherracks());
 
     public EnumStorage<Material> ShredPicks() {
         return SHRED_PICKS_E;
