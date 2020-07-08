@@ -1,3 +1,7 @@
+Got a question? Need help or want to discuss changes? Then feel free to DM me via discord: tristellar#9022
+<hr>
+NOTE: The fork will change to NBT Tags soon, make sure to discuss these changes! They won't be light!
+
 This fork only supports 1.16.1 and newer versions when the time comes
 
 # Zenchantments
