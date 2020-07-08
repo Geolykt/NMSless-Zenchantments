@@ -9,9 +9,9 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import zedly.zenchantments.enchantments.Fire;
 import zedly.zenchantments.enchantments.Spectral;
 import zedly.zenchantments.enums.Tool;
-import zedly.zenchantments.evt.AnvilMerge;
 import zedly.zenchantments.evt.WatcherEnchant;
 
 import java.io.File;
@@ -154,6 +154,7 @@ public class Config {
         WatcherEnchant.patch_cancel_netherstep = !patchCFG.getBoolean("patch_ench_protect.netherstep_removeBlocksInsteadOfCancel", false);
         WatcherEnchant.patch_cancel_frozenstep = !patchCFG.getBoolean("patch_ench_protect.frozenstep_removeBlocksInsteadOfCancel", false);
         Spectral.performWorldProtection = patchCFG.getBoolean("worldProtection.spectral", true);
+        Fire.useSoftcoded = patchCFG.getBoolean("recipe.useSoftCoded.fire", true);
     }
 
     public static Config getWorldConfig (World world) {

@@ -1,5 +1,7 @@
 package zedly.zenchantments.enchantments;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -11,6 +13,7 @@ import zedly.zenchantments.Storage;
 import zedly.zenchantments.compatibility.EnumStorage;
 import zedly.zenchantments.enums.Hand;
 import zedly.zenchantments.enums.Tool;
+import zedly.zenchantments.util.RecipeUtil;
 import zedly.zenchantments.util.Utilities;
 
 import java.util.List;
@@ -28,6 +31,8 @@ public class Fire extends CustomEnchantment {
     public static int[][] SEARCH_FACES_CHORUS = new int[][]{new int[]{-1, 0, 0}, new int[]{1, 0, 0}, new int[]{0, 1, 0}, new int[]{0, 0, -1}, new int[]{0, 0, 1}};
 
     public static final int ID = 13;
+    
+    public static boolean useSoftcoded = true;
     
     // Locations where Fire has been used on a block and the drop was changed. 
     // BlockBreakEvent is not cancelled but the original item drop is not desired.
@@ -53,6 +58,51 @@ public class Fire extends CustomEnchantment {
             return false;
         }
 
+        if (!useSoftcoded) {
+            return hardcodedDrop(evt, level, usedHand);
+        } else {
+            if (evt.isDropItems()) {
+                return true;
+            }
+            if (evt.getBlock().getType() == Material.CACTUS ||
+                evt.getBlock().getType() == Material.CHORUS_PLANT) {
+                return hardcodedDrop(evt, level, usedHand);
+            }
+            
+            ItemStack hand = Utilities.usedStack(evt.getPlayer(), usedHand);
+            Collection<ItemStack> original = evt.getBlock().getDrops(hand, evt.getPlayer());
+            List<ItemStack> newDrops = new ArrayList<ItemStack>();
+            for (ItemStack is: original) {
+                ItemStack ns = RecipeUtil.getSmeltedVariant(is);
+                int amount = ns.getAmount();
+                while (amount > ns.getMaxStackSize()) {
+                    ns.setAmount(ns.getMaxStackSize());
+                    newDrops.add(ns);
+                }
+                ns.setAmount(ns.getMaxStackSize());
+                newDrops.add(ns);
+            }
+            if (newDrops.size() != 0) {
+                Utilities.display(Utilities.getCenter(evt.getBlock()), Particle.FLAME, 10, .1f, .5f, .5f, .5f);
+                for (ItemStack is: newDrops) {
+                    evt.getBlock().getWorld().dropItemNaturally(evt.getBlock().getLocation(), is);
+                }
+                Block affectedBlock = evt.getBlock();
+                cancelledItemDrops.add(affectedBlock);
+                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Storage.zenchantments, () -> {
+                    cancelledItemDrops.remove(affectedBlock);
+                }, 5);
+
+                return true;
+            } else {
+                return false;
+            }
+        }
+        
+    }
+    
+    @Deprecated
+    private boolean hardcodedDrop(BlockBreakEvent evt, int level, boolean usedHand) {
         ItemStack hand = Utilities.usedStack(evt.getPlayer(), usedHand);
         Material original = evt.getBlock().getType();
         Material mat = AIR;

@@ -28,4 +28,5 @@ Anyone is free to contribute to this repository, however keep in mind that this 
 	<li>1.16.1 Compatible</li>
 	<li>Patched a bug which would spam the console when the Weight enchantment is used</li>
 	<li>Patched a bug which would result in a unbreaking 1 enchanted item, see https://github.com/Zedly/Zenchantments/issues/40</li>
+	<li>The fire enchantment no longer uses hardcoded recepies</li>
 </ul>
