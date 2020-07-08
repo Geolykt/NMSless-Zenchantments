@@ -252,8 +252,8 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
     }
 
     public static ItemStack fixItem(final ItemStack stack, World world) {
-        if (stack.hasItemMeta() ||
-            stack.getItemMeta().hasLore()) {
+        if (!stack.hasItemMeta() ||
+            !stack.getItemMeta().hasLore()) {
             return stack;
         }
         ItemMeta meta = stack.getItemMeta();
@@ -279,6 +279,7 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
     
     
     // Updates lore enchantments and descriptions to new format. This will be removed eventually
+    @Deprecated
     public static ItemStack updateToNewFormat(ItemStack stk, World world) {
         if (stk != null) {
             if (stk.hasItemMeta()) {
@@ -523,9 +524,7 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
         List<String> lore = new LinkedList<>();
         if (meta.hasLore()) {
             for (String loreStr : meta.getLore()) {
-                if (loreStr.toLowerCase(Locale.ENGLISH).contains(ench.loreName.toLowerCase(Locale.ENGLISH))) {
-                    lore.add(ench.getShown(level, world));
-                } else {
+                if (!loreStr.toLowerCase(Locale.ENGLISH).contains(ench.loreName.toLowerCase(Locale.ENGLISH))) {
                     lore.add(loreStr);
                 }
             }
@@ -533,7 +532,9 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
 
         if (ench != null && level > 0 && level <= ench.maxLevel) {
             meta.getPersistentDataContainer().set(ench.getKey(), PersistentDataType.SHORT, (short) level);
+            lore.add(ench.getShown(level, world));
         }
+        
         meta.setLore(lore);
         stk.setItemMeta(meta);
         
