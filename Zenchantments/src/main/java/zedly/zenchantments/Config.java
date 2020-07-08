@@ -11,7 +11,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import zedly.zenchantments.enchantments.Spectral;
 import zedly.zenchantments.enums.Tool;
-import zedly.zenchantments.evt.AnvilMerge;
 import zedly.zenchantments.evt.WatcherEnchant;
 
 import java.io.File;
