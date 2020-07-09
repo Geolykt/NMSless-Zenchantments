@@ -251,33 +251,6 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
         });
     }
 
-    public static ItemStack fixItem(final ItemStack stack, World world) {
-        if (stack.hasItemMeta() ||
-            stack.getItemMeta().hasLore()) {
-            return stack;
-        }
-        ItemMeta meta = stack.getItemMeta();
-        LinkedHashMap<CustomEnchantment, Integer> enchs = new LinkedHashMap<>();
-        ArrayList<String> normalLore = new ArrayList<String>();
-        for (String lore : meta.getLore()) {
-            if (lore != null) {
-                Map.Entry<CustomEnchantment, Integer> ench = getEnchant(lore, world);
-                if (ench == null) {
-                    normalLore.add(lore);
-                } else {
-                    enchs.put(ench.getKey(), ench.getValue());
-                }
-            }
-        }
-        meta.setLore(normalLore);
-        stack.setItemMeta(meta);
-        for (Map.Entry<CustomEnchantment, Integer> ench: enchs.entrySet()) {
-            setEnchantment(stack, ench.getKey(), ench.getValue(), world);
-        }
-        return stack;
-    }
-    
-    
     // Updates lore enchantments and descriptions to new format. This will be removed eventually
     public static ItemStack updateToNewFormat(ItemStack stk, World world) {
         if (stk != null) {
