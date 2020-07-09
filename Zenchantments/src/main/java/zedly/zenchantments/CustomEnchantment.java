@@ -2,7 +2,6 @@ package zedly.zenchantments;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -16,9 +15,6 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
-
 import zedly.zenchantments.compatibility.CompatibilityAdapter;
 import zedly.zenchantments.enchantments.*;
 import zedly.zenchantments.enums.Hand;
@@ -53,7 +49,6 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
     private boolean used;
     // Indicates that an enchantment has already been applied to an event, avoiding infinite regress
     protected boolean isCursed;
-    protected NamespacedKey key;
 
     public abstract Builder<? extends CustomEnchantment> defaults();
 
@@ -360,7 +355,6 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
                 }
             }
         }
-        
         LinkedHashMap<CustomEnchantment, Integer> finalMap = new LinkedHashMap<>();
         for (int id : new int[]{Lumber.ID, Shred.ID, Mow.ID, Pierce.ID, Extraction.ID, Plough.ID}) {
             CustomEnchantment e = null;
@@ -430,7 +424,8 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
 
     public String getShown(int level, World world) {
         String levelStr = Utilities.getRomanString(level);
-        return (isCursed ? Config.get(world).getCurseColor() : Config.get(world).getEnchantmentColor()) + loreName + " "
+        return Utilities.toInvisibleString("ze.ench." + getId() + '.' + level)
+                + (isCursed ? Config.get(world).getCurseColor() : Config.get(world).getEnchantmentColor()) + loreName + " "
                 + (maxLevel == 1 ? "" : levelStr);
     }
 
@@ -486,31 +481,36 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
         }
         ItemMeta meta = stk.getItemMeta();
         List<String> lore = new LinkedList<>();
+        List<String> normalLore = new LinkedList<>();
+        boolean customEnch = false;
         if (meta.hasLore()) {
             for (String loreStr : meta.getLore()) {
-                if (loreStr.toLowerCase(Locale.ENGLISH).contains(ench.loreName.toLowerCase(Locale.ENGLISH))) {
-                    lore.add(ench.getShown(level, world));
-                } else {
-                    lore.add(loreStr);
+                Map.Entry<CustomEnchantment, Integer> enchEntry = getEnchant(loreStr, world);
+                if (enchEntry == null && !isDescription(loreStr)) {
+                    normalLore.add(loreStr);
+                } else if (enchEntry != null && enchEntry.getKey() != ench) {
+                    customEnch = true;
+                    lore.add(enchEntry.getKey().getShown(enchEntry.getValue(), world));
+                    lore.addAll(enchEntry.getKey().getDescription(world));
                 }
             }
         }
 
         if (ench != null && level > 0 && level <= ench.maxLevel) {
-            meta.getPersistentDataContainer().set(ench.getKey(), PersistentDataType.SHORT, (short) level);
+            lore.add(ench.getShown(level, world));
+            lore.addAll(ench.getDescription(world));
+            customEnch = true;
         }
+
+        lore.addAll(normalLore);
         meta.setLore(lore);
         stk.setItemMeta(meta);
-        
-        if (stk.getType() == BOOK) {
+
+        if (customEnch && stk.getType() == BOOK) {
             stk.setType(ENCHANTED_BOOK);
         }
 
-        setGlow(stk, true, world);
-    }
-
-    public NamespacedKey getKey() {
-        return key;
+        setGlow(stk, customEnch, world);
     }
 
     public static void setGlow(ItemStack stk, boolean customEnch, World world) {
@@ -575,7 +575,6 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
         public Builder(Supplier<T> sup, int id) {
             customEnchantment = sup.get();
             customEnchantment.setId(id);
-            customEnchantment.key = new NamespacedKey(Storage.zenchantments, "ench." + id);
         }
 
         public Builder<T> maxLevel(int maxLevel) {
