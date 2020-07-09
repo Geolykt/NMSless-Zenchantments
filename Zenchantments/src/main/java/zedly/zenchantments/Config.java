@@ -9,6 +9,7 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import zedly.zenchantments.enchantments.Arborist;
 import zedly.zenchantments.enchantments.Fire;
 import zedly.zenchantments.enchantments.Spectral;
 import zedly.zenchantments.enums.Tool;
@@ -160,6 +161,8 @@ public class Config {
         WatcherEnchant.patch_cancel_frozenstep = !patchCFG.getBoolean("patch_ench_protect.frozenstep_removeBlocksInsteadOfCancel", false);
         Spectral.performWorldProtection = patchCFG.getBoolean("worldProtection.spectral", true);
         Fire.useSoftcoded = patchCFG.getBoolean("recipe.useSoftCoded.fire", true);
+        Arborist.useSoftcoded = patchCFG.getBoolean("recipe.useSoftCoded.arborist", true);
+        Arborist.doGoldenAppleDrop = patchCFG.getBoolean("recipe.misc.arborist-doGoldenAppleDro", true);
     }
 
     public static Config getWorldConfig (World world) {

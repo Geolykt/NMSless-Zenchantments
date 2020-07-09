@@ -10,3 +10,9 @@ patch_ench_protect:
   frozenstep_removeBlocksInsteadOfCancel: false
 worldProtection:
   spectral: true
+recipe:
+  useSoftCoded:
+    fire: true
+    arborist: true
+  misc:
+    arborist-doGoldenAppleDrop: true
