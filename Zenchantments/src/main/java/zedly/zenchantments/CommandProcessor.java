@@ -36,7 +36,6 @@ public class CommandProcessor {
                 case "list":
                 case "help":
                 case "version":
-                case "fixitem":
                     break;
                 case "give":
                     if (args.length == 2) {
@@ -387,8 +386,6 @@ public class CommandProcessor {
                     + "Enables selected enchantment for the user");
             player.sendMessage(ChatColor.DARK_AQUA + "- " + "ench version: " + ChatColor.AQUA
                     + "Shows the version the plugin runs on.");
-            player.sendMessage(ChatColor.DARK_AQUA + "- " + "ench fixitem: " + ChatColor.AQUA
-                    + "Converts a pre-1.7.1 into an NBT compatible item. Cannot fix corrupted items.");
             return true;
         }
         return false;
@@ -426,20 +423,11 @@ public class CommandProcessor {
                     return enable(player, config, args);
                 case "version":
                     return versionInfo(player);
-                case "fixitem":
-                    return fixitem(player.getPlayer());
                 case "help":
                 default:
                     return helpEnchantment(sender, label) || enchant(player, config, args, label, stack);
             }
         }
-        return true;
-    }
-
-    private static boolean fixitem(Player player) {
-        player.sendMessage(Storage.logo + ChatColor.BLUE + " Attempting to convert the item, please beware that this may"
-                + " not work and that that action is not supported for long.");
-        player.getInventory().setItemInMainHand(CustomEnchantment.fixItem(player.getInventory().getItemInMainHand(), player.getWorld()));
         return true;
     }
 }

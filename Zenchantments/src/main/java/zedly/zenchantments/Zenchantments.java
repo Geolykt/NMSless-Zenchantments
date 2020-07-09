@@ -134,7 +134,6 @@ public class Zenchantments extends JavaPlugin {
                     player.getInventory().getArmorContents(), player.getInventory().getContents())) {
                 CustomEnchantment.setEnchantment(stk, null, 0, player.getWorld());
                 CustomEnchantment.updateToNewFormat(stk, player.getWorld());
-                CustomEnchantment.fixItem(stk, player.getWorld());
             }
         }
     }
