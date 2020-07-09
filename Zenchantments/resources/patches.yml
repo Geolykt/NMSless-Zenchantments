@@ -1,3 +1,5 @@
+alerts:
+  NBT: true
 piston:
   enable: true
 explosion:

@@ -148,6 +148,11 @@ public class Config {
             Storage.zenchantments.saveResource("patches.yml", false);
         }
         FileConfiguration patchCFG = YamlConfiguration.loadConfiguration(patchFile);
+        if (patchCFG.getBoolean("alerts.NBT", true)) {
+            Bukkit.broadcastMessage(Storage.logo + ChatColor.RED + " You are useing NMSless-Zenchantments, "
+                    + "this version cannot update to the regular version safely. Please also keep in mind that"
+                    + " you must convert your items into the new format via /ench fixitem");
+        }
         WatcherEnchant.apply_patch_explosion = patchCFG.getBoolean("explosion.enable", true);
         WatcherEnchant.apply_patch_piston = patchCFG.getBoolean("piston.enable", true);
         WatcherEnchant.patch_cancel_explosion = !patchCFG.getBoolean("explosion.removeBlocksInsteadOfCancel", false);
