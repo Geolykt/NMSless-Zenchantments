@@ -369,28 +369,21 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
     public static LinkedHashMap<CustomEnchantment, Integer> getEnchants(ItemStack stk, boolean acceptBooks,
             World world,
             List<String> outExtraLore) {
-        
         Map<CustomEnchantment, Integer> map = new LinkedHashMap<>();
         if (stk != null && (acceptBooks || stk.getType() != Material.ENCHANTED_BOOK)) {
             if (stk.hasItemMeta()) {
-                final PersistentDataContainer cont = stk.getItemMeta().getPersistentDataContainer();
-                Set<NamespacedKey> keys = cont.getKeys();
-                
-                for (NamespacedKey key : keys) {
-                    if (!key.getNamespace().equals("zenchantments")) {
-                        continue;
+                if (stk.getItemMeta().hasLore()) {
+                    List<String> lore = stk.getItemMeta().getLore();
+                    for (String raw : lore) {
+                        Map.Entry<CustomEnchantment, Integer> ench = getEnchant(raw, world);
+                        if (ench != null) {
+                            map.put(ench.getKey(), ench.getValue());
+                        } else {
+                            if (outExtraLore != null) {
+                                outExtraLore.add(raw);
+                            }
+                        }
                     }
-                    if (!key.getKey().split("\\.")[0].equals("ench")) {
-                        continue;
-                    }
-                    
-                    Integer level = (int) cont.getOrDefault(key, PersistentDataType.SHORT, (short) 0);
-                    Short id = Short.decode(key.getKey().split("\\.")[1]);
-                    CustomEnchantment ench = Config.get(world).enchantFromID(id);
-                    if (ench == null) {
-                        continue;
-                    }
-                    map.put(ench, level);
                 }
             }
         }
@@ -413,7 +406,6 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
     }
 
     // Returns the custom enchantment from the lore name
-    @Deprecated
     private static Map.Entry<CustomEnchantment, Integer> getEnchant(String raw, World world) {
         Map<String, Boolean> unescaped = Utilities.fromInvisibleString(raw);
         for (Map.Entry<String, Boolean> entry : unescaped.entrySet()) {
