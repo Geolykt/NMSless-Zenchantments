@@ -61,8 +61,8 @@ public class Fire extends CustomEnchantment {
         if (!useSoftcoded) {
             return hardcodedDrop(evt, level, usedHand);
         } else {
-            if (evt.isDropItems()) {
-                return true;
+            if (!evt.isDropItems()) {
+                return false;
             }
             if (evt.getBlock().getType() == Material.CACTUS ||
                 evt.getBlock().getType() == Material.CHORUS_PLANT) {
@@ -74,12 +74,14 @@ public class Fire extends CustomEnchantment {
             List<ItemStack> newDrops = new ArrayList<ItemStack>();
             for (ItemStack is: original) {
                 ItemStack ns = RecipeUtil.getSmeltedVariant(is);
+                int oldAmount = ns.getAmount();
                 int amount = ns.getAmount();
                 while (amount > ns.getMaxStackSize()) {
                     ns.setAmount(ns.getMaxStackSize());
                     newDrops.add(ns);
+                    amount -= ns.getMaxStackSize();
                 }
-                ns.setAmount(ns.getMaxStackSize());
+                ns.setAmount(oldAmount);
                 newDrops.add(ns);
             }
             if (newDrops.size() != 0) {
