@@ -3,6 +3,7 @@ package zedly.zenchantments;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -17,6 +18,9 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
+
 import zedly.zenchantments.compatibility.CompatibilityAdapter;
 import zedly.zenchantments.enchantments.*;
 import zedly.zenchantments.enums.Hand;
@@ -52,6 +56,7 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
     private boolean used;
     // Indicates that an enchantment has already been applied to an event, avoiding infinite regress
     protected boolean isCursed;
+    protected NamespacedKey key;
 
     public abstract Builder<? extends CustomEnchantment> defaults();
 
@@ -251,7 +256,35 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
         });
     }
 
+    public static ItemStack fixItem(final ItemStack stack, World world) {
+        if (!stack.hasItemMeta() ||
+            !stack.getItemMeta().hasLore()) {
+            return stack;
+        }
+        ItemMeta meta = stack.getItemMeta();
+        LinkedHashMap<CustomEnchantment, Integer> enchs = new LinkedHashMap<>();
+        ArrayList<String> normalLore = new ArrayList<String>();
+        for (String lore : meta.getLore()) {
+            if (lore != null) {
+                Map.Entry<CustomEnchantment, Integer> ench = getEnchant(lore, world);
+                if (ench == null) {
+                    normalLore.add(lore);
+                } else {
+                    enchs.put(ench.getKey(), ench.getValue());
+                }
+            }
+        }
+        meta.setLore(normalLore);
+        stack.setItemMeta(meta);
+        for (Map.Entry<CustomEnchantment, Integer> ench: enchs.entrySet()) {
+            setEnchantment(stack, ench.getKey(), ench.getValue(), world);
+        }
+        return stack;
+    }
+    
+    
     // Updates lore enchantments and descriptions to new format. This will be removed eventually
+    @Deprecated
     public static ItemStack updateToNewFormat(ItemStack stk, World world) {
         if (stk != null) {
             if (stk.hasItemMeta()) {
@@ -342,24 +375,32 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
     public static LinkedHashMap<CustomEnchantment, Integer> getEnchants(ItemStack stk, boolean acceptBooks,
             World world,
             List<String> outExtraLore) {
+        
         Map<CustomEnchantment, Integer> map = new LinkedHashMap<>();
         if (stk != null && (acceptBooks || stk.getType() != Material.ENCHANTED_BOOK)) {
             if (stk.hasItemMeta()) {
-                if (stk.getItemMeta().hasLore()) {
-                    List<String> lore = stk.getItemMeta().getLore();
-                    for (String raw : lore) {
-                        Map.Entry<CustomEnchantment, Integer> ench = getEnchant(raw, world);
-                        if (ench != null) {
-                            map.put(ench.getKey(), ench.getValue());
-                        } else {
-                            if (outExtraLore != null) {
-                                outExtraLore.add(raw);
-                            }
-                        }
+                final PersistentDataContainer cont = stk.getItemMeta().getPersistentDataContainer();
+                Set<NamespacedKey> keys = cont.getKeys();
+                
+                for (NamespacedKey key : keys) {
+                    if (!key.getNamespace().equals("zenchantments")) {
+                        continue;
                     }
+                    if (!key.getKey().split("\\.")[0].equals("ench")) {
+                        continue;
+                    }
+                    
+                    Integer level = (int) cont.getOrDefault(key, PersistentDataType.SHORT, (short) 0);
+                    Short id = Short.decode(key.getKey().split("\\.")[1]);
+                    CustomEnchantment ench = Config.get(world).enchantFromID(id);
+                    if (ench == null) {
+                        continue;
+                    }
+                    map.put(ench, level);
                 }
             }
         }
+        
         LinkedHashMap<CustomEnchantment, Integer> finalMap = new LinkedHashMap<>();
         for (int id : new int[]{Lumber.ID, Shred.ID, Mow.ID, Pierce.ID, Extraction.ID, Plough.ID}) {
             CustomEnchantment e = null;
@@ -378,6 +419,7 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
     }
 
     // Returns the custom enchantment from the lore name
+    @Deprecated
     private static Map.Entry<CustomEnchantment, Integer> getEnchant(String raw, World world) {
         Map<String, Boolean> unescaped = Utilities.fromInvisibleString(raw);
         for (Map.Entry<String, Boolean> entry : unescaped.entrySet()) {
@@ -429,8 +471,7 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
 
     public String getShown(int level, World world) {
         String levelStr = Utilities.getRomanString(level);
-        return Utilities.toInvisibleString("ze.ench." + getId() + '.' + level)
-                + (isCursed ? Config.get(world).getCurseColor() : Config.get(world).getEnchantmentColor()) + loreName + " "
+        return (isCursed ? Config.get(world).getCurseColor() : Config.get(world).getEnchantmentColor()) + loreName + " "
                 + (maxLevel == 1 ? "" : levelStr);
     }
 
@@ -486,35 +527,36 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
         }
         ItemMeta meta = stk.getItemMeta();
         List<String> lore = new LinkedList<>();
-        List<String> normalLore = new LinkedList<>();
-        boolean customEnch = false;
         if (meta.hasLore()) {
             for (String loreStr : meta.getLore()) {
-                Map.Entry<CustomEnchantment, Integer> enchEntry = getEnchant(loreStr, world);
-                if (enchEntry == null && !isDescription(loreStr)) {
-                    normalLore.add(loreStr);
-                } else if (enchEntry != null && enchEntry.getKey() != ench) {
-                    customEnch = true;
-                    lore.add(enchEntry.getKey().getShown(enchEntry.getValue(), world));
-                    lore.addAll(enchEntry.getKey().getDescription(world));
+                if (!loreStr.toLowerCase(Locale.ENGLISH).contains(ench.loreName.toLowerCase(Locale.ENGLISH))) {
+                    lore.add(loreStr);
                 }
             }
         }
 
         if (ench != null && level > 0 && level <= ench.maxLevel) {
+            meta.getPersistentDataContainer().set(ench.getKey(), PersistentDataType.SHORT, (short) level);
             lore.add(ench.getShown(level, world));
-            lore.addAll(ench.getDescription(world));
-            customEnch = true;
         }
-        lore.addAll(normalLore);
+        
+        //Disenchant item
+        if (ench != null && level <= 0 && meta.getPersistentDataContainer().has(ench.getKey(), PersistentDataType.SHORT)) {
+            meta.getPersistentDataContainer().remove(ench.getKey());
+        }
+        
         meta.setLore(lore);
         stk.setItemMeta(meta);
-
-        if (customEnch && stk.getType() == BOOK) {
+        
+        if (stk.getType() == BOOK) {
             stk.setType(ENCHANTED_BOOK);
         }
 
-        setGlow(stk, customEnch, world);
+        setGlow(stk, true, world);
+    }
+
+    public NamespacedKey getKey() {
+        return key;
     }
 
     public static void setGlow(ItemStack stk, boolean customEnch, World world) {
@@ -579,6 +621,7 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
         public Builder(Supplier<T> sup, int id) {
             customEnchantment = sup.get();
             customEnchantment.setId(id);
+            customEnchantment.key = new NamespacedKey(Storage.zenchantments, "ench." + id);
         }
 
         public Builder<T> maxLevel(int maxLevel) {

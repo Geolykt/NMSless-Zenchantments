@@ -576,7 +576,7 @@ public class CompatibilityAdapter {
 
     //region Ores
     private final EnumStorage<Material> ORES_E = new EnumStorage<>(new Material[]{COAL_ORE, REDSTONE_ORE, DIAMOND_ORE,
-            GOLD_ORE, IRON_ORE, LAPIS_ORE, GLOWSTONE, NETHER_QUARTZ_ORE, EMERALD_ORE});
+            GOLD_ORE, IRON_ORE, LAPIS_ORE, GLOWSTONE, NETHER_QUARTZ_ORE, EMERALD_ORE, ANCIENT_DEBRIS});
 
     public EnumStorage<Material> Ores() {
         return ORES_E;
@@ -609,7 +609,7 @@ public class CompatibilityAdapter {
     //endregion
 
     //region Stones
-    private final EnumStorage<Material> STONES_E = new EnumStorage<>(new Material[]{STONE, GRANITE, ANDESITE, DIORITE});
+    private final EnumStorage<Material> STONES_E = new EnumStorage<>(new Material[]{STONE, GRANITE, ANDESITE, DIORITE, BASALT, BLACKSTONE});
 
     public EnumStorage<Material> Stones() {
         return STONES_E;
@@ -850,7 +850,7 @@ public class CompatibilityAdapter {
         return NETHER_BRICK_WALLS_E;
     }
     
-    private final EnumStorage<Material> NETHERRACKS_E = new EnumStorage<>(new Material[]{Material.NETHERRACK});
+    private final EnumStorage<Material> NETHERRACKS_E = new EnumStorage<>(new Material[]{Material.NETHERRACK, Material.WARPED_NYLIUM, Material.CRIMSON_NYLIUM});
 
     public EnumStorage<Material> Netherracks() {
         return NETHERRACKS_E;
@@ -870,7 +870,7 @@ public class CompatibilityAdapter {
     //endregion
 
     //region Laser Blacklist Blocks
-    private final EnumStorage<Material> LASER_BLACKLIST_BLOCKS = new EnumStorage<>(new Material[]{OBSIDIAN});
+    private final EnumStorage<Material> LASER_BLACKLIST_BLOCKS = new EnumStorage<>(new Material[]{OBSIDIAN, CRYING_OBSIDIAN});
 
     public EnumStorage<Material> LaserBlackListBlocks() {
         return LASER_BLACKLIST_BLOCKS;
@@ -934,7 +934,7 @@ public class CompatibilityAdapter {
     private final EnumStorage<EntityType> TRANSFORMATION_ENTITY_TYPES_FROM_E = new EnumStorage<>(new EntityType[]{
             HUSK, WITCH, EntityType.COD, PHANTOM, HORSE, SKELETON, EntityType.CHICKEN, SQUID, OCELOT, POLAR_BEAR, COW, PIG,
             SPIDER, SLIME, GUARDIAN, ENDERMITE, SKELETON_HORSE, EntityType.RABBIT, SHULKER, SNOWMAN, DROWNED, VINDICATOR,
-            EntityType.SALMON, BLAZE, DONKEY, STRAY, PARROT, DOLPHIN, WOLF, SHEEP, MUSHROOM_COW, PIG_ZOMBIE, CAVE_SPIDER,
+            EntityType.SALMON, BLAZE, DONKEY, STRAY, PARROT, DOLPHIN, WOLF, SHEEP, MUSHROOM_COW, ZOMBIFIED_PIGLIN, CAVE_SPIDER,
             MAGMA_CUBE, ELDER_GUARDIAN, SILVERFISH, ZOMBIE_HORSE, EntityType.RABBIT, ENDERMAN, IRON_GOLEM, ZOMBIE, EVOKER,
             PUFFERFISH, VEX, MULE, WITHER_SKELETON, BAT, TURTLE, ZOMBIE_VILLAGER, VILLAGER, EntityType.TROPICAL_FISH, GHAST,
             LLAMA, CREEPER});
@@ -945,7 +945,7 @@ public class CompatibilityAdapter {
 
     private final EnumStorage<EntityType> TRANSFORMATION_ENTITY_TYPES_TO_E = new EnumStorage<>(new EntityType[]{
             DROWNED, VINDICATOR, EntityType.SALMON, BLAZE, DONKEY, STRAY, PARROT, DOLPHIN, WOLF, SHEEP, MUSHROOM_COW,
-            PIG_ZOMBIE, CAVE_SPIDER, MAGMA_CUBE, ELDER_GUARDIAN, SILVERFISH, ZOMBIE_HORSE, EntityType.RABBIT, ENDERMAN,
+            ZOMBIFIED_PIGLIN, CAVE_SPIDER, MAGMA_CUBE, ELDER_GUARDIAN, SILVERFISH, ZOMBIE_HORSE, EntityType.RABBIT, ENDERMAN,
             IRON_GOLEM, ZOMBIE, EVOKER, PUFFERFISH, VEX, MULE, WITHER_SKELETON, BAT, TURTLE, OCELOT, POLAR_BEAR, COW, PIG,
             SPIDER, SLIME, GUARDIAN, ENDERMITE, SKELETON_HORSE, EntityType.RABBIT, SHULKER, SNOWMAN, ZOMBIE_VILLAGER,
             VILLAGER, EntityType.TROPICAL_FISH, GHAST, LLAMA, SKELETON, EntityType.CHICKEN, SQUID, HUSK, WITCH,
@@ -1030,7 +1030,7 @@ public class CompatibilityAdapter {
 
     //region Shred Picks
     private final EnumStorage<Material> SHRED_PICKS_E = new EnumStorage<>(new Material[]{STONE, GRANITE,
-            ANDESITE, DIORITE, GLOWSTONE, SANDSTONE, RED_SANDSTONE, ICE, PACKED_ICE, BLUE_ICE}, Ores(),
+            ANDESITE, DIORITE, GLOWSTONE, SANDSTONE, RED_SANDSTONE, ICE, PACKED_ICE, BLUE_ICE, BASALT}, Ores(),
             Terracottas(), Netherracks());
 
     public EnumStorage<Material> ShredPicks() {

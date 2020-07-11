@@ -150,8 +150,9 @@ public class Config {
         }
         FileConfiguration patchCFG = YamlConfiguration.loadConfiguration(patchFile);
         if (patchCFG.getBoolean("alerts.NBT", true)) {
-            Bukkit.broadcastMessage(Storage.logo + ChatColor.RED + " You are useing NMSless-Zenchantments "
-                    + "with persistent data storage reverted. While this makes it work in 1.15.2, this is not recommended");
+            Bukkit.broadcastMessage(Storage.logo + ChatColor.RED + " You are useing NMSless-Zenchantments, "
+                    + "this version cannot update to the regular version safely. Please also keep in mind that"
+                    + " you must convert your items into the new format via /ench fixitem");
         }
         WatcherEnchant.apply_patch_explosion = patchCFG.getBoolean("explosion.enable", true);
         WatcherEnchant.apply_patch_piston = patchCFG.getBoolean("piston.enable", true);
