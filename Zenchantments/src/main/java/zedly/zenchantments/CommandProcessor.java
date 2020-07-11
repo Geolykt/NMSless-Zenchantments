@@ -3,12 +3,16 @@ package zedly.zenchantments;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import me.zombie_striker.psudocommands.CommandUtils;
 import zedly.zenchantments.enums.Tool;
 
 import java.util.*;
@@ -408,8 +412,23 @@ public class CommandProcessor {
     }
 
     private static boolean ench(CommandSender infoReciever, String enchantmentName, Integer level, String targetModif) {
-        
-        return false;
+        Entity[] target = CommandUtils.getTargets(infoReciever, targetModif);
+        if (target.length == 0) {
+            infoReciever.sendMessage(Storage.logo + ChatColor.AQUA + "No entities changed.");
+            return true;
+        }
+        for (Entity e: target) {
+            if (e instanceof Player) {
+                ench(infoReciever, enchantmentName, level);
+            } else if (e instanceof Monster) {
+                ItemStack stack = ((Monster) e).getEquipment().getItemInMainHand();
+                if (stack != null) {
+                    CustomEnchantment.setEnchantment(stack, Config.get(e.getWorld()).enchantFromString(enchantmentName), level, e.getWorld());
+                    ((Monster) e).getEquipment().setItemInMainHand(stack);
+                }
+            }
+        }
+        return true;
     }
 
     private static boolean ench(CommandSender target, String enchantmentName, Integer level) {
@@ -421,6 +440,7 @@ public class CommandProcessor {
                 return true;
             } else {
                 CustomEnchantment.setEnchantment(player.getInventory().getItemInMainHand(), ench, level, player.getWorld());
+                player.sendMessage(Storage.logo + ChatColor.AQUA + "Your tool in hand was enchanted with " + ChatColor.BLUE + ench.getLoreName() + ChatColor.AQUA + ".");
             }
             return true;
         }
