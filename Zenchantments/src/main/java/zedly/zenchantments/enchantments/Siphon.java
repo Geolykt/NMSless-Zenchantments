@@ -18,6 +18,8 @@ import static zedly.zenchantments.enums.Tool.SWORD;
 public class Siphon extends CustomEnchantment {
 
     public static final int ID = 53;
+    public static double ratio = 0.5;
+    public static boolean calcAmour = true;
 
     @Override
     public Builder<Siphon> defaults() {
@@ -38,10 +40,15 @@ public class Siphon extends CustomEnchantment {
         if (evt.getEntity() instanceof LivingEntity
                 && ADAPTER.attackEntity((LivingEntity) evt.getEntity(), (Player) evt.getDamager(), 0)) {
             Player player = (Player) evt.getDamager();
-            int difference = (int) Math.round(.17 * level * power * evt.getDamage());
+            int difference = 0;
+            if (calcAmour) {
+                difference = (int) Math.round(.17 * level * power * evt.getFinalDamage());
+            } else {
+                difference = (int) Math.round(.17 * level * power * evt.getDamage());
+            }
             while (difference > 0) {
                 if (player.getHealth()+1 <= player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()) {
-                    player.setHealth(player.getHealth() + 1);
+                    player.setHealth(player.getHealth() + ratio);
                 } else {
                     return true;
                 }

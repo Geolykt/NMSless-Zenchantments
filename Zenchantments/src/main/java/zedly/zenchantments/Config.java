@@ -11,6 +11,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import zedly.zenchantments.enchantments.Arborist;
 import zedly.zenchantments.enchantments.Fire;
+import zedly.zenchantments.enchantments.Siphon;
 import zedly.zenchantments.enchantments.Spectral;
 import zedly.zenchantments.enums.Tool;
 import zedly.zenchantments.evt.WatcherEnchant;
@@ -163,6 +164,8 @@ public class Config {
         Fire.useSoftcoded = patchCFG.getBoolean("recipe.useSoftCoded.fire", true);
         Arborist.useSoftcoded = patchCFG.getBoolean("recipe.useSoftCoded.arborist", true);
         Arborist.doGoldenAppleDrop = patchCFG.getBoolean("recipe.misc.arborist-doGoldenAppleDro", true);
+        Siphon.ratio = patchCFG.getDouble("nerfs.siphonRatio", 0.5);
+        Siphon.calcAmour = patchCFG.getBoolean("nerfs.siphonsubstractAmour", true);
     }
 
     public static Config getWorldConfig (World world) {

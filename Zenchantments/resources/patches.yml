@@ -16,3 +16,6 @@ recipe:
     arborist: true
   misc:
     arborist-doGoldenAppleDrop: true
+nerfs:
+  siphonRatio: 0.5
+  siphonsubstractAmour: true
