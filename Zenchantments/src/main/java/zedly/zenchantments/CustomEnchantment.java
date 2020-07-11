@@ -540,6 +540,11 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
             lore.add(ench.getShown(level, world));
         }
         
+        //Disenchant item
+        if (ench != null && level <= 0 && meta.getPersistentDataContainer().has(ench.getKey(), PersistentDataType.SHORT)) {
+            meta.getPersistentDataContainer().remove(ench.getKey());
+        }
+        
         meta.setLore(lore);
         stk.setItemMeta(meta);
         

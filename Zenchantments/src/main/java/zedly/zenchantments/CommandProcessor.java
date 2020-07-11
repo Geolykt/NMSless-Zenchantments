@@ -3,7 +3,6 @@ package zedly.zenchantments;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -440,7 +439,12 @@ public class CommandProcessor {
                 return true;
             } else {
                 CustomEnchantment.setEnchantment(player.getInventory().getItemInMainHand(), ench, level, player.getWorld());
-                player.sendMessage(Storage.logo + ChatColor.AQUA + "Your tool in hand was enchanted with " + ChatColor.BLUE + ench.getLoreName() + ChatColor.AQUA + ".");
+                if (level <= 0) {
+                    player.sendMessage(Storage.logo + ChatColor.AQUA + "The enchantment " + ChatColor.BLUE + ench.getLoreName() + ChatColor.AQUA + " was removed from your tool.");
+                } else {
+                    player.sendMessage(Storage.logo + ChatColor.AQUA + "Your tool in hand was enchanted with " + ChatColor.BLUE + ench.getLoreName() + ChatColor.AQUA + " at level " + ChatColor.BLUE + level + ChatColor.AQUA + ".");
+                    
+                }
             }
             return true;
         }

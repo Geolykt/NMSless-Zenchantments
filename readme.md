@@ -32,7 +32,10 @@ Anyone is free to contribute to this repository via pull requests or comments, h
  <li>Minor changes:
   <ul>
    <li>Various minor performance boosts</li>
-   <li>The fire enchantment no longer uses hardcoded recepies</li>
+   <li>The fire and aborist enchantment no longer uses hardcoded recepies</li>
+   <li>Command blocks and console now can use more commands</li>
+   <li>Allow to target other players and using target modifiers in the enchantment command</li>
+   <li>Added informative enchantment use events - cannot be cancelled as of yet</li>
   </ul>
  </li>
  <li>Patches:
@@ -44,7 +47,7 @@ Anyone is free to contribute to this repository via pull requests or comments, h
    <li>Patched a bug which would result in a unbreaking 1 enchanted item, see https://github.com/Zedly/Zenchantments/issues/40</li>
   </ul>
  </li>
- <li>Code changes:
+ <li>Code changes (doesn't affect behaviour as much):
   <ul>
    <li>A lot of whitespace changes; this repo is 100% 4-space indented</li>
    <li>Removed unused variables and methods</li>
