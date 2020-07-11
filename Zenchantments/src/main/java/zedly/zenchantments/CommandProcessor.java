@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
 import zedly.zenchantments.enums.Tool;
 
 import java.util.*;
@@ -99,58 +100,6 @@ public class CommandProcessor {
             }
             return results;
         }
-    }
-
-    // Adds or removes the given enchantment of the given level to the item stack
-    static ItemStack addEnchantments(Config config, Player player, CustomEnchantment enchantment, ItemStack stack,
-            String levelStr, boolean isHeld) {
-        if (config == null) {
-            return stack;
-        }
-
-        // Check if the player is holding an item
-        if (stack.getType() == AIR) {
-            if (player != null) {
-                player.sendMessage(Storage.logo + "You need to be holding an item!");
-            }
-            return stack;
-        }
-
-        // Check if the item can be enchanted
-        if (!enchantment.validMaterial(stack) && stack.getType() != BOOK && stack.getType() != ENCHANTED_BOOK) {
-            if (player != null) {
-                player.sendMessage(Storage.logo + "The enchantment " + ChatColor.DARK_AQUA + enchantment.loreName
-                        + ChatColor.AQUA + " cannot be added to this item.");
-            }
-            return stack;
-        }
-
-        // Get the level
-        int level;
-        try {
-            level = Math.min(Integer.parseInt(levelStr), enchantment.maxLevel);
-        } catch (NumberFormatException e) {
-            level = 1;
-        }
-
-        enchantment.setEnchantment(stack, level, config.getWorld());
-
-        if (level != 0) {
-            if (isHeld && player != null) {
-                player.sendMessage(Storage.logo + "The enchantment " + ChatColor.DARK_AQUA + enchantment.loreName
-                        + ChatColor.AQUA + " has been added.");
-            }
-        } else {
-            if (!isHeld) {
-                return null;
-            }
-            if (player != null) {
-                player.sendMessage(Storage.logo + "The enchantment " + ChatColor.DARK_AQUA + enchantment.loreName
-                        + ChatColor.AQUA + " has been removed.");
-            }
-        }
-
-        return stack;
     }
 
     // Reloads the Zenchantments plugin
@@ -248,7 +197,15 @@ public class CommandProcessor {
     }
 
     // Lists the Custom Enchantments applicable to the held tool
-    private static boolean listEnchantment(EnchantPlayer player, Config config, ItemStack stack) {
+    private static boolean listEnchantment(CommandSender sender) {
+        if (!(sender instanceof Player)) {
+            return false;
+        }
+        
+        EnchantPlayer player = EnchantPlayer.matchPlayer((Player) sender);
+        Config config = Config.get(player.getPlayer().getWorld());
+        ItemStack stack = player.getPlayer().getInventory().getItemInMainHand();
+        
         if (!player.hasPermission("zenchantments.command.list")) {
             player.sendMessage(Storage.logo + "You do not have permission to do this!");
             return true;
@@ -264,7 +221,14 @@ public class CommandProcessor {
     }
 
     // Gives information on each enchantment on the given tool or on the enchantment named in the parameter
-    private static boolean infoEnchantment(EnchantPlayer player, Config config, String[] args) {
+    private static boolean infoEnchantment(CommandSender sender, String[] args) {
+        if (!(sender instanceof Player)) {
+            return false;
+        }
+        
+        EnchantPlayer player = EnchantPlayer.matchPlayer((Player) sender);
+        Config config = Config.get(player.getPlayer().getWorld());
+        
         if (!player.hasPermission("zenchantments.command.info")) {
             player.sendMessage(Storage.logo + "You do not have permission to do this!");
             return true;
@@ -295,7 +259,14 @@ public class CommandProcessor {
     }
 
     // Disables the given enchantment for the player
-    private static boolean disable(EnchantPlayer player, Config config, String[] args) {
+    private static boolean disable(CommandSender sender, String[] args) {
+        if (!(sender instanceof Player)) {
+            return false;
+        }
+        
+        EnchantPlayer player = EnchantPlayer.matchPlayer((Player) sender);
+        Config config = Config.get(player.getPlayer().getWorld());
+        
         if (!player.hasPermission("zenchantments.command.onoff")) {
             player.sendMessage(Storage.logo + "You do not have permission to do this!");
             return true;
@@ -321,7 +292,14 @@ public class CommandProcessor {
     }
 
     // Enables the given enchantment for the player
-    private static boolean enable(EnchantPlayer player, Config config, String[] args) {
+    private static boolean enable(CommandSender sender, String[] args) {
+        if (!(sender instanceof Player)) {
+            return false;
+        }
+        
+        EnchantPlayer player = EnchantPlayer.matchPlayer((Player) sender);
+        Config config = Config.get(player.getPlayer().getWorld());
+        
         if (!player.hasPermission("zenchantments.command.onoff")) {
             player.sendMessage(Storage.logo + "You do not have permission to do this!");
             return true;
@@ -342,29 +320,6 @@ public class CommandProcessor {
         } else {
             player.sendMessage(
                     Storage.logo + ChatColor.DARK_AQUA + "Usage: " + ChatColor.AQUA + "/ench enable <enchantment/all>");
-        }
-        return true;
-    }
-
-    // Enchants the held item with enchantments determined by the parameters
-    private static boolean enchant(EnchantPlayer player, Config config, String[] args, String label, ItemStack stack) {
-        if (!player.hasPermission("zenchantments.command.enchant")) {
-            player.sendMessage(Storage.logo + "You do not have permission to do this!");
-            return true;
-        }
-
-        CustomEnchantment ench = config.enchantFromString(label);
-        if (ench != null) {
-            player.getPlayer().getInventory().setItemInMainHand(
-                    addEnchantments(Config.get(player.getPlayer().getWorld()),
-                            player.getPlayer(),
-                            ench,
-                            stack,
-                            args.length >= 2 ? args[1] : "1",
-                            true)
-            );
-        } else {
-            player.sendMessage(Storage.logo + "That enchantment does not exist!");
         }
         return true;
     }
@@ -394,8 +349,8 @@ public class CommandProcessor {
         return false;
     }
 
-    private static boolean versionInfo(EnchantPlayer player) {
-        player.sendMessage("Using Zenchantments " + Storage.version + ". This server utilises the dev-geolykt fork of Zenchantments, so issues should be reported to Geolykt (mail@geolykt.de), not to Zedly.");
+    private static boolean versionInfo(CommandSender sender) {
+        sender.sendMessage("Using Zenchantments " + Storage.version + ". This server utilises the dev-geolykt fork of Zenchantments, so issues should be reported to Geolykt (mail@geolykt.de), not to Zedly.");
         return true;
     }
 
@@ -408,38 +363,78 @@ public class CommandProcessor {
                     return reload(sender);
                 case "give":
                     return give(sender, args);
-            }
-            if (!(sender instanceof Player)) {
-                return false;
-            }
-            EnchantPlayer player = EnchantPlayer.matchPlayer((Player) sender);
-            Config config = Config.get(player.getPlayer().getWorld());
-            ItemStack stack = player.getPlayer().getInventory().getItemInMainHand();
-            switch (label) {
                 case "list":
-                    return listEnchantment(player, config, stack);
+                    return listEnchantment(sender);
                 case "info":
-                    return infoEnchantment(player, config, args);
+                    return infoEnchantment(sender, args);
                 case "disable":
-                    return disable(player, config, args);
+                    return disable(sender, args);
                 case "enable":
-                    return enable(player, config, args);
+                    return enable(sender, args);
                 case "version":
-                    return versionInfo(player);
+                    return versionInfo(sender);
                 case "fixitem":
-                    return fixitem(player.getPlayer());
+                    return fixitem(sender);
                 case "help":
                 default:
-                    return helpEnchantment(sender, label) || enchant(player, config, args, label, stack);
+                    return helpEnchantment(sender, label) || enchant(sender, args);
             }
         }
         return true;
     }
 
-    private static boolean fixitem(Player player) {
-        player.sendMessage(Storage.logo + ChatColor.BLUE + " Attempting to convert the item, please beware that this may"
+    private static boolean enchant(CommandSender sender, String[] args) {
+        switch (args.length) {
+        case 0:
+            return false;
+        case 1:
+            return ench(sender,args[0], 1);
+        case 2:
+            try {
+                return ench(sender, args[0], Integer.decode(args[1]));
+            } catch (NumberFormatException e) {
+                sender.sendMessage(Storage.logo + ChatColor.RED + "Argument 2 is not a number, however an Integer was expected");
+                return false;
+            }
+        case 3:
+        default:
+            try {
+                return ench(sender, args[0], Integer.decode(args[1]), args[2]);
+            } catch (NumberFormatException e) {
+                sender.sendMessage(Storage.logo + ChatColor.RED + "Argument 2 is not a number, however an Integer was expected");
+                return false;
+            }
+        }
+    }
+
+    private static boolean ench(CommandSender infoReciever, String enchantmentName, Integer level, String targetModif) {
+        
+        return false;
+    }
+
+    private static boolean ench(CommandSender target, String enchantmentName, Integer level) {
+        if (target instanceof Player) {
+            Player player = (Player) target;
+            CustomEnchantment ench = Config.get(player.getWorld()).enchantFromString(enchantmentName);
+            if (ench == null) {
+                player.sendMessage(Storage.logo + ChatColor.RED + "This is not a valid enchantment");
+                return true;
+            } else {
+                CustomEnchantment.setEnchantment(player.getInventory().getItemInMainHand(), ench, level, player.getWorld());
+            }
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean fixitem(CommandSender sender) {
+        if (!(sender instanceof Player)) {
+            return false;
+        }
+        
+        sender.sendMessage(Storage.logo + ChatColor.BLUE + " Attempting to convert the item, please beware that this may"
                 + " not work and that that action is not supported for long.");
-        player.getInventory().setItemInMainHand(CustomEnchantment.fixItem(player.getInventory().getItemInMainHand(), player.getWorld()));
+        ((Player)sender).getInventory().setItemInMainHand(CustomEnchantment.fixItem(((Player)sender).getInventory().getItemInMainHand(), ((Player)sender).getWorld()));
         return true;
     }
 }
