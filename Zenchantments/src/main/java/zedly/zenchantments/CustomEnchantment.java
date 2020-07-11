@@ -1,5 +1,6 @@
 package zedly.zenchantments;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -11,6 +12,7 @@ import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerShearEntityEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
@@ -19,6 +21,7 @@ import zedly.zenchantments.compatibility.CompatibilityAdapter;
 import zedly.zenchantments.enchantments.*;
 import zedly.zenchantments.enums.Hand;
 import zedly.zenchantments.enums.Tool;
+import zedly.zenchantments.evt.ench.ZenchantmentUseEvent;
 import zedly.zenchantments.util.Utilities;
 
 import java.util.*;
@@ -237,6 +240,8 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
                     ench.used = true;
                     if (action.test(ench, level)) {
                         EnchantPlayer.matchPlayer(player).setCooldown(ench.id, ench.cooldown);
+                        final ZenchantmentUseEvent evt = new ZenchantmentUseEvent(player, EquipmentSlot.HAND, ench, level);
+                        Bukkit.getPluginManager().callEvent(evt);
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -501,7 +506,6 @@ public abstract class CustomEnchantment implements Comparable<CustomEnchantment>
             lore.addAll(ench.getDescription(world));
             customEnch = true;
         }
-
         lore.addAll(normalLore);
         meta.setLore(lore);
         stk.setItemMeta(meta);
