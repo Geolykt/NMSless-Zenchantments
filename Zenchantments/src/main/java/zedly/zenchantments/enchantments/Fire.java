@@ -110,7 +110,7 @@ public class Fire extends CustomEnchantment {
         if (original == CACTUS) {
             List<Block> bks = Utilities.BFS(evt.getBlock(), MAX_BLOCKS, false, 256,
                     SEARCH_FACES_CACTUS, Sets.immutableEnumSet(CACTUS), new HashSet<Material>(),
-                    true);
+                    false, true);
 
             for (int i = bks.size() - 1; i >= 0; i--) {
                 Block block = bks.get(i);
@@ -132,7 +132,7 @@ public class Fire extends CustomEnchantment {
         } else if (original == CHORUS_PLANT) {
             List<Block> bks = Utilities.BFS(evt.getBlock(), MAX_BLOCKS, false, 256,
                     SEARCH_FACES_CHORUS, Sets.immutableEnumSet(CHORUS_PLANT, CHORUS_FLOWER), new HashSet<Material>(),
-                    true);
+                    false, true);
 
             for (int i = bks.size() - 1; i >= 0; i--) {
                 Block block = bks.get(i);

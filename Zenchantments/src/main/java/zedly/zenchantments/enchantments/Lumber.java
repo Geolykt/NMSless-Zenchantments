@@ -66,12 +66,13 @@ public class Lumber extends CustomEnchantment {
             return false;
         }
         Block startBlock = evt.getBlock();
-        if (LUMBER_TRUNKS.contains(startBlock.getType())) {
+        
+        if (!LUMBER_TRUNKS.contains(startBlock.getType())) {
             return false;
         }
         
         List<Block> blocks = Utilities.BFS(startBlock, MAX_BLOCKS, true, Float.MAX_VALUE, SEARCH_FACES, LUMBER_TRUNKS,
-                LUMBER_ALLOWLIST, true);
+                LUMBER_ALLOWLIST, true, false);
         for (Block b : blocks) {
             ADAPTER.breakBlockNMS(b, evt.getPlayer());
         }

@@ -517,14 +517,36 @@ public class Utilities {
         }
     }
 
-    public static List<Block> BFS(Block startBlock, int maxBlocks, boolean strictMax, float maxDistFromOrigin,
-            int[][] searchFaces, Set<Material> validFind, Set<Material> validSearch, boolean strictValidSearch) {
+
+    /**
+     * Returns a list of blocks found using the BFS algorithm given the passed search parameters
+     * @param startBlock The starting position of the BFS algorithm
+     * @param maxBlocks The max number of blocks to found (will return empty list if strict is true)
+     * @param strictMax true -> return nothing if maxBlocks number is exceeded; false -> return current find if maxBlock number is exceeded
+     * @param maxDistFromOrigin The max distance the center of a found block can be from the center of startBlock to be a valid find
+     * @param searchFaces The block faces to search
+     * @param validFind valid materials for a found block
+     * @param validSearch valid materials for a searched block; Will return empty list if not one of these
+     * @param strictValidSearch true -> return nothing if denylist block is found; false -> return current find if blacklist block is found
+     * @param flipValidSearch true -> validSearch is a allowlist; false -> validSearch is a denylist
+     */
+    public static List<Block> BFS(Block startBlock, int maxBlocks, boolean strictMax, float maxDistFromOrigin, int[][] searchFaces,
+            Set<Material> validFind, Set<Material> validSearch,  boolean strictValidSearch, boolean flipValidSearch) {
+
+        // Ensure the search list is in the allowlist
+        if (!flipValidSearch) {
+            HashSet<Material> validSearchNew = new HashSet<Material>();
+            validSearchNew.addAll(validSearch);
+            validSearchNew.addAll(validFind);
+            validSearch = validSearchNew;
+        }
+
         // BFS through the trunk, cancel if forbidden blocks are adjacent or search body becomes too large
 
         // Searched blocks
         Set<Block> searchedBlocks = new LinkedHashSet<>();
 
-        // Searched blocks that match the whitelist
+        // Searched blocks that match the allowlist
         List<Block> foundBlocks = new ArrayList<>();
 
         // Blocks that still need to be searched
@@ -550,8 +572,11 @@ public class Utilities {
                     // See if its been searched before
                     if (!searchedBlocks.contains(nextBlock)) {
 
-                        // Determine if the block is in the whitelist and flip the condition if flipValidSearch
+                        // Determine if the block is in the allowlist and flip the condition if flipValidSearch
                         boolean check = validSearch.contains(nextBlock.getType());
+                        if (flipValidSearch) {
+                            check = !check;
+                        }
 
                         // Add to search body if it meets the condition, else return
                         if (check) {

@@ -9,8 +9,8 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.*;
 import org.bukkit.block.data.type.*;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.material.Colorable;
 
 import com.google.common.collect.Sets;
 
@@ -24,7 +24,6 @@ import zedly.zenchantments.util.Utilities;
 
 import java.util.*;
 
-import static org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK;
 import static zedly.zenchantments.enums.Tool.SHOVEL;
 
 public class Spectral extends CustomEnchantment {
@@ -56,7 +55,7 @@ public class Spectral extends CustomEnchantment {
             return false;
         }
 
-        if (evt.getAction() != RIGHT_CLICK_BLOCK) {
+        if (evt.getAction() != Action.RIGHT_CLICK_BLOCK) {
             return false;
         }
         Set<Block> potentialBlocks = new HashSet<>();
@@ -64,7 +63,7 @@ public class Spectral extends CustomEnchantment {
         if (evt.getPlayer().isSneaking()) {
             potentialBlocks.addAll(Utilities.BFS(evt.getClickedBlock(), MAX_BLOCKS, false, Float.MAX_VALUE,
                     SEARCH_FACES, Sets.immutableEnumSet(evt.getClickedBlock().getType()),
-                    new HashSet<Material>(), true));
+                    new HashSet<Material>(), false, true));
         }
         
         int blocksChanged = 0;
@@ -102,6 +101,7 @@ public class Spectral extends CustomEnchantment {
     private static boolean isDirtlike(Material in) {
         switch (in) {
         case GRASS_BLOCK:
+        case GRASS_PATH:
         case DIRT:
         case MYCELIUM:
         case PODZOL:
@@ -210,6 +210,15 @@ public class Spectral extends CustomEnchantment {
             }
         } else if (Tag.CORAL_PLANTS.isTagged(original)) {
             Material[] items = Tag.CORAL_PLANTS.getValues().toArray(new Material[0]);
+            for (int i = 0; i < items.length; i++) {
+                if (items[i].equals(original)) {
+                    newMat = items[(i+1)%items.length];
+                    changed = true;
+                    break;
+                }
+            }
+        } else if (Tag.SAND.isTagged(original)) {
+            Material[] items = Tag.SAND.getValues().toArray(new Material[0]);
             for (int i = 0; i < items.length; i++) {
                 if (items[i].equals(original)) {
                     newMat = items[(i+1)%items.length];
