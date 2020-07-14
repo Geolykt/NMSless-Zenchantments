@@ -26,16 +26,19 @@ Anyone is free to contribute to this repository via pull requests or comments, h
   <ul>
    <li>Removed NMS</li>
    <li>Using NBT tags to store enchantments other than invisble lore</li>
+   <li>Using Datapack tags instead of hardcoded values for some stuff</li>
    <li>1.16.1 and upwards compatible</li>
+   <li>Rewrote large portions of the compatibillity adapter</li>
   </ul>
  </li>
  <li>Minor changes:
   <ul>
    <li>Various minor performance boosts</li>
-   <li>The fire and aborist enchantment no longer uses hardcoded recepies</li>
+   <li>The fire and aborist enchantment no longer use hardcoded recepies</li>
    <li>Command blocks and console now can use more commands</li>
    <li>Allow to target other players and using target modifiers in the enchantment command</li>
    <li>Added informative enchantment use events - cannot be cancelled as of yet</li>
+   <li>Recoded the giant stack of if-else statements in the spectral class</li>
   </ul>
  </li>
  <li>Patches:
