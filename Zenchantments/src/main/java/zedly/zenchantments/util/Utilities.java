@@ -16,7 +16,6 @@ import org.bukkit.potion.PotionEffectType;
 
 import zedly.zenchantments.EnchantPlayer;
 import zedly.zenchantments.Storage;
-import zedly.zenchantments.compatibility.EnumStorage;
 
 import java.util.*;
 
@@ -518,25 +517,8 @@ public class Utilities {
         }
     }
 
-    // Returns a list of blocks found using the BFS algorithm given the passed search parameters
-    //
-    // startBlock: The starting position of the BFS algorithm
-    // maxBlocks: The max number of blocks to found (will return empty list if strict is true)
-    // maxDistFromOrigin: The max distance the center of a found block can be from the center of startBlock to be a valid find
-    // strictMax: true -> return nothing if maxBlocks num is exceeded; false -> return current find if maxBlock num is exceeded
-    // searchFaces: The block faces to search
-    // validFind: valid materials for a found block
-    // validSearch: valid materials for a searched block; Will return empty list if not one of these
-    // strictValidSearch: true -> return nothing if blacklist block is found; false -> return current find if blacklist block is found
-    // flipValidSearch: true -> validSearch is a blacklist; false -> validSearch is a whitelist
-    public static List<Block> BFS(Block startBlock, int maxBlocks, boolean strictMax, float maxDistFromOrigin, int[][] searchFaces,
-        EnumStorage<Material> validFind, EnumStorage<Material> validSearch,  boolean strictValidSearch, boolean flipValidSearch) {
-
-        // Ensure the search list is in the whitelist
-        if (!flipValidSearch) {
-            validSearch = new EnumStorage<>(new Material[]{}, validSearch, validFind);
-        }
-
+    public static List<Block> BFS(Block startBlock, int maxBlocks, boolean strictMax, float maxDistFromOrigin,
+            int[][] searchFaces, Set<Material> validFind, Set<Material> validSearch, boolean strictValidSearch) {
         // BFS through the trunk, cancel if forbidden blocks are adjacent or search body becomes too large
 
         // Searched blocks
@@ -570,9 +552,6 @@ public class Utilities {
 
                         // Determine if the block is in the whitelist and flip the condition if flipValidSearch
                         boolean check = validSearch.contains(nextBlock.getType());
-                        if (flipValidSearch) {
-                            check = !check;
-                        }
 
                         // Add to search body if it meets the condition, else return
                         if (check) {
@@ -607,5 +586,4 @@ public class Utilities {
 
         return foundBlocks;
     }
-
 }

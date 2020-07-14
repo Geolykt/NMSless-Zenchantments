@@ -5,12 +5,13 @@ import java.util.Collection;
 import java.util.HashSet;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
+
+import com.google.common.collect.Sets;
+
 import zedly.zenchantments.CustomEnchantment;
 import zedly.zenchantments.Storage;
-import zedly.zenchantments.compatibility.EnumStorage;
 import zedly.zenchantments.enums.Hand;
 import zedly.zenchantments.enums.Tool;
 import zedly.zenchantments.util.RecipeUtil;
@@ -20,7 +21,6 @@ import java.util.List;
 import java.util.Set;
 
 import static org.bukkit.Material.*;
-import static org.bukkit.entity.EntityType.EXPERIENCE_ORB;
 import static zedly.zenchantments.enums.Tool.*;
 
 public class Fire extends CustomEnchantment {
@@ -59,14 +59,15 @@ public class Fire extends CustomEnchantment {
         }
 
         if (!useSoftcoded) {
-            return hardcodedDrop(evt, level, usedHand);
+            Bukkit.getLogger().info("Hardcoded fire enchantment drops have been removed.");
+            return false;
         } else {
             if (!evt.isDropItems()) {
                 return false;
             }
             if (evt.getBlock().getType() == Material.CACTUS ||
                 evt.getBlock().getType() == Material.CHORUS_PLANT) {
-                return hardcodedDrop(evt, level, usedHand);
+                return cactusDrop(evt, level, usedHand);
             }
             
             ItemStack hand = Utilities.usedStack(evt.getPlayer(), usedHand);
@@ -103,51 +104,13 @@ public class Fire extends CustomEnchantment {
         
     }
     
-    @Deprecated
-    private boolean hardcodedDrop(BlockBreakEvent evt, int level, boolean usedHand) {
-        ItemStack hand = Utilities.usedStack(evt.getPlayer(), usedHand);
+    private boolean cactusDrop(BlockBreakEvent evt, int level, boolean usedHand) {
         Material original = evt.getBlock().getType();
-        Material mat = AIR;
-        if (Tool.PICKAXE.contains(hand)) {
-            if (Storage.COMPATIBILITY_ADAPTER.FireRaw().contains(original)) {
-                mat = Storage.COMPATIBILITY_ADAPTER.FireCooked().get(
-                        Storage.COMPATIBILITY_ADAPTER.FireRaw().indexOf(original));
-            }
-            if (original == GOLD_ORE || original == IRON_ORE) {
-                ExperienceOrb o
-                        = (ExperienceOrb) evt.getBlock().getWorld().spawnEntity(Utilities.getCenter(evt.getBlock()),
-                                EXPERIENCE_ORB);
-                o.setExperience(original == IRON_ORE ? Storage.rnd.nextInt(5) + 1 : Storage.rnd.nextInt(5) + 3);
-            }
-        }
-
-        if (original == WET_SPONGE) {
-            mat = SPONGE;
-        } else if (Storage.COMPATIBILITY_ADAPTER.Sands().contains(original)) {
-            mat = GLASS;
-        } else if (Storage.COMPATIBILITY_ADAPTER.Logs().contains(original)
-                || Storage.COMPATIBILITY_ADAPTER.StrippedLogs().contains(original)
-                || Storage.COMPATIBILITY_ADAPTER.StrippedWoods().contains(original)
-                || Storage.COMPATIBILITY_ADAPTER.Woods().contains(original)) {
-            mat = CHARCOAL;
-        } else if (original == CLAY) {
-            Utilities.display(Utilities.getCenter(evt.getBlock()), Particle.FLAME, 10, .1f, .5f, .5f, .5f);
-            for (int x = 0; x < 4; x++) {
-                evt.getBlock().getWorld()
-                        .dropItemNaturally(evt.getBlock().getLocation(), new ItemStack(BRICK));
-            }
-
-            Block affectedBlock = evt.getBlock();
-            cancelledItemDrops.add(affectedBlock);
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Storage.zenchantments, () -> {
-                cancelledItemDrops.remove(affectedBlock);
-            }, 5);
-
-            return true;
-        } else if (original == CACTUS) {
+        
+        if (original == CACTUS) {
             List<Block> bks = Utilities.BFS(evt.getBlock(), MAX_BLOCKS, false, 256,
-                    SEARCH_FACES_CACTUS, new EnumStorage<>(new Material[]{CACTUS}), new EnumStorage<>(new Material[]{}),
-                    false, true);
+                    SEARCH_FACES_CACTUS, Sets.immutableEnumSet(CACTUS), new HashSet<Material>(),
+                    true);
 
             for (int i = bks.size() - 1; i >= 0; i--) {
                 Block block = bks.get(i);
@@ -155,7 +118,7 @@ public class Fire extends CustomEnchantment {
                 Utilities.display(Utilities.getCenter(block), Particle.FLAME, 10, .1f, .5f, .5f, .5f);
 
                 evt.getBlock().getWorld().dropItemNaturally(Utilities.getCenter(block.getLocation()),
-                        new ItemStack(Storage.COMPATIBILITY_ADAPTER.Dyes().get(13), 1));
+                        new ItemStack(Material.GREEN_DYE, 1));
                 block.setType(AIR);
 
                 cancelledItemDrops.add(block);
@@ -168,8 +131,8 @@ public class Fire extends CustomEnchantment {
             return true;
         } else if (original == CHORUS_PLANT) {
             List<Block> bks = Utilities.BFS(evt.getBlock(), MAX_BLOCKS, false, 256,
-                    SEARCH_FACES_CHORUS, new EnumStorage<>(new Material[]{CHORUS_PLANT, CHORUS_FLOWER}), new EnumStorage<>(new Material[]{}),
-                    false, true);
+                    SEARCH_FACES_CHORUS, Sets.immutableEnumSet(CHORUS_PLANT, CHORUS_FLOWER), new HashSet<Material>(),
+                    true);
 
             for (int i = bks.size() - 1; i >= 0; i--) {
                 Block block = bks.get(i);
@@ -192,18 +155,6 @@ public class Fire extends CustomEnchantment {
                 }, 5);
 
             }
-            return true;
-        }
-        if (mat != AIR) {
-            evt.getBlock().getWorld().dropItemNaturally(evt.getBlock().getLocation(), new ItemStack((mat), 1));
-
-            Utilities.display(Utilities.getCenter(evt.getBlock()), Particle.FLAME, 10, .1f, .5f, .5f, .5f);
-            Block affectedBlock = evt.getBlock();
-            cancelledItemDrops.add(affectedBlock);
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Storage.zenchantments, () -> {
-                cancelledItemDrops.remove(affectedBlock);
-            }, 5);
-
             return true;
         }
         return false;

@@ -1,6 +1,7 @@
 package zedly.zenchantments.enchantments;
 
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.entity.Sheep;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerShearEntityEvent;
@@ -36,15 +37,15 @@ public class Rainbow extends CustomEnchantment {
     @Override
     public boolean onBlockBreak(BlockBreakEvent evt, int level, boolean usedHand) {
         Material dropMaterial;
-        if (Storage.COMPATIBILITY_ADAPTER.SmallFlowers().contains(evt.getBlock().getType())) {
-            dropMaterial = Storage.COMPATIBILITY_ADAPTER.SmallFlowers().getRandom();
-        } else if (Storage.COMPATIBILITY_ADAPTER.LargeFlowers().contains(evt.getBlock().getType())) {
-            dropMaterial = Storage.COMPATIBILITY_ADAPTER.LargeFlowers().getRandom();
+        if (Tag.SMALL_FLOWERS.isTagged(evt.getBlock().getType())) {
+            dropMaterial = Tag.SMALL_FLOWERS.getValues().toArray(new Material[0])[Storage.rnd.nextInt(Tag.SMALL_FLOWERS.getValues().size())];
+        } else if (Tag.TALL_FLOWERS.isTagged(evt.getBlock().getType())) {
+            dropMaterial = Tag.TALL_FLOWERS.getValues().toArray(new Material[0])[Storage.rnd.nextInt(Tag.TALL_FLOWERS.getValues().size())];
         } else {
             return false;
         }
         evt.setCancelled(true);
-        if (Storage.COMPATIBILITY_ADAPTER.LargeFlowers().contains(evt.getBlock().getRelative(DOWN).getType())) {
+        if (Tag.TALL_FLOWERS.isTagged(evt.getBlock().getRelative(DOWN).getType())) {
             evt.getBlock().getRelative(DOWN).setType(AIR);
         }
         evt.getBlock().setType(AIR);
@@ -62,7 +63,7 @@ public class Rainbow extends CustomEnchantment {
             evt.setCancelled(true);
             sheep.setSheared(true);
             evt.getEntity().getWorld().dropItemNaturally(evt.getEntity().getLocation(),
-                new ItemStack(Storage.COMPATIBILITY_ADAPTER.Wools().getRandom(), count));
+                new ItemStack(Tag.WOOL.getValues().toArray(new Material[0])[Storage.rnd.nextInt(Tag.WOOL.getValues().size())], count));
         }
         return true;
     }

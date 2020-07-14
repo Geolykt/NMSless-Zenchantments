@@ -1,6 +1,7 @@
 package zedly.zenchantments.enchantments;
 
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import zedly.zenchantments.CustomEnchantment;
@@ -33,17 +34,17 @@ public class Variety extends CustomEnchantment {
     @Override
     public boolean onBlockBreak(BlockBreakEvent evt, int level, boolean usedHand) {
         Material mat = evt.getBlock().getType();
-        if (Storage.COMPATIBILITY_ADAPTER.Logs().contains(mat)) {
+        if (Tag.LOGS.isTagged(mat)) {
             evt.getBlock().setType(AIR);
             evt.getBlock().getWorld()
                .dropItemNaturally(evt.getBlock().getLocation(),
-                   new ItemStack(Storage.COMPATIBILITY_ADAPTER.Logs().getRandom()));
+                   new ItemStack(Tag.LOGS.getValues().toArray(new Material[0])[Storage.rnd.nextInt(Tag.LOGS.getValues().size())]));
             Utilities.damageTool(evt.getPlayer(), 1, usedHand);
-        } else if (Storage.COMPATIBILITY_ADAPTER.Leaves().contains(mat)) {
+        } else if (Tag.LEAVES.isTagged(mat)) {
             evt.getBlock().setType(AIR);
             evt.getBlock().getWorld()
                .dropItemNaturally(evt.getBlock().getLocation(),
-                   new ItemStack(Storage.COMPATIBILITY_ADAPTER.Leaves().getRandom()));
+                   new ItemStack(Tag.LEAVES.getValues().toArray(new Material[0])[Storage.rnd.nextInt(Tag.LEAVES.getValues().size())]));
             Utilities.damageTool(evt.getPlayer(), 1, usedHand);
         }
         return true;

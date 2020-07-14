@@ -5,7 +5,6 @@ import org.bukkit.block.Block;
 import org.bukkit.event.player.PlayerInteractEvent;
 import zedly.zenchantments.CustomEnchantment;
 import zedly.zenchantments.Storage;
-import zedly.zenchantments.compatibility.EnumStorage;
 import zedly.zenchantments.enums.Hand;
 import zedly.zenchantments.enums.Tool;
 import zedly.zenchantments.util.Utilities;
@@ -13,6 +12,8 @@ import zedly.zenchantments.util.Utilities;
 import static org.bukkit.Material.*;
 import static org.bukkit.event.block.Action.RIGHT_CLICK_BLOCK;
 import static zedly.zenchantments.enums.Tool.SHOVEL;
+
+import java.util.HashSet;
 
 public class Terraformer extends CustomEnchantment {
 
@@ -55,7 +56,7 @@ public class Terraformer extends CustomEnchantment {
                 }
 
                 for (Block b : Utilities.BFS(start, MAX_BLOCKS, false, 5.f, SEARCH_FACES,
-                    Storage.COMPATIBILITY_ADAPTER.Airs(), new EnumStorage<>(new Material[]{}), false, true)) {
+                    Storage.COMPATIBILITY_ADAPTER.Airs(), new HashSet<Material>(), true)) {
                     if (b.getType().equals(AIR)) {
                         if (Utilities.hasItem(evt.getPlayer(), mat, 1)) {
                             if (Storage.COMPATIBILITY_ADAPTER.placeBlock(b, evt.getPlayer(), mat, null)) {

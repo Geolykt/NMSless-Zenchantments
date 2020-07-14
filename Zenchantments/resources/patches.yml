@@ -11,9 +11,6 @@ patch_ench_protect:
 worldProtection:
   spectral: true
 recipe:
-  useSoftCoded:
-    fire: true
-    arborist: true
   misc:
     arborist-doGoldenAppleDrop: true
 nerfs:

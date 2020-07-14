@@ -1,6 +1,7 @@
 package zedly.zenchantments.enchantments;
 
 import org.bukkit.Bukkit;
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -8,11 +9,12 @@ import org.bukkit.block.data.*;
 import org.bukkit.block.data.type.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.material.Colorable;
+
+import com.google.common.collect.Sets;
 
 import zedly.zenchantments.CustomEnchantment;
 import zedly.zenchantments.Storage;
-import zedly.zenchantments.compatibility.CompatibilityAdapter;
-import zedly.zenchantments.compatibility.EnumStorage;
 import zedly.zenchantments.enums.Hand;
 import zedly.zenchantments.enums.Tool;
 import zedly.zenchantments.evt.BlockSpectralChangeEvent;
@@ -59,8 +61,8 @@ public class Spectral extends CustomEnchantment {
         potentialBlocks.add(evt.getClickedBlock());
         if (evt.getPlayer().isSneaking()) {
             potentialBlocks.addAll(Utilities.BFS(evt.getClickedBlock(), MAX_BLOCKS, false, Float.MAX_VALUE,
-                    SEARCH_FACES, new EnumStorage<>(new Material[]{evt.getClickedBlock().getType()}),
-                    new EnumStorage<>(new Material[]{}), false, true));
+                    SEARCH_FACES, Sets.immutableEnumSet(evt.getClickedBlock().getType()),
+                    new HashSet<Material>(), true));
         }
         
         int blocksChanged = 0;
@@ -91,12 +93,28 @@ public class Spectral extends CustomEnchantment {
         return doEvent(evt, level, usedHand);
     }
     
+    private static DyeColor nextCol(DyeColor oldCol) {
+        return DyeColor.values()[(oldCol.ordinal()+1)%DyeColor.values().length];
+    }
 
     private boolean cycleBlockType(Block block) {
-        CompatibilityAdapter adapter = Storage.COMPATIBILITY_ADAPTER;
+//        CompatibilityAdapter adapter = Storage.COMPATIBILITY_ADAPTER;
         Material original = block.getType();
         Material newMat = original;
         boolean changed = false;
+        
+        if (block.getBlockData() instanceof Colorable) {
+            Bukkit.getLogger().info("Colorable");
+            
+        } else {
+            Bukkit.getLogger().info("Not colorable");
+        }
+        
+        /*
+        AbstractDyeableType type = ColUtil.getAbstractDyeableType(original);
+        if (type != null) {
+            newMat = ColUtil.getDyedVariant(type, original.)
+        }
         //TODO This is a huge tower of if-else statements, cleanup may be required
         
         if (adapter.Wools().contains(original)) {
@@ -237,7 +255,7 @@ public class Spectral extends CustomEnchantment {
             newMat = adapter.Beds().getNext(original);
         } else if (adapter.Beds().contains(original)) {
             newMat = adapter.Beds().getNext(original);
-        }
+        }*/
 
         if (!newMat.equals(original)) {
             changed = true;

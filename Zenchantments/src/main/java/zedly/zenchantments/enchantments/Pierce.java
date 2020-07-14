@@ -8,9 +8,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.metadata.FixedMetadataValue;
+
+import com.google.common.collect.Sets;
+
 import zedly.zenchantments.CustomEnchantment;
 import zedly.zenchantments.Storage;
-import zedly.zenchantments.compatibility.EnumStorage;
 import zedly.zenchantments.enums.Hand;
 import zedly.zenchantments.enums.Tool;
 import zedly.zenchantments.util.Utilities;
@@ -135,8 +137,8 @@ public class Pierce extends CustomEnchantment {
         } else if (mode == 5) {
             if (Storage.COMPATIBILITY_ADAPTER.Ores().contains(evt.getBlock().getType())) {
                 total.addAll(Utilities.BFS(evt.getBlock(), MAX_BLOCKS, false, Float.MAX_VALUE, SEARCH_FACES,
-                    new EnumStorage<>(new Material[]{evt.getBlock().getType()}),
-                    new EnumStorage<>(new Material[]{}), false, true));
+                    Sets.immutableEnumSet(evt.getBlock().getType()),
+                    new HashSet<Material>(), true));
 
             } else {
                 return false;

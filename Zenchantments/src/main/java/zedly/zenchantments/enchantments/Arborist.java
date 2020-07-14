@@ -1,5 +1,6 @@
 package zedly.zenchantments.enchantments;
 
+import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
@@ -17,7 +18,6 @@ public class Arborist extends CustomEnchantment {
 
     public static final int ID = 2;
     public static boolean doGoldenAppleDrop = true;
-    public static boolean useSoftcoded = true;
 
     @Override
     public Builder<Arborist> defaults() {
@@ -36,10 +36,7 @@ public class Arborist extends CustomEnchantment {
     @Override
     public boolean onBlockBreak(BlockBreakEvent evt, int level, boolean usedHand) {
         Block blk = evt.getBlock();
-        if (Storage.COMPATIBILITY_ADAPTER.Leaves().contains(blk.getType())) {
-            if (!useSoftcoded) {
-                return useHardcode(blk, level, usedHand);
-            }
+        if (Tag.LEAVES.isTagged(blk.getType())) {
             ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
             for (int i = 0; i < level + 3; i++) {
                 drops.addAll(blk.getDrops());
@@ -55,33 +52,6 @@ public class Arborist extends CustomEnchantment {
             }
             return bol;
         }
-        return false;
-    }
-    
-    private boolean useHardcode (Block blk, int level, boolean usedHand) {
-            int index = Storage.COMPATIBILITY_ADAPTER.Leaves().indexOf(blk.getType());
-
-            ItemStack stk = new ItemStack(Storage.COMPATIBILITY_ADAPTER.Saplings().get(index), 1);
-
-            if (Storage.rnd.nextInt(10) >= (9 - level) / (power + .001)) {
-                if (Storage.rnd.nextInt(3) % 3 == 0) {
-                    blk.getWorld()
-                       .dropItemNaturally(blk.getLocation(), stk);
-                }
-                if (Storage.rnd.nextInt(3) % 3 == 0) {
-                    blk.getWorld()
-                       .dropItemNaturally(blk.getLocation(), new ItemStack(STICK, 1));
-                }
-                if (Storage.rnd.nextInt(3) % 3 == 0) {
-                    blk.getWorld()
-                       .dropItemNaturally(blk.getLocation(), new ItemStack(APPLE, 1));
-                }
-                if (Storage.rnd.nextInt(65) == 25) {
-                    blk.getWorld()
-                       .dropItemNaturally(blk.getLocation(), new ItemStack(GOLDEN_APPLE, 1));
-                }
-                return true;
-            }
         return false;
     }
 }
