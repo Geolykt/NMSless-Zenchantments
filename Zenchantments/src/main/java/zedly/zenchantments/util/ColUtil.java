@@ -28,6 +28,10 @@ public class ColUtil {
         WOOL
     }
     
+    public static boolean isDyeable(Material in) {
+        return getAbstractDyeableType(in) != null;
+    }
+    
     public static AbstractDyeableType getAbstractDyeableType(Material old) {
         switch (old) {
         case BLACK_BANNER:
