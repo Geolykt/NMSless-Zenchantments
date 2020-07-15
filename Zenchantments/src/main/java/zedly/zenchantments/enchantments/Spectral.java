@@ -69,11 +69,16 @@ public class Spectral extends CustomEnchantment {
         int blocksChanged = 0;
         Player p = evt.getPlayer();
         
+        Material cache = null;
+        
         for (Block b : potentialBlocks) {
             BlockSpectralChangeEvent blockSpectralChangeEvent = new BlockSpectralChangeEvent(b, p);
             Bukkit.getServer().getPluginManager().callEvent(blockSpectralChangeEvent);
             
-            if  (!blockSpectralChangeEvent.isCancelled() && cycleBlockType(b)) {
+            if (cache == null && !blockSpectralChangeEvent.isCancelled()) {
+                cache = cycleBlockType(b);
+                blocksChanged += cache == null ? 0 : 1;
+            } else if (!blockSpectralChangeEvent.isCancelled() && cycleBlockType(b, cache)){
                 blocksChanged++;
             }
         }
@@ -112,17 +117,14 @@ public class Spectral extends CustomEnchantment {
         }
     }
     
-    private boolean cycleBlockType(Block block) {
-//        CompatibilityAdapter adapter = Storage.COMPATIBILITY_ADAPTER;
+
+    private Material cycleBlockType(Block block) {
         Material original = block.getType();
         Material newMat = original;
-        boolean changed = false;
         
         if (ColUtil.isDyeable(original)) {
             newMat = ColUtil.getDyedVariant(ColUtil.getAbstractDyeableType(original), nextCol(ColUtil.getDye(original)));
-            changed = true;
         } else if (isDirtlike(original)) {
-            changed = true;
             switch (original) {
             case GRASS_BLOCK:
                 newMat = Material.COARSE_DIRT;
@@ -143,14 +145,12 @@ public class Spectral extends CustomEnchantment {
                 newMat = Material.PODZOL;
                 break;
             default:
-                changed = false;
             }
         } else if (Tag.LOGS.isTagged(original)) {
             Material[] items = Tag.LOGS.getValues().toArray(new Material[0]);
             for (int i = 0; i < items.length; i++) {
                 if (items[i].equals(original)) {
                     newMat = items[(i+1)%items.length];
-                    changed = true;
                     break;
                 }
             }
@@ -159,7 +159,6 @@ public class Spectral extends CustomEnchantment {
             for (int i = 0; i < items.length; i++) {
                 if (items[i].equals(original)) {
                     newMat = items[(i+1)%items.length];
-                    changed = true;
                     break;
                 }
             }
@@ -168,7 +167,6 @@ public class Spectral extends CustomEnchantment {
             for (int i = 0; i < items.length; i++) {
                 if (items[i].equals(original)) {
                     newMat = items[(i+1)%items.length];
-                    changed = true;
                     break;
                 }
             }
@@ -177,7 +175,6 @@ public class Spectral extends CustomEnchantment {
             for (int i = 0; i < items.length; i++) {
                 if (items[i].equals(original)) {
                     newMat = items[(i+1)%items.length];
-                    changed = true;
                     break;
                 }
             }
@@ -186,7 +183,6 @@ public class Spectral extends CustomEnchantment {
             for (int i = 0; i < items.length; i++) {
                 if (items[i].equals(original)) {
                     newMat = items[(i+1)%items.length];
-                    changed = true;
                     break;
                 }
             }
@@ -195,7 +191,6 @@ public class Spectral extends CustomEnchantment {
             for (int i = 0; i < items.length; i++) {
                 if (items[i].equals(original)) {
                     newMat = items[(i+1)%items.length];
-                    changed = true;
                     break;
                 }
             }
@@ -204,7 +199,6 @@ public class Spectral extends CustomEnchantment {
             for (int i = 0; i < items.length; i++) {
                 if (items[i].equals(original)) {
                     newMat = items[(i+1)%items.length];
-                    changed = true;
                     break;
                 }
             }
@@ -213,7 +207,6 @@ public class Spectral extends CustomEnchantment {
             for (int i = 0; i < items.length; i++) {
                 if (items[i].equals(original)) {
                     newMat = items[(i+1)%items.length];
-                    changed = true;
                     break;
                 }
             }
@@ -222,11 +215,120 @@ public class Spectral extends CustomEnchantment {
             for (int i = 0; i < items.length; i++) {
                 if (items[i].equals(original)) {
                     newMat = items[(i+1)%items.length];
-                    changed = true;
                     break;
                 }
             }
         }
+        
+        if (!newMat.equals(original)) {
+            BlockData blockData = block.getBlockData();
+            final Material newMatFinal = newMat;
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Storage.zenchantments, () -> {
+
+                block.setType(newMatFinal, false);
+
+                if (blockData instanceof Bisected) {
+                    Bisected newBlockData = (Bisected) block.getBlockData();
+                    newBlockData.setHalf(((Bisected) blockData).getHalf());
+                    block.setBlockData(newBlockData, false);
+
+                    // Set the second half's data
+                    if (block.getRelative(BlockFace.UP).getType().equals(original)) {
+                        newBlockData.setHalf(Bisected.Half.TOP);
+                        block.getRelative(BlockFace.UP).setBlockData(newBlockData, false);
+                    }
+                    if (block.getRelative(BlockFace.DOWN).getType().equals(original)) {
+                        newBlockData.setHalf(Bisected.Half.BOTTOM);
+                        block.getRelative(BlockFace.DOWN).setBlockData(newBlockData, false);
+                    }
+                }
+
+                if (blockData instanceof Bed) {
+                    Bed newBlockData = (Bed) block.getBlockData();
+                    newBlockData.setPart(((Bed) blockData).getPart());
+                    block.setBlockData(newBlockData, false);
+
+                    // Set the second bed's part
+                    BlockFace facing = !newBlockData.getPart().equals(Bed.Part.HEAD)
+                            ? ((Bed) blockData).getFacing()
+                                    : ((Bed) blockData).getFacing().getOppositeFace();
+                            newBlockData.setPart(((Bed) block.getRelative(facing).getBlockData()).getPart());
+                            block.getRelative(facing).setBlockData(newBlockData, false);
+
+                            // Set the second bed's direction since we never do that later on
+                            Directional secondaryBlockData = (Directional) block.getRelative(facing).getBlockData();
+                            secondaryBlockData.setFacing(((Directional) blockData).getFacing());
+                            block.getRelative(facing).setBlockData(secondaryBlockData, true);
+
+                }
+
+                if (blockData instanceof Gate) {
+                    Gate newBlockData = (Gate) block.getBlockData();
+                    newBlockData.setInWall(((Gate) blockData).isInWall());
+                    block.setBlockData(newBlockData, true);
+                }
+
+                if (blockData instanceof Door) {
+                    Door newBlockData = (Door) block.getBlockData();
+                    newBlockData.setHinge(((Door) blockData).getHinge());
+                    block.setBlockData(newBlockData, true);
+                }
+
+                if (blockData instanceof Orientable) {
+                    Orientable newBlockData = (Orientable) block.getBlockData();
+                    newBlockData.setAxis(((Orientable) blockData).getAxis());
+                    block.setBlockData(newBlockData, true);
+                }
+
+                if (blockData instanceof Powerable) {
+                    Powerable newBlockData = (Powerable) block.getBlockData();
+                    newBlockData.setPowered(((Powerable) blockData).isPowered());
+                    block.setBlockData(newBlockData, true);
+                }
+
+                if (blockData instanceof Openable) {
+                    Openable newBlockData = (Openable) block.getBlockData();
+                    newBlockData.setOpen(((Openable) blockData).isOpen());
+                    block.setBlockData(newBlockData, true);
+                }
+
+                if (blockData instanceof Stairs) {
+                    Stairs newBlockData = (Stairs) block.getBlockData();
+                    newBlockData.setShape(((Stairs) blockData).getShape());
+                    block.setBlockData(newBlockData, true);
+                }
+
+                if (blockData instanceof Slab) {
+                    Slab newBlockData = (Slab) block.getBlockData();
+                    newBlockData.setType(((Slab) blockData).getType());
+                    block.setBlockData(newBlockData, true);
+                }
+                if (blockData instanceof MultipleFacing) {
+                    MultipleFacing newBlockData = (MultipleFacing) block.getBlockData();
+                    for (BlockFace bf : ((MultipleFacing) blockData).getFaces()) {
+                        newBlockData.setFace(bf, true);
+                    }
+                    block.setBlockData(newBlockData, true);
+                }
+                if (blockData instanceof Directional) {
+                    Directional newBlockData = (Directional) block.getBlockData();
+                    newBlockData.setFacing(((Directional) blockData).getFacing());
+                    block.setBlockData(newBlockData, true);
+                }
+                if (blockData instanceof Waterlogged) {
+                    Waterlogged newBlockData = (Waterlogged) block.getBlockData();
+                    newBlockData.setWaterlogged(((Waterlogged) blockData).isWaterlogged());
+                    block.setBlockData(newBlockData, true);
+                }
+            }, 0);
+        }
+        return newMat;
+    }
+    
+    private boolean cycleBlockType(Block block, Material newMat) {
+        Material original = block.getType();
+        boolean changed = false;
+        
         
         if (!newMat.equals(original)) {
             changed = true;
