@@ -387,6 +387,10 @@ public class CommandProcessor {
     }
 
     private static boolean enchant(CommandSender sender, String[] args) {
+        if (!player.hasPermission("zenchantments.command.enchant")) {
+            player.sendMessage(Storage.logo + "You do not have permission to do this!");
+            return true;
+        }
         switch (args.length) {
         case 0:
             return false;
