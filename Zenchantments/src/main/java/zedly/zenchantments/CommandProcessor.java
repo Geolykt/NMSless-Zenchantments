@@ -81,10 +81,9 @@ public class CommandProcessor {
                     }
                     break;
                 default:
-
                     if (args.length == 1) {
                         for (Map.Entry<String, CustomEnchantment> ench : config.getSimpleMappings()) {
-                            if (ench.getKey().startsWith(args[0]) && (stack.getType() == BOOK
+                            if (ench.getKey().startsWith(args[0].toLowerCase(Locale.ENGLISH)) && (stack.getType() == BOOK
                                     || stack.getType() == ENCHANTED_BOOK || ench.getValue().validMaterial(
                                     stack.getType())
                                     || stack.getType() == AIR)) {
@@ -94,11 +93,16 @@ public class CommandProcessor {
                     } else if (args.length == 2) {
                         CustomEnchantment ench = config.enchantFromString(args[0]);
                         if (ench != null) {
-                            for (int i = 1; i <= ench.getMaxLevel(); i++) {
+                            for (int i = 0; i <= ench.getMaxLevel(); i++) {
                                 results.add(i + "");
                             }
                         }
-
+                    } else if (args.length == 3) {
+                        results.addAll(Arrays.asList("@a", "@p", "@r", "@s"));
+                        results.removeIf(e -> !e.startsWith(args[2]));
+                    } else if (args.length == 4) {
+                        results.addAll(Arrays.asList("true", "false"));
+                        results.removeIf(e -> !e.startsWith(args[3]));
                     }
             }
             return results;
@@ -450,6 +454,12 @@ public class CommandProcessor {
                     player.sendMessage(Storage.logo + ChatColor.RED + "This is not a valid enchantment");
                 }
                 return true;
+            } else if (player.getInventory().getItemInMainHand() == null ||
+                       player.getInventory().getItemInMainHand().getType() == Material.AIR) {
+                if (postPlayerFeedback) {
+                    target.sendMessage(Storage.logo + ChatColor.RED + " You cannot enchant air");
+                }
+                return false;
             } else {
                 CustomEnchantment.setEnchantment(player.getInventory().getItemInMainHand(), ench, level, player.getWorld());
                 if (postPlayerFeedback) {
