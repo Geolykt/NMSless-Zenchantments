@@ -337,7 +337,7 @@ public class CommandProcessor {
                     + "Returns a list of enchantments for the tool in hand.");
             player.sendMessage(ChatColor.DARK_AQUA + "- " + "ench give <Player> <Material> <enchantment> <?level> ... "
                     + ChatColor.AQUA + "Gives the target a specified enchanted item.");
-            player.sendMessage(ChatColor.DARK_AQUA + "- " + "ench <enchantment> <?level>: " + ChatColor.AQUA
+            player.sendMessage(ChatColor.DARK_AQUA + "- " + "ench <enchantment> <?level> <?modifier> <?doNotification>: " + ChatColor.AQUA
                     + "Enchants the item in hand with the given enchantment and level");
             player.sendMessage(ChatColor.DARK_AQUA + "- " + "ench disable <enchantment/all>: " + ChatColor.AQUA
                     + "Disables selected enchantment for the user");
@@ -353,7 +353,7 @@ public class CommandProcessor {
     }
 
     private static boolean versionInfo(CommandSender sender) {
-        sender.sendMessage("Using Zenchantments " + Storage.version + ". This server utilises the dev-geolykt fork of Zenchantments, so issues should be reported to Geolykt (mail@geolykt.de), not to Zedly.");
+        sender.sendMessage(Storage.logo + ChatColor.AQUA + "Using Zenchantments " + Storage.version + ". Download it here:" + ChatColor.DARK_GREEN + " https://github.com/Geolykt/NMSless-Zenchantments");
         return true;
     }
 
@@ -404,9 +404,16 @@ public class CommandProcessor {
                 return false;
             }
         case 3:
+            try {
+                return ench(sender, args[0], Integer.decode(args[1]), args[2], false);
+            } catch (NumberFormatException e) {
+                sender.sendMessage(Storage.logo + ChatColor.RED + "Argument 2 is not a number, however an Integer was expected");
+                return false;
+            }
+        case 4:
         default:
             try {
-                return ench(sender, args[0], Integer.decode(args[1]), args[2]);
+                return ench(sender, args[0], Integer.decode(args[1]), args[2], Boolean.parseBoolean(args[3]));
             } catch (NumberFormatException e) {
                 sender.sendMessage(Storage.logo + ChatColor.RED + "Argument 2 is not a number, however an Integer was expected");
                 return false;
@@ -414,7 +421,7 @@ public class CommandProcessor {
         }
     }
 
-    private static boolean ench(CommandSender infoReciever, String enchantmentName, Integer level, String targetModif) {
+    private static boolean ench(CommandSender infoReciever, String enchantmentName, Integer level, String targetModif, Boolean doNotify) {
         Entity[] target = CommandUtils.getTargets(infoReciever, targetModif);
         if (target.length == 0) {
             infoReciever.sendMessage(Storage.logo + ChatColor.AQUA + "No entities changed.");
@@ -422,7 +429,7 @@ public class CommandProcessor {
         }
         for (Entity e: target) {
             if (e instanceof Player) {
-                ench(infoReciever, enchantmentName, level);
+                ench(infoReciever, enchantmentName, level, doNotify);
             } else if (e instanceof Monster) {
                 ItemStack stack = ((Monster) e).getEquipment().getItemInMainHand();
                 if (stack != null) {
@@ -434,25 +441,34 @@ public class CommandProcessor {
         return true;
     }
 
-    private static boolean ench(CommandSender target, String enchantmentName, Integer level) {
+    private static boolean ench(CommandSender target, String enchantmentName, Integer level, boolean postPlayerFeedback) {
         if (target instanceof Player) {
             Player player = (Player) target;
             CustomEnchantment ench = Config.get(player.getWorld()).enchantFromString(enchantmentName);
             if (ench == null) {
-                player.sendMessage(Storage.logo + ChatColor.RED + "This is not a valid enchantment");
+                if (postPlayerFeedback) {
+                    player.sendMessage(Storage.logo + ChatColor.RED + "This is not a valid enchantment");
+                }
                 return true;
             } else {
                 CustomEnchantment.setEnchantment(player.getInventory().getItemInMainHand(), ench, level, player.getWorld());
-                if (level <= 0) {
-                    player.sendMessage(Storage.logo + ChatColor.AQUA + "The enchantment " + ChatColor.BLUE + ench.getLoreName() + ChatColor.AQUA + " was removed from your tool.");
-                } else {
-                    player.sendMessage(Storage.logo + ChatColor.AQUA + "Your tool in hand was enchanted with " + ChatColor.BLUE + ench.getLoreName() + ChatColor.AQUA + " at level " + ChatColor.BLUE + level + ChatColor.AQUA + ".");
-                    
+                if (postPlayerFeedback) {
+                    if (level <= 0) {
+                        player.sendMessage(Storage.logo + ChatColor.AQUA + "The enchantment " + ChatColor.BLUE + ench.getLoreName() + ChatColor.AQUA + " was removed from your tool.");
+                    } else if (level == 1) {
+                        player.sendMessage(Storage.logo + ChatColor.AQUA + "Your tool in hand was enchanted with " + ChatColor.BLUE + ench.getLoreName() + ChatColor.AQUA + ".");
+                    } else {
+                        player.sendMessage(Storage.logo + ChatColor.AQUA + "Your tool in hand was enchanted with " + ChatColor.BLUE + ench.getLoreName() + ChatColor.AQUA + " at level " + ChatColor.BLUE + level + ChatColor.AQUA + ".");
+                    }
                 }
             }
             return true;
         }
         return false;
+    }
+    
+    private static boolean ench(CommandSender infoReciever, String enchantmentName, Integer level) {
+        return ench(infoReciever, enchantmentName, level, true);
     }
 
     private static boolean fixitem(CommandSender sender) {
