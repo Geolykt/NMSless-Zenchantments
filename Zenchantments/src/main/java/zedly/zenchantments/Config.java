@@ -1,7 +1,6 @@
 package zedly.zenchantments;
 
 import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
-import org.apache.commons.io.IOUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -19,6 +18,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 // This class manages indivudual world configs, loading them each from the config file. It will start the process
@@ -171,7 +171,7 @@ public class Config {
             File file = new File(Storage.zenchantments.getDataFolder(), world.getName() + ".yml");
             if (!file.exists()) {
                 try {
-                    String raw = IOUtils.toString(stream, "UTF-8");
+                    String raw = new String(stream.readAllBytes(), StandardCharsets.UTF_8);
                     byte[] b = raw.getBytes();
                     FileOutputStream fos = new FileOutputStream(file);
                     fos.write(b, 0, b.length);
