@@ -1,3 +1,5 @@
+<b> Active development on this branch will stop soon, the last feature that will be added is going to be a cross compatible enchantment storage system with upstream and legacy versions. After that, this branch will enter the LTS phase at which only new entities and blocks will be added to the adapter. Bugs will be of course also fixed, as long as they are reasonably easy to fix. Development on the branch should stop completely by 2021</b>
+<hr>
 Got a question? Need help or want to discuss changes? Then feel free to DM me via discord: tristellar#9022. Issues however should be reported here so forkers can profit from them being public
 <hr>
 This fork uses NBT tags to store enchantments, which makes it somewhat uninterchangeable with the regular plugin
