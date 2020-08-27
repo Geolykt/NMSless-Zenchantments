@@ -170,13 +170,36 @@ public class Config {
         }
     }
 
+    private static Byte[] streamReadAllBytes (InputStream stream) {
+        ArrayList<Byte> bytes = new ArrayList<Byte>();
+        try {
+            int read = stream.read();
+            
+            while (read != -1) {
+                bytes.add((byte) read);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new Byte[] {};
+        }
+        return bytes.toArray(new Byte[] {});
+    }
+    
+    private static byte[] toPrimitive(Byte[] bytes) {
+        byte[] returnBytes = new byte[bytes.length];
+        int i = 0;
+        for(Byte b : bytes)
+            returnBytes[i] = b.byteValue();
+        return returnBytes;
+    }
+    
     public static Config getWorldConfig (World world) {
         try {
             InputStream stream = Zenchantments.class.getResourceAsStream("/defaultconfig.yml");
             File file = new File(Storage.zenchantments.getDataFolder(), world.getName() + ".yml");
             if (!file.exists()) {
                 try {
-                    String raw = new String(stream.readAllBytes(), StandardCharsets.UTF_8); // FIXME you know it, this ain't working in Java8
+                    String raw = new String(toPrimitive(streamReadAllBytes(stream)), StandardCharsets.UTF_8);
                     byte[] b = raw.getBytes();
                     FileOutputStream fos = new FileOutputStream(file);
                     fos.write(b, 0, b.length);

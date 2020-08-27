@@ -39,6 +39,7 @@ public class UpdateConfig {
     }
 
     // Removes power and max level if they are not needed by an enchantment and adds any enchantments not in the config
+    @SuppressWarnings("unchecked")
     private static void genericUpdate(YamlConfiguration config) {
         // Get the existing config data from the file
         List<Map<String, LinkedHashMap<String, Object>>> configData;

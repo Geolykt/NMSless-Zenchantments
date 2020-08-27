@@ -140,15 +140,6 @@ public class Zenchantments extends JavaPlugin {
 
     // Loads configs and starts tasks
     public void onEnable() {
-        
-        if (System.getProperty("java.version").contains("1.8") || System.getProperty("java.version").contains("1.7")) {
-            getLogger().severe("Due to me being me this plugin will not work in Java 8 or below (if you are using Java 7, wtf?). "
-                    + "Please update to either Oracle's java 11 or openJDK's java 11 (latter is used by me).");
-            getLogger().warning("This plugin will not crash right now, but it WILL CRASH LATER in a few milliseconds "
-                    + "unless you are using magic!");
-        }
-        
-        
         Storage.zenchantments = this;
         Storage.pluginPath = Bukkit.getPluginManager().getPlugin("Zenchantments").getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
         Storage.version = Bukkit.getServer().getPluginManager().getPlugin(this.getName()).getDescription().getVersion();

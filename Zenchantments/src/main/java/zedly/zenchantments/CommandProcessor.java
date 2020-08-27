@@ -347,8 +347,6 @@ public class CommandProcessor {
                     + "Enables selected enchantment for the user");
             player.sendMessage(ChatColor.DARK_AQUA + "- " + "ench version: " + ChatColor.AQUA
                     + "Shows the version the plugin runs on.");
-            player.sendMessage(ChatColor.DARK_AQUA + "- " + "ench fixitem: " + ChatColor.AQUA
-                    + "Converts a pre-1.7.1 into an NBT compatible item. Cannot fix corrupted items.");
             return true;
         }
         return false;
@@ -378,8 +376,6 @@ public class CommandProcessor {
                     return enable(sender, args);
                 case "version":
                     return versionInfo(sender);
-                case "fixitem":
-                    return fixitem(sender);
                 case "help":
                 default:
                     return helpEnchantment(sender, label) || enchant(sender, args);
@@ -477,10 +473,5 @@ public class CommandProcessor {
     
     private static boolean ench(CommandSender infoReciever, String enchantmentName, Integer level) {
         return ench(infoReciever, enchantmentName, level, true);
-    }
-
-    private static boolean fixitem(CommandSender sender) {
-        sender.sendMessage(Storage.logo + ChatColor.RED + "Command removed. This is now done automagically on runtime");
-        return true;
     }
 }
