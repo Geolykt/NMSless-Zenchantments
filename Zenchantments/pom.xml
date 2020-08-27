@@ -11,25 +11,25 @@
     <parent>
         <groupId>zedly</groupId>
         <artifactId>Zenchantments-parent</artifactId>
-        <version>1.9.0</version>
+        <version>1.9.1</version>
     </parent>
     <dependencies>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.16.1-R0.1-SNAPSHOT</version>
+            <version>1.16.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>zedly</groupId>
             <artifactId>compatibility-adapter</artifactId>
-            <version>1.9.0</version>
+            <version>1.9.1</version>
             <scope>compile</scope>
             <!--<type>jar</type>-->
         </dependency>
         <dependency>
             <groupId>io.github.lukehutch</groupId>
-            <artifactId>fast-classpath-scanner</artifactId>
+            <artifactId>fast-classpath-scanner</artifactId> <!-- TODO update to ClassGraph one day, maybe -->
             <version>3.1.10</version>
             <scope>compile</scope>
         </dependency>
