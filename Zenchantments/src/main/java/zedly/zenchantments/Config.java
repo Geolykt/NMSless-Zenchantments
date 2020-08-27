@@ -189,7 +189,7 @@ public class Config {
         byte[] returnBytes = new byte[bytes.length];
         int i = 0;
         for(Byte b : bytes)
-            returnBytes[i] = b.byteValue();
+            returnBytes[i++] = b.byteValue();
         return returnBytes;
     }
     
