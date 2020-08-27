@@ -149,11 +149,6 @@ public class Config {
             Storage.zenchantments.saveResource("patches.yml", false);
         }
         FileConfiguration patchCFG = YamlConfiguration.loadConfiguration(patchFile);
-        if (patchCFG.getBoolean("alerts.NBT", true)) {
-            Bukkit.broadcastMessage(Storage.logo + ChatColor.RED + " You are useing NMSless-Zenchantments, "
-                    + "this version cannot update to the regular version safely. Please also keep in mind that"
-                    + " you must convert your items into the new format via /ench fixitem");
-        }
         WatcherEnchant.apply_patch_explosion = patchCFG.getBoolean("explosion.enable", true);
         WatcherEnchant.apply_patch_piston = patchCFG.getBoolean("piston.enable", true);
         WatcherEnchant.patch_cancel_explosion = !patchCFG.getBoolean("explosion.removeBlocksInsteadOfCancel", false);
@@ -163,6 +158,16 @@ public class Config {
         Arborist.doGoldenAppleDrop = patchCFG.getBoolean("recipe.misc.arborist-doGoldenAppleDrop", true);
         Siphon.ratio = patchCFG.getDouble("nerfs.siphonRatio", 0.5);
         Siphon.calcAmour = patchCFG.getBoolean("nerfs.siphonsubstractAmour", true);
+
+        if (patchCFG.getString("enchantmentGatherer", "NBT").equals("NBT")) {
+            CustomEnchantment.Enchantment_Adapter = new CustomEnchantment.PersistentDataGatherer();
+            ((CustomEnchantment.PersistentDataGatherer) CustomEnchantment.Enchantment_Adapter).doCompat =
+                    Storage.zenchantments.getConfig().getBoolean("compatibility", true);
+        } else if (patchCFG.getString("enchantmentGatherer").equals("PR47-lore")) {
+            CustomEnchantment.Enchantment_Adapter = new CustomEnchantment.LegacyLoreGatherer();
+        } else {
+            CustomEnchantment.Enchantment_Adapter = new CustomEnchantment.ProvisionalLoreGatherer();
+        }
     }
 
     public static Config getWorldConfig (World world) {
