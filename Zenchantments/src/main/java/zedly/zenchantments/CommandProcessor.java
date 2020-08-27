@@ -40,8 +40,6 @@ public class CommandProcessor {
                 case "list":
                 case "help":
                 case "version":
-                case "fixitem":
-                    break;
                 case "give":
                     if (args.length == 2) {
                         for (Player plyr : Bukkit.getOnlinePlayers()) {
@@ -482,13 +480,7 @@ public class CommandProcessor {
     }
 
     private static boolean fixitem(CommandSender sender) {
-        if (!(sender instanceof Player)) {
-            return false;
-        }
-        
-        sender.sendMessage(Storage.logo + ChatColor.BLUE + " Attempting to convert the item, please beware that this may"
-                + " not work and that that action is not supported for long.");
-        ((Player)sender).getInventory().setItemInMainHand(CustomEnchantment.fixItem(((Player)sender).getInventory().getItemInMainHand(), ((Player)sender).getWorld()));
+        sender.sendMessage(Storage.logo + ChatColor.RED + "Command removed. This is now done automagically on runtime");
         return true;
     }
 }

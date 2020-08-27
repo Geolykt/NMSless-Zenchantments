@@ -171,7 +171,7 @@ public class Config {
             File file = new File(Storage.zenchantments.getDataFolder(), world.getName() + ".yml");
             if (!file.exists()) {
                 try {
-                    String raw = new String(stream.readAllBytes(), StandardCharsets.UTF_8);
+                    String raw = new String(stream.readAllBytes(), StandardCharsets.UTF_8); // FIXME you know it, this ain't working in Java8
                     byte[] b = raw.getBytes();
                     FileOutputStream fos = new FileOutputStream(file);
                     fos.write(b, 0, b.length);
