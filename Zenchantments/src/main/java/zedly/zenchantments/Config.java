@@ -14,6 +14,7 @@ import zedly.zenchantments.enchantments.Spectral;
 import zedly.zenchantments.enums.Tool;
 import zedly.zenchantments.evt.WatcherEnchant;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -170,27 +171,22 @@ public class Config {
         }
     }
 
-    private static Byte[] streamReadAllBytes (InputStream stream) {
-        ArrayList<Byte> bytes = new ArrayList<Byte>();
+    private static byte[] streamReadAllBytes (InputStream stream) {
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+        int nRead;
+        byte[] data = new byte[16384];
+
         try {
-            int read = stream.read();
-            
-            while (read != -1) {
-                bytes.add((byte) read);
+            while ((nRead = stream.read(data, 0, data.length)) != -1) {
+              buffer.write(data, 0, nRead);
             }
         } catch (IOException e) {
             e.printStackTrace();
-            return new Byte[] {};
+            return buffer.toByteArray();
         }
-        return bytes.toArray(new Byte[] {});
-    }
-    
-    private static byte[] toPrimitive(Byte[] bytes) {
-        byte[] returnBytes = new byte[bytes.length];
-        int i = 0;
-        for(Byte b : bytes)
-            returnBytes[i++] = b.byteValue();
-        return returnBytes;
+
+        return buffer.toByteArray();
     }
     
     public static Config getWorldConfig (World world) {
@@ -199,7 +195,7 @@ public class Config {
             File file = new File(Storage.zenchantments.getDataFolder(), world.getName() + ".yml");
             if (!file.exists()) {
                 try {
-                    String raw = new String(toPrimitive(streamReadAllBytes(stream)), StandardCharsets.UTF_8);
+                    String raw = new String(streamReadAllBytes(stream), StandardCharsets.UTF_8);
                     byte[] b = raw.getBytes();
                     FileOutputStream fos = new FileOutputStream(file);
                     fos.write(b, 0, b.length);
