@@ -1,4 +1,4 @@
-(Development has moved over to Enchantments+, if you are a newer user, use that release instead.)[https://github.com/Geolykt/EnchantmentsPlus]
+[Development has moved over to Enchantments+, if you are a newer user, use that release instead.](https://github.com/Geolykt/EnchantmentsPlus)
 It does not offer full support with the current releases, so you may not want to migrate if you are already using Zenchantments or NMS-less Zenchantments.
 <b> This repo will only be updated with bugfixes until the End of 2020. You should either fork it, or waddle on. </b>
 <hr>
