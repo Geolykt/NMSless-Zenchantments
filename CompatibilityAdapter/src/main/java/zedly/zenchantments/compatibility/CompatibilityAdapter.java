@@ -191,10 +191,10 @@ public class CompatibilityAdapter {
 
     public List<Material> TerraformerMaterials() {
         if (terraformer_materials == null) {
-            terraformer_materials = Arrays.asList(
+            terraformer_materials = new ArrayList<Material>(Arrays.asList(
                     BRICK, TNT, BOOKSHELF, ICE,
                     STONE_BRICKS, NETHER_BRICK, END_STONE, QUARTZ_BLOCK, WARPED_HYPHAE,
-                    PRISMARINE, PACKED_ICE, RED_SANDSTONE, NETHERRACK, WARPED_NYLIUM);
+                    PRISMARINE, PACKED_ICE, RED_SANDSTONE, NETHERRACK, WARPED_NYLIUM));
             terraformer_materials.addAll(terracottas());
             terraformer_materials.addAll(glazedTerracottas());
             terraformer_materials.addAll(Ores());
@@ -287,8 +287,8 @@ public class CompatibilityAdapter {
 
     public Set<Material> ShredPicks() {
         if  (shredPickSet == null) {
-            List<Material> shredPick = Arrays.asList(STONE, GRANITE,
-                    ANDESITE, DIORITE, GLOWSTONE, SANDSTONE, RED_SANDSTONE, ICE, PACKED_ICE, BLUE_ICE, BASALT);
+            List<Material> shredPick = new ArrayList<Material>(Arrays.asList(STONE, GRANITE,
+                    ANDESITE, DIORITE, GLOWSTONE, SANDSTONE, RED_SANDSTONE, ICE, PACKED_ICE, BLUE_ICE, BASALT));
             shredPick.addAll(Ores());
             shredPick.addAll(terracottas());
             shredPick.addAll(Netherracks());
