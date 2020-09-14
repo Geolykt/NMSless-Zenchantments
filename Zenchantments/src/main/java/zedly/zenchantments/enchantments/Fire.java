@@ -75,6 +75,8 @@ public class Fire extends CustomEnchantment {
             List<ItemStack> newDrops = new ArrayList<ItemStack>();
             for (ItemStack is: original) {
                 ItemStack ns = RecipeUtil.getSmeltedVariant(is);
+                if (ns.getMaxStackSize() == 0)
+                	continue;
                 int oldAmount = ns.getAmount();
                 int amount = ns.getAmount();
                 while (amount > ns.getMaxStackSize()) {
