@@ -45,7 +45,7 @@ public class Spread extends CustomEnchantment {
         MultiArrow ar = new MultiArrow(originalArrow);
         EnchantedArrow.putArrow(originalArrow, ar, player);
         Bukkit.getPluginManager().callEvent(
-        		new EntityShootBowEvent(player, hand, null, originalArrow, usedHand ? EquipmentSlot.HAND : EquipmentSlot.OFF_HAND, (float) originalArrow.getVelocity().length(), false));;
+        		new EntityShootBowEvent(player, hand, null, originalArrow, usedHand ? EquipmentSlot.HAND : EquipmentSlot.OFF_HAND, (float) originalArrow.getVelocity().length(), false));
         Utilities.damageTool(player, (int) Math.round(level / 2.0 + 1), usedHand);
         for (int i = 0; i < (int) Math.round(power * level * 4); i++) {
             Vector v = originalArrow.getVelocity();
