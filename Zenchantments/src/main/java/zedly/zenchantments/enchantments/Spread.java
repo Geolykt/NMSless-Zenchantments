@@ -5,6 +5,7 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
@@ -44,7 +45,7 @@ public class Spread extends CustomEnchantment {
         MultiArrow ar = new MultiArrow(originalArrow);
         EnchantedArrow.putArrow(originalArrow, ar, player);
         Bukkit.getPluginManager().callEvent(
-            new EntityShootBowEvent(player, hand, originalArrow, (float) originalArrow.getVelocity().length()));
+        		new EntityShootBowEvent(player, hand, null, originalArrow, usedHand ? EquipmentSlot.HAND : EquipmentSlot.OFF_HAND, (float) originalArrow.getVelocity().length(), false));
         Utilities.damageTool(player, (int) Math.round(level / 2.0 + 1), usedHand);
         for (int i = 0; i < (int) Math.round(power * level * 4); i++) {
             Vector v = originalArrow.getVelocity();
@@ -56,8 +57,7 @@ public class Spread extends CustomEnchantment {
             arrow.setVelocity(v.normalize().multiply(originalArrow.getVelocity().length()));
             arrow.setFireTicks(originalArrow.getFireTicks());
             arrow.setKnockbackStrength(originalArrow.getKnockbackStrength());
-            EntityShootBowEvent event =
-                new EntityShootBowEvent(player, hand, arrow, (float) originalArrow.getVelocity().length());
+            EntityShootBowEvent event = new EntityShootBowEvent(player, hand, null, arrow, usedHand ? EquipmentSlot.HAND : EquipmentSlot.OFF_HAND, (float) originalArrow.getVelocity().length(), false);
             Bukkit.getPluginManager().callEvent(event);
             if (evt.isCancelled()) {
                 arrow.remove();
