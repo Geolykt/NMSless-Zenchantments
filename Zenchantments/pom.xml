@@ -11,7 +11,7 @@
     <parent>
         <groupId>zedly</groupId>
         <artifactId>Zenchantments-parent</artifactId>
-        <version>1.9.2</version>
+        <version>1.9.3</version>
     </parent>
     <dependencies>
         <dependency>
@@ -23,7 +23,7 @@
         <dependency>
             <groupId>zedly</groupId>
             <artifactId>compatibility-adapter</artifactId>
-            <version>1.9.2</version>
+            <version>1.9.3</version>
             <scope>compile</scope>
             <!--<type>jar</type>-->
         </dependency>
