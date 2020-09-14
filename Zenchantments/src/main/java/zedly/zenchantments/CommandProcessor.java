@@ -354,6 +354,7 @@ public class CommandProcessor {
 
     private static boolean versionInfo(CommandSender sender) {
         sender.sendMessage(Storage.logo + ChatColor.AQUA + "Using Zenchantments " + Storage.version + ". Download it here:" + ChatColor.DARK_GREEN + " https://github.com/Geolykt/NMSless-Zenchantments");
+        sender.sendMessage(Storage.logo + ChatColor.DARK_RED + "Please consider moving to enchantments+ or waiting till upstream updates (which may take a while)");
         return true;
     }
 
