@@ -1,9 +1,9 @@
-<b> Active development on this branch will stop soon, the last feature that will be added is going to be a cross compatible enchantment storage system with upstream and legacy versions. After that, this branch will enter the LTS phase at which only new entities and blocks will be added to the adapter. Bugs will be of course also fixed, as long as they are reasonably easy to fix. Development on the branch should stop completely by 2021</b>
-<hr>
-Got a question? Need help or want to discuss changes? Then feel free to DM me via discord: tristellar#9022. Issues however should be reported here so forkers can profit from them being public
+[Development has moved over to Enchantments+, if you are a newer user, use that release instead.](https://github.com/Geolykt/EnchantmentsPlus)
+It does not offer full support with the current releases, so you may not want to migrate if you are already using Zenchantments or NMS-less Zenchantments.
+<b> This repo will only be updated with bugfixes until the End of 2020. You should either fork it, or waddle on. </b>
 <hr>
 This fork uses NBT tags to store enchantments, which makes it somewhat uninterchangeable with the regular plugin
-It also only intends to support 1.16.1 and newer versions when the time comes, older may work however with a bit of commit reverting. Using older minecraft versions is generally not recommended after the commits of the 14th July.
+It also only intends to support 1.16.1 and 1.16.2, older may work however with a bit of commit reverting. Using older minecraft versions is generally not recommended after the commits of the 14th July, even if it's now a bit more easy to set up than when I initially wrote this, it's just tweaking some values now.
 
 # NMSless-Zenchantments
 ## Description
