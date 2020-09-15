@@ -1,8 +1,8 @@
 [Development has moved over to Enchantments+, if you are a newer user, use that release instead.](https://github.com/Geolykt/EnchantmentsPlus)
-It does not offer full support with the current releases, so you may not want to migrate if you are already using Zenchantments or NMS-less Zenchantments.
-<b> This repo will only be updated with bugfixes until the End of 2020. You should either fork it, or waddle on. </b>
+<b> This repo (NMS-less Zenchantments) will only be updated with bugfixes until the End of 2020. You should either fork it, or waddle on. </b>
+The reason behind this decision is to free from the old requirement of having to stick to the old Format of how things are done, however not much has changed overall and will be 100% compatible if using PR-47 lore. I do not recommend of using upstream due to reasons
 <hr>
-This fork uses NBT tags to store enchantments, which makes it somewhat uninterchangeable with the regular plugin
+This fork uses NBT tags to store enchantments, however still has alternative enchantment getters which makes it interchangeable with the regular plugin
 It also only intends to support 1.16.1 and 1.16.2, older may work however with a bit of commit reverting. Using older minecraft versions is generally not recommended after the commits of the 14th July, even if it's now a bit more easy to set up than when I initially wrote this, it's just tweaking some values now.
 
 # NMSless-Zenchantments
